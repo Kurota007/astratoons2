@@ -1,0 +1,4576 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-31 18:42-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\accounts\forms.py:23 .\accounts\forms.py:127
+#: .\templates\account\signup.html:34
+msgid "Nome de usuário"
+msgstr "Username"
+
+#: .\accounts\forms.py:29
+msgid "Email"
+msgstr "Email"
+
+#: .\accounts\forms.py:36 .\core\models.py:37
+msgid "Nome"
+msgstr "Name"
+
+#: .\accounts\forms.py:37
+msgid "Seu nome"
+msgstr "Your name"
+
+#: .\accounts\forms.py:41 .\accounts\forms.py:119
+msgid "Sobrenome"
+msgstr "Last Name"
+
+#: .\accounts\forms.py:42
+msgid "Seu sobrenome"
+msgstr "Your last name"
+
+#: .\accounts\forms.py:53 .\templates\accounts\profile_edit.html:129
+msgid "Nome de Exibição"
+msgstr "Display Name"
+
+#: .\accounts\forms.py:56
+msgid "Como você quer ser chamado"
+msgstr "How you want to be called"
+
+#: .\accounts\forms.py:62
+msgid "Sobre você"
+msgstr "About you"
+
+#: .\accounts\forms.py:67
+msgid "Conte um pouco sobre você..."
+msgstr "Tell us a little about yourself..."
+
+#: .\accounts\forms.py:74 .\templates\accounts\profile_edit.html:146
+msgid "Badges Ativos"
+msgstr "Active Badges"
+
+#: .\accounts\forms.py:93
+msgid "Você pode selecionar no máximo 2 badges para exibir."
+msgstr "You can select a maximum of 2 badges to display."
+
+#: .\accounts\forms.py:114
+msgid "Primeiro nome"
+msgstr "First Name"
+
+#: .\accounts\models.py:14
+msgid "Nome do Badge"
+msgstr "Badge Name"
+
+#: .\accounts\models.py:15 .\subscriptions\models.py:14
+#: .\subscriptions\models.py:130
+msgid "Descrição"
+msgstr "Description"
+
+#: .\accounts\models.py:16
+msgid "Classe do Ícone (Font Awesome)"
+msgstr "Icon Class (Font Awesome)"
+
+#: .\accounts\models.py:17
+msgid "Cor de Fundo (Hex)"
+msgstr "Background Color (Hex)"
+
+#: .\accounts\models.py:18
+msgid "Cor do Texto (Hex)"
+msgstr "Text Color (Hex)"
+
+#: .\accounts\models.py:19
+msgid "Preço em Moedas"
+msgstr "Price in Coins"
+
+#: .\accounts\models.py:20
+msgid "Badge de Staff?"
+msgstr "Staff Badge?"
+
+#: .\accounts\models.py:21
+msgid "Badge VIP?"
+msgstr "VIP Badge?"
+
+#: .\accounts\models.py:54
+msgid "Saldo de Moedas"
+msgstr "Coin Balance"
+
+#: .\accounts\views.py:88
+msgid "Cadastro realizado com sucesso! Por favor, faça o login."
+msgstr "Registration successful! Please log in."
+
+#: .\accounts\views.py:146
+msgid "Suas informações foram atualizadas!"
+msgstr "Your information has been updated!"
+
+#: .\accounts\views.py:149
+msgid "Por favor, corrija os erros abaixo."
+msgstr "Please correct the errors below."
+
+#: .\accounts\views.py:154
+msgid "Seu avatar foi atualizado!"
+msgstr "Your avatar has been updated!"
+
+#: .\accounts\views.py:157
+msgid "Não foi possível atualizar o avatar."
+msgstr "Could not update the avatar."
+
+#: .\accounts\views.py:180
+msgid "Avatar atualizado com sucesso!"
+msgstr "Avatar updated successfully!"
+
+#: .\accounts\views.py:192
+msgid "Não foi possível atualizar o avatar. Verifique o arquivo."
+msgstr "Could not update the avatar. Please check the file."
+
+#: .\accounts\views.py:205
+#, python-format
+msgid "A conta de \"%(username)s\" foi excluída permanentemente."
+msgstr "The account for \"%(username)s\" has been permanently deleted."
+
+#: .\accounts\views.py:209
+msgid ""
+"Ocorreu um erro crítico ao tentar excluir sua conta. Por favor, contate o "
+"suporte."
+msgstr ""
+"A critical error occurred while trying to delete your account. Please "
+"contact support."
+
+#: .\accounts\wagtail_hooks.py:43
+msgid "Status VIP"
+msgstr "VIP Status"
+
+#: .\accounts\wagtail_hooks.py:51 .\accounts\wagtail_hooks.py:66
+#: .\templates\accounts\badge_store.html:4
+#: .\templates\accounts\badge_store.html:90
+msgid "Loja de Badges"
+msgstr "Badge Store"
+
+#: .\accounts\wagtail_hooks.py:59
+msgid "Inventário de Badges"
+msgstr "Badge Inventory"
+
+#: .\astratoons\settings\base.py:108
+msgid "Português"
+msgstr "Portuguese"
+
+#: .\astratoons\settings\base.py:109
+msgid "English"
+msgstr "English"
+
+#: .\astratoons\settings\base.py:110
+msgid "Français"
+msgstr "French"
+
+#: .\astratoons\settings\base.py:111
+msgid "Español"
+msgstr "Spanish"
+
+#: .\comments\models.py:11 .\templates\search\search.html:45
+msgid "Página"
+msgstr "Page"
+
+#: .\comments\models.py:17 .\manga\models.py:899 .\manga\models.py:919
+#: .\novels\models.py:294 .\subscriptions\models.py:55
+msgid "Usuário"
+msgstr "User"
+
+#: .\comments\models.py:25
+msgid "Resposta a"
+msgstr "Reply to"
+
+#: .\comments\models.py:27 .\comments\models.py:42 .\manga\models.py:878
+msgid "Comentário"
+msgstr "Comment"
+
+#: .\comments\models.py:29 .\manga\models.py:879
+msgid "Imagem Anexada"
+msgstr "Attached Image"
+
+#: .\comments\models.py:34
+msgid "Texto é Spoiler?"
+msgstr "Text is a Spoiler?"
+
+#: .\comments\models.py:35
+msgid "Imagem é Spoiler?"
+msgstr "Image is a Spoiler?"
+
+#: .\comments\models.py:36 .\manga\models.py:881
+msgid "Criado em"
+msgstr "Created at"
+
+#: .\comments\models.py:37
+msgid "Aprovado"
+msgstr "Approved"
+
+#: .\comments\models.py:38
+msgid "Editado"
+msgstr "Edited"
+
+#: .\comments\models.py:43 .\comments\wagtail_hooks.py:7 .\core\models.py:322
+msgid "Comentários"
+msgstr "Comments"
+
+#: .\comments\models.py:79
+msgid "Voto de Comentário"
+msgstr "Comment Vote"
+
+#: .\comments\models.py:80
+msgid "Votos de Comentários"
+msgstr "Comment Votes"
+
+#: .\comments\models.py:96
+msgid "Usuário Notificado"
+msgstr "Notified User"
+
+#: .\comments\models.py:101
+msgid "Comentário de Resposta"
+msgstr "Reply Comment"
+
+#: .\comments\models.py:103
+msgid "Lido"
+msgstr "Read"
+
+#: .\comments\models.py:104
+msgid "Data de Criação"
+msgstr "Creation Date"
+
+#: .\comments\models.py:110
+msgid "Notificação"
+msgstr "Notification"
+
+#: .\comments\models.py:111 .\comments\wagtail_hooks.py:20
+msgid "Notificações"
+msgstr "Notifications"
+
+#: .\comments\wagtail_hooks.py:16
+msgid "Comentário (início)"
+msgstr "Comment (start)"
+
+#: .\comments\wagtail_hooks.py:28
+msgid "Autor da Resposta"
+msgstr "Reply Author"
+
+#: .\comments\wagtail_hooks.py:31
+msgid "Gerenciar Comentários"
+msgstr "Manage Comments"
+
+#: .\core\models.py:37
+msgid "Ex: Gostei, Amei"
+msgstr "Ex: Like, Love"
+
+#: .\core\models.py:38
+msgid "ID do Tipo"
+msgstr "Type ID"
+
+#: .\core\models.py:38
+msgid "Identificador único, ex: 'like', 'love'"
+msgstr "Unique identifier, ex: 'like', 'love'"
+
+#: .\core\models.py:39
+msgid "Ícone"
+msgstr "Icon"
+
+#: .\core\models.py:39
+msgid "Ícone da reação (.svg, .png)"
+msgstr "Reaction icon (.svg, .png)"
+
+#: .\core\models.py:48 .\core\models.py:286
+msgid "Tipo de Reação"
+msgstr "Reaction Type"
+
+#: .\core\models.py:49
+msgid "Tipos de Reação"
+msgstr "Reaction Types"
+
+#: .\core\models.py:62
+msgid "Reação de Usuário"
+msgstr "User Reaction"
+
+#: .\core\models.py:63
+msgid "Reações de Usuários"
+msgstr "User Reactions"
+
+#: .\core\models.py:80
+msgid "Imagem do Slide"
+msgstr "Slide Image"
+
+#: .\core\models.py:84
+msgid "Link Interno (Página)"
+msgstr "Internal Link (Page)"
+
+#: .\core\models.py:85
+msgid "Se preenchido, ignora o Link Externo."
+msgstr "If filled, ignores the External Link."
+
+#: .\core\models.py:88
+msgid "Link Externo (URL)"
+msgstr "External Link (URL)"
+
+#: .\core\models.py:89
+msgid "Use apenas se não houver Link Interno."
+msgstr "Use only if there is no Internal Link."
+
+#: .\core\models.py:91 .\manga\models.py:499
+msgid "Legenda (Opcional)"
+msgstr "Caption (Optional)"
+
+#: .\core\models.py:109 .\core\models.py:232
+msgid "Item do Slider"
+msgstr "Slider Item"
+
+#: .\core\models.py:110
+msgid "Itens do Slider"
+msgstr "Slider Items"
+
+#: .\core\models.py:119
+msgid "Texto do Benefício"
+msgstr "Benefit Text"
+
+#: .\core\models.py:129
+msgid "Benefício Premium"
+msgstr "Premium Benefit"
+
+#: .\core\models.py:130
+msgid "Benefícios Premium"
+msgstr "Premium Benefits"
+
+#: .\core\models.py:136
+msgid "Nenhum Sistema de Comentários"
+msgstr "No Comment System"
+
+#: .\core\models.py:137
+msgid "Disqus"
+msgstr "Disqus"
+
+#: .\core\models.py:138
+msgid "Sistema Próprio (Custom)"
+msgstr "Custom System"
+
+#: .\core\models.py:141
+msgid "Logo do Site"
+msgstr "Site Logo"
+
+#: .\core\models.py:142
+msgid "Favicon"
+msgstr "Favicon"
+
+#: .\core\models.py:143
+msgid "Nome no Rodapé"
+msgstr "Footer Name"
+
+#: .\core\models.py:144
+msgid "Créditos (Rodapé)"
+msgstr "Credits (Footer)"
+
+#: .\core\models.py:145
+msgid "Link do Discord"
+msgstr "Discord Link"
+
+#: .\core\models.py:146
+msgid "Link de Doação"
+msgstr "Donation Link"
+
+#: .\core\models.py:147
+msgid "Mensagem de Doação (Home)"
+msgstr "Donation Message (Home)"
+
+#: .\core\models.py:148
+msgid "Texto DMCA"
+msgstr "DMCA Text"
+
+#: .\core\models.py:149
+msgid "Texto Política de Privacidade"
+msgstr "Privacy Policy Text"
+
+#: .\core\models.py:150
+msgid "Texto Termos de Uso"
+msgstr "Terms of Use Text"
+
+#: .\core\models.py:151
+msgid "Ativar Slider na Home?"
+msgstr "Enable Slider on Home?"
+
+#: .\core\models.py:152
+msgid "Cor Fundo Navbar"
+msgstr "Navbar Background Color"
+
+#: .\core\models.py:153
+msgid "Cor Fundo Principal"
+msgstr "Main Background Color"
+
+#: .\core\models.py:154
+msgid "Cor Texto Principal"
+msgstr "Main Text Color"
+
+#: .\core\models.py:155
+msgid "Cor de Destaque"
+msgstr "Highlight Color"
+
+#: .\core\models.py:156
+msgid "Cor Fundo Card"
+msgstr "Card Background Color"
+
+#: .\core\models.py:157
+msgid "Cor Borda"
+msgstr "Border Color"
+
+#: .\core\models.py:158
+msgid "Cor Texto Claro"
+msgstr "Light Text Color"
+
+#: .\core\models.py:159
+msgid "Cor Fundo Input"
+msgstr "Input Background Color"
+
+#: .\core\models.py:160
+msgid "Cor Borda Input"
+msgstr "Input Border Color"
+
+#: .\core\models.py:161
+msgid "Cor Texto Botão Primário"
+msgstr "Primary Button Text Color"
+
+#: .\core\models.py:162
+msgid "Cor Fundo Botão Secundário"
+msgstr "Secondary Button Background Color"
+
+#: .\core\models.py:163
+msgid "Cor Texto Botão Secundário"
+msgstr "Secondary Button Text Color"
+
+#: .\core\models.py:164
+msgid "Cor Borda Botão Secundário"
+msgstr "Secondary Button Border Color"
+
+#: .\core\models.py:165
+msgid "Cor Perigo"
+msgstr "Danger Color"
+
+#: .\core\models.py:166
+msgid "Cor Fundo Seção"
+msgstr "Section Background Color"
+
+#: .\core\models.py:167
+msgid "Limite de Dias para Badge Automático"
+msgstr "Day Limit for Automatic Badge"
+
+#: .\core\models.py:168
+msgid "Texto Padrão do Badge 'Novo Capítulo'"
+msgstr "Default 'New Chapter' Badge Text"
+
+#: .\core\models.py:169
+msgid "Imagem/GIF Padrão do Badge 'Novo Capítulo' (Opcional)"
+msgstr "Default 'New Chapter' Badge Image/GIF (Optional)"
+
+#: .\core\models.py:170
+msgid "URL do Widget LivePix (Home)"
+msgstr "LivePix Widget URL (Home)"
+
+#: .\core\models.py:171
+msgid "Provedor de Comentários"
+msgstr "Comment Provider"
+
+#: .\core\models.py:172
+msgid "Disqus Shortname"
+msgstr "Disqus Shortname"
+
+#: .\core\models.py:173
+msgid "LivePix Client ID"
+msgstr "LivePix Client ID"
+
+#: .\core\models.py:173
+msgid "Client ID obtido do painel de desenvolvedor do LivePix."
+msgstr "Client ID obtained from the LivePix developer panel."
+
+#: .\core\models.py:174
+msgid "LivePix Client Secret"
+msgstr "LivePix Client Secret"
+
+#: .\core\models.py:174
+msgid "Client Secret obtido do painel de desenvolvedor. Mantenha em segredo."
+msgstr "Client Secret obtained from the developer panel. Keep it secret."
+
+#: .\core\models.py:175
+msgid "Limite de Capítulos Recentes VIP"
+msgstr "Recent VIP Chapters Limit"
+
+#: .\core\models.py:175
+msgid ""
+"Para obras não-VIP, define quantos dos últimos capítulos lançados serão "
+"exclusivos para assinantes."
+msgstr ""
+"For non-VIP works, defines how many of the latest chapters will be exclusive "
+"for subscribers."
+
+#: .\core\models.py:176
+msgid "Token do Bot do Discord"
+msgstr "Discord Bot Token"
+
+#: .\core\models.py:176
+msgid ""
+"O token do seu bot para gerenciar cargos e enviar anúncios. Mantenha em "
+"segredo."
+msgstr ""
+"Your bot's token for managing roles and sending announcements. Keep it "
+"secret."
+
+#: .\core\models.py:177
+msgid "ID do Servidor (Guild)"
+msgstr "Server ID (Guild)"
+
+#: .\core\models.py:177
+msgid "O ID do seu servidor do Discord."
+msgstr "Your Discord server's ID."
+
+#: .\core\models.py:178
+msgid "ID do Cargo VIP"
+msgstr "VIP Role ID"
+
+#: .\core\models.py:178
+msgid "O ID do cargo que será dado aos assinantes VIP."
+msgstr "The ID of the role that will be given to VIP subscribers."
+
+#: .\core\models.py:179
+msgid "Monetag (Meta Tag de Verificação)"
+msgstr "Monetag (Verification Meta Tag)"
+
+#: .\core\models.py:179
+msgid "Cole a meta tag <meta name='monetag'...> aqui."
+msgstr "Paste the <meta name='monetag'...> tag here."
+
+#: .\core\models.py:180
+msgid "Push Notifications"
+msgstr "Push Notifications"
+
+#: .\core\models.py:180
+msgid "ID da Zona: 9469896"
+msgstr "Zone ID: 9469896"
+
+#: .\core\models.py:181
+msgid "Push Notifications (Anti-AdBlock)"
+msgstr "Push Notifications (Anti-AdBlock)"
+
+#: .\core\models.py:181
+msgid "ID da Zona: 9469897"
+msgstr "Zone ID: 9469897"
+
+#: .\core\models.py:182
+msgid "OnClick (Popunder)"
+msgstr "OnClick (Popunder)"
+
+#: .\core\models.py:182
+msgid "ID da Zona: 9469898"
+msgstr "Zone ID: 9469898"
+
+#: .\core\models.py:183
+msgid "In-Page Push"
+msgstr "In-Page Push"
+
+#: .\core\models.py:183
+msgid "ID da Zona: 9469961"
+msgstr "Zone ID: 9469961"
+
+#: .\core\models.py:184
+msgid "Native Banner (Interstitial)"
+msgstr "Native Banner (Interstitial)"
+
+#: .\core\models.py:184
+msgid "ID da Zona: 9469963"
+msgstr "Zone ID: 9469963"
+
+#: .\core\models.py:185
+msgid "Vignette Banner"
+msgstr "Vignette Banner"
+
+#: .\core\models.py:185
+msgid "ID da Zona: 9469964"
+msgstr "Zone ID: 9469964"
+
+#: .\core\models.py:186
+msgid "Monetag (Multizone)"
+msgstr "Monetag (Multizone)"
+
+#: .\core\models.py:186
+msgid "Cole o script do anúncio Multizone aqui."
+msgstr "Paste the Multizone ad script here."
+
+#: .\core\models.py:190
+msgid "Usar Canvas para Leitor de Capítulos"
+msgstr "Use Canvas for Chapter Reader"
+
+#: .\core\models.py:191
+msgid ""
+"Se marcado, as páginas dos capítulos serão exibidas em <canvas> para "
+"dificultar o download. Se desmarcado, usará a tag <img> padrão."
+msgstr ""
+"If checked, chapter pages will be displayed in <canvas> to make downloading "
+"harder. If unchecked, it will use the standard <img> tag."
+
+#: .\core\models.py:194
+msgid "Ativar Banner Premium na Home?"
+msgstr "Enable Premium Banner on Home?"
+
+#: .\core\models.py:195
+msgid "Badge do Banner"
+msgstr "Banner Badge"
+
+#: .\core\models.py:196
+msgid "Título do Banner"
+msgstr "Banner Title"
+
+#: .\core\models.py:197
+msgid "Texto de Preço"
+msgstr "Price Text"
+
+#: .\core\models.py:198
+msgid "Texto do Botão"
+msgstr "Button Text"
+
+#: .\core\models.py:199
+msgid "Título da Lista de Benefícios"
+msgstr "Benefits List Title"
+
+#: .\core\models.py:207
+msgid "GIF Animado do Banner"
+msgstr "Animated Banner GIF"
+
+#: .\core\models.py:208
+msgid "Opcional. Um GIF para ser exibido ao lado do banner."
+msgstr "Optional. A GIF to be displayed next to the banner."
+
+#: .\core\models.py:214
+msgid "Cloudflare Zone ID"
+msgstr "Cloudflare Zone ID"
+
+#: .\core\models.py:215
+msgid ""
+"O ID da Zona encontrado no painel do Cloudflare. Necessário para limpar o "
+"cache."
+msgstr ""
+"The Zone ID found in the Cloudflare panel. Required to purge the cache."
+
+#: .\core\models.py:220
+msgid "Cloudflare API Token"
+msgstr "Cloudflare API Token"
+
+#: .\core\models.py:221
+msgid ""
+"Crie um token com permissão de 'Purge Cache'. Ele será usado para limpar o "
+"cache automaticamente."
+msgstr ""
+"Create a token with 'Purge Cache' permission. It will be used to "
+"automatically clear the cache."
+
+#: .\core\models.py:226
+msgid "Identidade Visual e Rodapé"
+msgstr "Branding & Footer"
+
+#: .\core\models.py:227
+msgid "Links Sociais e Apoio"
+msgstr "Social Links & Support"
+
+#: .\core\models.py:228
+msgid "Textos Legais"
+msgstr "Legal Texts"
+
+#: .\core\models.py:240
+msgid "Conteúdo Principal do Banner"
+msgstr "Main Banner Content"
+
+#: .\core\models.py:243
+msgid "Botão de Ação (CTA)"
+msgstr "Call to Action Button (CTA)"
+
+#: .\core\models.py:246
+msgid "Benefício"
+msgstr "Benefit"
+
+#: .\core\models.py:247
+msgid "Lista de Benefícios"
+msgstr "Benefits List"
+
+#: .\core\models.py:250
+msgid "Visual (GIF Animado)"
+msgstr "Visual (Animated GIF)"
+
+#: .\core\models.py:253
+msgid ""
+"Defina as cores principais. Use códigos hexadecimais (ex: #00B982). Deixar "
+"em branco usará o padrão definido no CSS."
+msgstr ""
+"Define the main colors. Use hexadecimal codes (e.g., #00B982). Leaving it "
+"blank will use the default defined in the CSS."
+
+#: .\core\models.py:269
+msgid "Configurações do Badge 'Novo Capítulo'"
+msgstr "'New Chapter' Badge Settings"
+
+#: .\core\models.py:272
+msgid "Configurações de Acesso VIP"
+msgstr "VIP Access Settings"
+
+#: .\core\models.py:275
+msgid "Configurações do Leitor de Capítulos"
+msgstr "Chapter Reader Settings"
+
+#: .\core\models.py:279
+msgid "Configure o sistema de comentários do site."
+msgstr "Configure the site's comment system."
+
+#: .\core\models.py:285
+msgid "Adicione e gerencie os tipos de reações disponíveis para os usuários."
+msgstr "Add and manage the reaction types available to users."
+
+#: .\core\models.py:304
+msgid "Configurações do LivePix"
+msgstr "LivePix Settings"
+
+#: .\core\models.py:309
+msgid "Integração do Bot do Discord"
+msgstr "Discord Bot Integration"
+
+#: .\core\models.py:313
+msgid "Integração do Cloudflare"
+msgstr "Cloudflare Integration"
+
+#: .\core\models.py:317
+msgid "Identidade e Links"
+msgstr "Identity & Links"
+
+#: .\core\models.py:318
+msgid "Slider Home"
+msgstr "Home Slider"
+
+#: .\core\models.py:319
+msgid "Banner Premium Home"
+msgstr "Premium Banner Home"
+
+#: .\core\models.py:320
+msgid "Aparência"
+msgstr "Appearance"
+
+#: .\core\models.py:321
+msgid "Conteúdo & VIP"
+msgstr "Content & VIP"
+
+#: .\core\models.py:323
+msgid "Reações"
+msgstr "Reactions"
+
+#: .\core\models.py:324
+msgid "Monetização e Integrações"
+msgstr "Monetization & Integrations"
+
+#: .\core\models.py:328
+msgid "Configurações Globais do Site"
+msgstr "Global Site Settings"
+
+#: .\core\models.py:333
+msgid "Google Client ID"
+msgstr "Google Client ID"
+
+#: .\core\models.py:334
+msgid "Google Client Secret"
+msgstr "Google Client Secret"
+
+#: .\core\models.py:335
+msgid "Discord Client ID"
+msgstr "Discord Client ID"
+
+#: .\core\models.py:336
+msgid "Discord Client Secret"
+msgstr "Discord Client Secret"
+
+#: .\manga\admin_views.py:29 .\templates\manga\admin\upload_options.html:4
+#: .\templates\manga\admin\upload_options.html:112
+msgid "Upar Capítulos - Selecione a Obra"
+msgstr "Upload Chapters - Select Work"
+
+#: .\manga\admin_views.py:49
+msgid "Upar Capítulo(s) por ZIP"
+msgstr "Upload Chapter(s) by ZIP"
+
+#: .\manga\admin_views.py:58 .\manga\admin_views.py:112
+msgid "A obra selecionada para upload não foi encontrada."
+msgstr "The selected work for upload was not found."
+
+#: .\manga\admin_views.py:83
+msgid "Processamento concluído. Verifique os detalhes abaixo."
+msgstr "Processing complete. Check the details below."
+
+#: .\manga\admin_views.py:88
+#, python-format
+msgid "Erro fatal inesperado durante o processamento: %(error)s"
+msgstr "Unexpected fatal error during processing: %(error)s"
+
+#: .\manga\admin_views.py:103 .\templates\manga\admin\folder_upload_form.html:4
+msgid "Upar Capítulos por Pastas"
+msgstr "Upload Chapters by Folders"
+
+#: .\manga\forms.py:17
+msgid "Obra (Série de Mangá)"
+msgstr "Work (Manga Series)"
+
+#: .\manga\forms.py:18
+msgid "--- Selecione a Obra ---"
+msgstr "--- Select the Work ---"
+
+#: .\manga\forms.py:20
+msgid "Selecione a obra para a qual este upload se destina."
+msgstr "Select the work this upload is for."
+
+#: .\manga\forms.py:23
+msgid "Arquivo ZIP do(s) Capítulo(s)"
+msgstr "ZIP File of the Chapter(s)"
+
+#: .\manga\forms.py:26
+msgid "ZIP com pastas numeradas (ex: '01', '10.5') contendo imagens."
+msgstr "ZIP with numbered folders (e.g., '01', '10.5') containing images."
+
+#: .\manga\forms.py:37
+msgid "O arquivo ZIP enviado está vazio."
+msgstr "The submitted ZIP file is empty."
+
+#: .\manga\forms.py:39
+msgid "Arquivo inválido. Por favor, envie um arquivo ZIP válido."
+msgstr "Invalid file. Please submit a valid ZIP file."
+
+#: .\manga\forms.py:42
+#, python-format
+msgid "Ocorreu um erro ao tentar ler o arquivo ZIP: %(error)s"
+msgstr "An error occurred while trying to read the ZIP file: %(error)s"
+
+#: .\manga\forms.py:56
+msgid "Escreva seu comentário aqui..."
+msgstr "Write your comment here..."
+
+#: .\manga\forms.py:58
+msgid "Campo de comentário"
+msgstr "Comment field"
+
+#: .\manga\models.py:63
+msgid "Manga (Japonês)"
+msgstr "Manga (Japanese)"
+
+#: .\manga\models.py:64
+msgid "Manhwa (Coreano)"
+msgstr "Manhwa (Korean)"
+
+#: .\manga\models.py:65
+msgid "Manhua (Chinês)"
+msgstr "Manhua (Chinese)"
+
+#: .\manga\models.py:66
+msgid "Webtoon"
+msgstr "Webtoon"
+
+#: .\manga\models.py:67
+msgid "Outro"
+msgstr "Other"
+
+#: .\manga\models.py:70 .\novels\models.py:66
+msgid "Em Andamento"
+msgstr "Ongoing"
+
+#: .\manga\models.py:71
+msgid "Completo"
+msgstr ""
+
+#: .\manga\models.py:72 .\novels\models.py:68
+msgid "Hiato"
+msgstr "Hiatus"
+
+#: .\manga\models.py:73
+msgid "Cancelado"
+msgstr "Canceled"
+
+#: .\manga\models.py:76
+msgid "Segunda-feira"
+msgstr "Monday"
+
+#: .\manga\models.py:77
+msgid "Terça-feira"
+msgstr "Tuesday"
+
+#: .\manga\models.py:78
+msgid "Quarta-feira"
+msgstr "Wednesday"
+
+#: .\manga\models.py:79
+msgid "Quinta-feira"
+msgstr "Thursday"
+
+#: .\manga\models.py:80
+msgid "Sexta-feira"
+msgstr "Friday"
+
+#: .\manga\models.py:81
+msgid "Sábado"
+msgstr "Saturday"
+
+#: .\manga\models.py:82
+msgid "Domingo"
+msgstr "Sunday"
+
+#: .\manga\models.py:83
+msgid "Indefinido / Sem dia fixo"
+msgstr "Undefined / No fixed day"
+
+#: .\manga\models.py:84
+msgid "Irregular"
+msgstr "Irregular"
+
+#: .\manga\models.py:89
+msgid "Gênero da Obra"
+msgstr "Work Genre"
+
+#: .\manga\models.py:90
+msgid "Gêneros da Obra"
+msgstr "Work Genres"
+
+#: .\manga\models.py:135
+msgid "Arquivo ZIP"
+msgstr "ZIP File"
+
+#: .\manga\models.py:137
+msgid "Apenas arquivos .zip são permitidos."
+msgstr "Only .zip files are allowed."
+
+#: .\manga\models.py:139
+msgid "Data de Upload"
+msgstr "Upload Date"
+
+#: .\manga\models.py:140
+msgid "Processado?"
+msgstr "Processed?"
+
+#: .\manga\models.py:141
+msgid "Capítulos no ZIP"
+msgstr "Chapters in ZIP"
+
+#: .\manga\models.py:142
+msgid "Status/Notas Processamento"
+msgstr "Processing Status/Notes"
+
+#: .\manga\models.py:156
+msgid "Upload de Capítulos (Registro)"
+msgstr "Chapter Upload (Log)"
+
+#: .\manga\models.py:157
+msgid "Uploads de Capítulos (Registros)"
+msgstr "Chapter Uploads (Logs)"
+
+#: .\manga\models.py:170
+msgid "Tipo"
+msgstr "Type"
+
+#: .\manga\models.py:171 .\novels\models.py:72
+msgid "Status"
+msgstr "Status"
+
+#: .\manga\models.py:172
+msgid "Autor(es)"
+msgstr "Author(s)"
+
+#: .\manga\models.py:173
+msgid "Artista(s)"
+msgstr "Artist(s)"
+
+#: .\manga\models.py:174
+msgid "Scanlator"
+msgstr "Scanlator"
+
+#: .\manga\models.py:176
+msgid "Capa"
+msgstr "Cover"
+
+#: .\manga\models.py:179 .\novels\models.py:50
+msgid "Gêneros"
+msgstr "Genres"
+
+#: .\manga\models.py:181
+msgid "Nota Média (0.0 a 10.0)"
+msgstr "Average Rating (0.0 to 10.0)"
+
+#: .\manga\models.py:184 .\manga\models.py:324 .\novels\models.py:54
+msgid "Sinopse"
+msgstr "Synopsis"
+
+#: .\manga\models.py:186
+msgid "Dia da Semana (Lançamento Aprox.)"
+msgstr "Day of the Week (Approx. Release)"
+
+#: .\manga\models.py:187
+msgid "Selecione o dia principal que novos capítulos costumam sair."
+msgstr "Select the main day new chapters are usually released."
+
+#: .\manga\models.py:189
+msgid "Ano de Lançamento"
+msgstr "Release Year"
+
+#: .\manga\models.py:190
+msgid "Títulos Alternativos"
+msgstr "Alternative Titles"
+
+#: .\manga\models.py:191
+msgid "Editora/Plataforma"
+msgstr "Publisher/Platform"
+
+#: .\manga\models.py:192
+msgid "Link Original (Coreano)"
+msgstr "Original Link (Korean)"
+
+#: .\manga\models.py:193
+msgid "Link Original (Japonês)"
+msgstr "Original Link (Japanese)"
+
+#: .\manga\models.py:194
+msgid "Link Original (Chinês)"
+msgstr "Original Link (Chinese)"
+
+#: .\manga\models.py:195
+msgid "Link Oficial (Inglês)"
+msgstr "Official Link (English)"
+
+#: .\manga\models.py:197 .\manga\models.py:325
+msgid "Notícias e Avisos"
+msgstr "News and Notices"
+
+#: .\manga\models.py:198
+msgid ""
+"Use este espaço para avisos sobre hiatos, mudanças, informações extras, etc."
+msgstr ""
+"Use this space for notices about hiatuses, changes, extra information, etc."
+
+#: .\manga\models.py:202 .\novels\models.py:57
+msgid "ID do Cargo no Discord (Notificações)"
+msgstr "Discord Role ID (Notifications)"
+
+#: .\manga\models.py:206 .\novels\models.py:61
+msgid ""
+"Opcional. ID do cargo do Discord a ser mencionado quando novos capítulos "
+"desta obra forem lançados."
+msgstr ""
+"Optional. ID of the Discord role to be mentioned when new chapters of this "
+"work are released."
+
+#: .\manga\models.py:209
+msgid "Obra Inteira é VIP?"
+msgstr "Is the Entire Work VIP?"
+
+#: .\manga\models.py:211
+msgid ""
+"Se marcado, TODOS os capítulos desta obra exigirão uma assinatura VIP e a "
+"obra será escondida de não-assinantes."
+msgstr ""
+"If checked, ALL chapters of this work will require a VIP subscription and "
+"the work will be hidden from non-subscribers."
+
+#: .\manga\models.py:214
+msgid "Ativar VIP para Caps. Recentes?"
+msgstr "Enable VIP for Recent Chaps?"
+
+#: .\manga\models.py:216
+msgid "Se marcado, os capítulos mais recentes (definido abaixo) serão VIP."
+msgstr "If checked, the most recent chapters (defined below) will be VIP."
+
+#: .\manga\models.py:219
+msgid "Quantidade de Capítulos Recentes VIP"
+msgstr "Number of Recent VIP Chapters"
+
+#: .\manga\models.py:221
+msgid ""
+"Defina quantos dos capítulos mais recentes serão exclusivos para VIPs (ex: "
+"3). Só funciona se a opção acima estiver marcada."
+msgstr ""
+"Define how many of the most recent chapters will be exclusive to VIPs (e.g., "
+"3). Only works if the option above is checked."
+
+#: .\manga\models.py:224
+msgid "Tamanho do Degrau VIP (caps)"
+msgstr "VIP Tier Size (chaps)"
+
+#: .\manga\models.py:226
+msgid "Quantos capítulos formam um 'degrau' de tempo de espera. Ex: 3."
+msgstr "How many chapters form a waiting time 'tier'. Ex: 3."
+
+#: .\manga\models.py:229
+msgid "Tempo Máx. de Espera (dias)"
+msgstr "Max. Waiting Time (days)"
+
+#: .\manga\models.py:231
+msgid "Tempo de espera, em dias, para os capítulos do degrau mais recente."
+msgstr "Waiting time, in days, for the chapters of the most recent tier."
+
+#: .\manga\models.py:234
+msgid "Redução de Tempo por Degrau (dias)"
+msgstr "Time Reduction per Tier (days)"
+
+#: .\manga\models.py:236
+msgid "Quantos dias de espera são removidos a cada degrau mais antigo. Ex: 2."
+msgstr "How many waiting days are removed for each older tier. Ex: 2."
+
+#: .\manga\models.py:239
+msgid "Obra em Dia?"
+msgstr "Work Up-to-Date?"
+
+#: .\manga\models.py:241
+msgid ""
+"Marque se os capítulos postados estão em dia com os lançamentos originais. "
+"Isso desativará a caixa de doação."
+msgstr ""
+"Check if the posted chapters are up-to-date with the original releases. This "
+"will disable the donation box."
+
+#: .\manga\models.py:249
+msgid "Ativar Sistema de Doação?"
+msgstr "Enable Donation System?"
+
+#: .\manga\models.py:251
+msgid ""
+"Marque para habilitar a funcionalidade de meta de doação para esta obra."
+msgstr "Check to enable the donation goal functionality for this work."
+
+#: .\manga\models.py:254
+msgid "Meta de Moedas para Próximo Cap."
+msgstr "Coin Goal for Next Chap."
+
+#: .\manga\models.py:256
+msgid ""
+"Defina a meta de moedas para o lançamento do próximo capítulo. 0 para "
+"desativar."
+msgstr "Set the coin goal for the release of the next chapter. 0 to disable."
+
+#: .\manga\models.py:259
+msgid "Moedas Atuais na Meta"
+msgstr "Current Coins in Goal"
+
+#: .\manga\models.py:261
+msgid "Quantidade de moedas doadas até agora para o próximo capítulo."
+msgstr "Amount of coins donated so far for the next chapter."
+
+#: .\manga\models.py:264
+msgid "Zerar Moedas Atuais ao Salvar?"
+msgstr "Reset Current Coins on Save?"
+
+#: .\manga\models.py:266
+msgid ""
+"Marque esta caixa e salve para zerar o contador de 'Moedas Atuais na Meta'."
+msgstr "Check this box and save to reset the 'Current Coins in Goal' counter."
+
+#: .\manga\models.py:296
+msgid "Detalhes da Obra"
+msgstr "Work Details"
+
+#: .\manga\models.py:302
+msgid ""
+"As configurações abaixo definem um sistema de desbloqueio progressivo para "
+"capítulos VIP."
+msgstr ""
+"The settings below define a progressive unlock system for VIP chapters."
+
+#: .\manga\models.py:308
+msgid "Configurações VIP"
+msgstr "VIP Settings"
+
+#: .\manga\models.py:312
+msgid ""
+"A caixa de doação só aparecerá se o sistema estiver ativo, a meta for > 0 e "
+"a obra NÃO estiver marcada como 'Em Dia'."
+msgstr ""
+"The donation box will only appear if the system is active, the goal is > 0 "
+"and the work is NOT marked as 'Up-to-Date'."
+
+#: .\manga\models.py:318
+msgid "Meta de Doação de Capítulo"
+msgstr "Chapter Donation Goal"
+
+#: .\manga\models.py:323
+msgid "Links Oficiais/Originais"
+msgstr "Official/Original Links"
+
+#: .\manga\models.py:361
+msgid "Página de Mangá"
+msgstr "Manga Page"
+
+#: .\manga\models.py:362
+msgid "Páginas de Mangá"
+msgstr "Manga Pages"
+
+#: .\manga\models.py:495
+msgid "Arquivo de Fatia Criptografada (.enc)"
+msgstr "Encrypted Slice File (.enc)"
+
+#: .\manga\models.py:496
+msgid "Armazena a fatia da imagem no formato .enc criptografado."
+msgstr "Stores the image slice in the encrypted .enc format."
+
+#: .\manga\models.py:498
+msgid "Nome Original do Arquivo"
+msgstr "Original File Name"
+
+#: .\manga\models.py:539
+msgid "Arquivo de Imagem Criptografada"
+msgstr "Encrypted Image File"
+
+#: .\manga\models.py:540
+msgid "Arquivos de Imagem Criptografada"
+msgstr "Encrypted Image Files"
+
+#: .\manga\models.py:546
+msgid "Número/ID do Capítulo"
+msgstr "Chapter Number/ID"
+
+#: .\manga\models.py:548 .\novels\models.py:204
+msgid "Capítulo VIP?"
+msgstr "VIP Chapter?"
+
+#: .\manga\models.py:550 .\novels\models.py:206
+msgid "Marque se este capítulo for exclusivo para assinantes VIP."
+msgstr "Check if this chapter is exclusive to VIP subscribers."
+
+#: .\manga\models.py:553
+msgid "Thumbnail do Capítulo"
+msgstr "Chapter Thumbnail"
+
+#: .\manga\models.py:557
+msgid ""
+"Thumbnail específica para este capítulo. Salva fora da biblioteca do Wagtail."
+msgstr ""
+"Specific thumbnail for this chapter. Saved outside the Wagtail library."
+
+#: .\manga\models.py:565
+msgid "Trilha Sonora de Fundo (BGM)"
+msgstr "Background Music (BGM)"
+
+#: .\manga\models.py:566
+msgid ""
+"Opcional. Escolha um arquivo de áudio (MP3, OGG) para tocar durante a "
+"leitura deste capítulo."
+msgstr ""
+"Optional. Choose an audio file (MP3, OGG) to play during the reading of this "
+"chapter."
+
+#: .\manga\models.py:568
+msgid "Data de Lançamento Efetiva"
+msgstr "Effective Release Date"
+
+#: .\manga\models.py:569
+msgid "Sobrescrever Config. Global do Badge 'Novo'?"
+msgstr "Override Global 'New' Badge Config?"
+
+#: .\manga\models.py:569
+msgid ""
+"Marque para definir manualmente o status/aparência do badge 'Novo' para ESTE "
+"capítulo, ignorando as configurações globais."
+msgstr ""
+"Check to manually set the 'New' badge status/appearance for THIS chapter, "
+"overriding global settings."
+
+#: .\manga\models.py:570
+msgid "Forçar Exibição do Badge 'Novo'?"
+msgstr "Force 'New' Badge Display?"
+
+#: .\manga\models.py:570
+msgid ""
+"Se 'Sobrescrever' estiver marcado, esta opção força a exibição do badge. Usa "
+"texto/imagem global se os campos abaixo estiverem vazios."
+msgstr ""
+"If 'Override' is checked, this option forces the badge display. Uses global "
+"text/image if the fields below are empty."
+
+#: .\manga\models.py:571
+msgid "Texto Manual do Badge (Opcional)"
+msgstr "Manual Badge Text (Optional)"
+
+#: .\manga\models.py:571
+msgid ""
+"Texto específico para o badge deste capítulo. Se vazio e 'Forçar Exibição' "
+"estiver marcado, usará o texto global."
+msgstr ""
+"Specific text for this chapter's badge. If empty and 'Force Display' is "
+"checked, it will use the global text."
+
+#: .\manga\models.py:578
+msgid "Imagem/GIF Manual do Badge (Opcional)"
+msgstr "Manual Badge Image/GIF (Optional)"
+
+#: .\manga\models.py:579
+msgid ""
+"Imagem específica para o badge deste capítulo. Substitui o texto manual e a "
+"imagem global se definida."
+msgstr ""
+"Specific image for this chapter's badge. Replaces the manual text and the "
+"global image if set."
+
+#: .\manga\models.py:581 .\novels\models.py:194
+msgid "Visualizações"
+msgstr "Views"
+
+#: .\manga\models.py:581 .\novels\models.py:195
+msgid "Número de vezes que este capítulo foi visualizado."
+msgstr "Number of times this chapter has been viewed."
+
+#: .\manga\models.py:734 .\manga\models.py:739
+msgid "NOVO!"
+msgstr "NEW!"
+
+#: .\manga\models.py:775
+msgid "Configurações Manuais do Badge 'Novo Capítulo'"
+msgstr "Manual 'New Chapter' Badge Settings"
+
+#: .\manga\models.py:776
+msgid "Fatias de Imagem Criptografadas"
+msgstr "Encrypted Image Slices"
+
+#: .\manga\models.py:776
+msgid "Fatia Criptografada"
+msgstr "Encrypted Slice"
+
+#: .\manga\models.py:792
+msgid "Página de Capítulo"
+msgstr "Chapter Page"
+
+#: .\manga\models.py:793
+msgid "Páginas de Capítulo"
+msgstr "Chapter Pages"
+
+#: .\manga\models.py:802
+msgid "Obra"
+msgstr "Work"
+
+#: .\manga\models.py:808
+msgid "Capítulo"
+msgstr "Chapter"
+
+#: .\manga\models.py:880
+msgid "É Spoiler?"
+msgstr "Is Spoiler?"
+
+#: .\manga\models.py:882
+msgid "Atualizado em"
+msgstr "Updated at"
+
+#: .\manga\models.py:887
+msgid "Página Desconhecida"
+msgstr "Unknown Page"
+
+#: .\manga\models.py:889
+msgid "Página Removida"
+msgstr "Page Removed"
+
+#: .\manga\models.py:890 .\manga\models.py:910
+msgid "Usuário Desconhecido"
+msgstr "Unknown User"
+
+#: .\manga\models.py:891
+msgid "Comentário de"
+msgstr "Comment from"
+
+#: .\manga\models.py:891
+msgid "em"
+msgstr "on"
+
+#: .\manga\models.py:894
+msgid "Comentário de Mangá"
+msgstr "Manga Comment"
+
+#: .\manga\models.py:895
+msgid "Comentários de Mangá"
+msgstr "Manga Comments"
+
+#: .\manga\models.py:900
+msgid "Mangá"
+msgstr "Manga"
+
+#: .\manga\models.py:901 .\novels\models.py:301
+msgid "Favoritado em"
+msgstr "Favorited on"
+
+#: .\manga\models.py:906
+msgid "Favorito de Mangá"
+msgstr "Manga Favorite"
+
+#: .\manga\models.py:907
+msgid "Favoritos de Mangá"
+msgstr "Manga Favorites"
+
+#: .\manga\models.py:911
+msgid "Mangá Desconhecido"
+msgstr "Unknown Manga"
+
+#: .\manga\models.py:912
+msgid "favoritou"
+msgstr "favorited"
+
+#: .\manga\models.py:925
+msgid "Capítulo Lido"
+msgstr "Chapter Read"
+
+#: .\manga\models.py:928
+msgid "Lido em"
+msgstr "Read on"
+
+#: .\manga\models.py:936
+msgid "Registro de Histórico"
+msgstr "History Log"
+
+#: .\manga\models.py:937
+msgid "Registros de Histórico"
+msgstr "History Logs"
+
+#: .\manga\templates\manga\admin\combined_upload_form.html:6
+#: .\templates\manga\admin\combined_upload_form.html:4
+msgid "Upload de Capítulos (ZIP)"
+msgstr "Upload Chapters (ZIP)"
+
+#: .\manga\templates\manga\admin\combined_upload_form.html:18
+msgid ""
+"\n"
+"            Selecione a obra (mangá) na lista abaixo. Em seguida, escolha o "
+"arquivo <code>.zip</code> que contém as pastas dos capítulos.\n"
+"            Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será tratada "
+"como um capítulo separado. As imagens dentro de cada pasta serão adicionadas "
+"ao capítulo correspondente.\n"
+"            "
+msgstr ""
+"\n"
+"            Select the work (manga) from the list below. Then, choose the "
+"<code>.zip</code> file containing the chapter folders.\n"
+"            Each folder inside the ZIP (e.g., '01', '02', '10.5') will be "
+"treated as a separate chapter. The images inside each folder will be added "
+"to the corresponding chapter.\n"
+"            "
+
+#: .\manga\templates\manga\admin\combined_upload_form.html:92
+#: .\templates\manga\admin\combined_upload_form.html:83
+msgid "Processando…"
+msgstr "Processing…"
+
+#: .\manga\templates\manga\admin\combined_upload_form.html:93
+#: .\templates\manga\admin\combined_upload_form.html:84
+msgid "Enviar e Processar ZIP"
+msgstr "Submit and Process ZIP"
+
+#: .\manga\templates\manga\admin\upload_chapter_panel.html:3
+#: .\templates\manga\admin\upload_chapter_panel.html:3
+msgid ""
+"Para adicionar novos capítulos ou atualizar existentes usando um arquivo "
+"ZIP, utilize a página de upload."
+msgstr ""
+"To add new chapters or update existing ones using a ZIP file, use the upload "
+"page."
+
+#: .\manga\templates\manga\admin\upload_chapter_panel.html:6
+#: .\templates\manga\admin\upload_chapter_panel.html:6
+msgid "Ir para Upload de Capítulos (ZIP)"
+msgstr "Go to Chapter Upload (ZIP)"
+
+#: .\manga\utils.py:57
+msgid ""
+"Nenhuma pasta de capítulo válida ou arquivos de imagem permitidos "
+"encontrados no ZIP."
+msgstr "No valid chapter folders or allowed image files found in the ZIP."
+
+#: .\manga\utils.py:74
+#, python-format
+msgid "Atualizando capítulo '%(title)s'. Imagens antigas removidas."
+msgstr "Updating chapter '%(title)s'. Old images removed."
+
+#: .\manga\utils.py:85
+#, python-format
+msgid "Capítulo '%(title)s' criado com sucesso."
+msgstr "Chapter '%(title)s' created successfully."
+
+#: .\manga\utils.py:141
+#, python-format
+msgid "%(count)d fatias de imagem foram salvas para o capítulo '%(title)s'."
+msgstr "%(count)d image slices were saved for chapter '%(title)s'."
+
+#: .\manga\utils.py:147
+msgid "ERRO FATAL: O arquivo enviado não é um ZIP válido ou está corrompido."
+msgstr "FATAL ERROR: The submitted file is not a valid ZIP or is corrupted."
+
+#: .\manga\utils.py:152
+#, python-format
+msgid "ERRO FATAL INESPERADO: %(error)s"
+msgstr "UNEXPECTED FATAL ERROR: %(error)s"
+
+#: .\manga\validator.py:12
+msgid "Formato inválido para a nota."
+msgstr "Invalid format for the rating."
+
+#: .\manga\validator.py:15
+#, python-format
+msgid "A nota deve estar entre 0.0 e 10.0. Você inseriu %(value)s."
+msgstr "The rating must be between 0.0 and 10.0. You entered %(value)s."
+
+#: .\manga\views.py:307
+msgid "A quantidade de moedas deve ser positiva."
+msgstr "The coin amount must be positive."
+
+#: .\manga\views.py:316
+msgid "Você não tem moedas suficientes para esta doação."
+msgstr "You do not have enough coins for this donation."
+
+#: .\manga\views.py:326
+msgid "Obrigado por doar {} moedas para {}!"
+msgstr "Thank you for donating {} coins to {}!"
+
+#: .\manga\views.py:333
+msgid "Obra não encontrada."
+msgstr "Work not found."
+
+#: .\manga\views.py:335
+msgid "Dados inválidos na requisição."
+msgstr "Invalid data in request."
+
+#: .\manga\views.py:338
+msgid "Ocorreu um erro interno. Tente novamente mais tarde."
+msgstr "An internal error occurred. Please try again later."
+
+#: .\manga\views.py:371
+msgid "A página onde você tentou comentar não foi encontrada."
+msgstr "The page you tried to comment on was not found."
+
+#: .\manga\views.py:377
+msgid "Seu comentário foi adicionado com sucesso!"
+msgstr "Your comment was added successfully!"
+
+#: .\manga\wagtail_hooks.py:25
+msgid "Upar Mangás"
+msgstr "Upload Mangas"
+
+#: .\novels\forms.py:8
+msgid "Número/Identificador do Capítulo"
+msgstr "Chapter Number/Identifier"
+
+#: .\novels\forms.py:9
+msgid "Ex: '1', '10.5', 'Prólogo', 'Volume 2 Capítulo 5'. Obrigatório."
+msgstr "Ex: '1', '10.5', 'Prologue', 'Volume 2 Chapter 5'. Required."
+
+#: .\novels\forms.py:14
+msgid "Nome do Capítulo (Opcional)"
+msgstr "Chapter Name (Optional)"
+
+#: .\novels\forms.py:15
+msgid "Um título descritivo para o capítulo, se houver."
+msgstr "A descriptive title for the chapter, if any."
+
+#: .\novels\forms.py:21
+msgid "Conteúdo do Capítulo"
+msgstr "Chapter Content"
+
+#: .\novels\forms.py:23
+msgid ""
+"Use Markdown para formatação. Ex: **negrito**, *itálico*, # Cabeçalho, - "
+"Lista. A prévia HTML aparecerá abaixo."
+msgstr ""
+"Use Markdown for formatting. Ex: **bold**, *italic*, # Heading, - List. The "
+"HTML preview will appear below."
+
+#: .\novels\forms.py:33
+msgid "Este campo é obrigatório."
+msgstr "This field is required."
+
+#: .\novels\forms.py:39
+msgid "O conteúdo do capítulo (Markdown) não pode estar vazio."
+msgstr "The chapter content (Markdown) cannot be empty."
+
+#: .\novels\forms.py:44
+msgid "Arquivo .ZIP com Capítulos"
+msgstr ".ZIP File with Chapters"
+
+#: .\novels\forms.py:45
+msgid ""
+"Envie um arquivo .zip contendo arquivos .txt (um por capítulo) ou PDFs (com "
+"múltiplos capítulos). Nomes de arquivo podem ser usados para inferir números/"
+"títulos de capítulo."
+msgstr ""
+"Upload a .zip file containing .txt files (one per chapter) or PDFs (with "
+"multiple chapters). File names can be used to infer chapter numbers/titles."
+
+#: .\novels\models.py:37
+msgid "Gênero da Novel"
+msgstr "Novel Genre"
+
+#: .\novels\models.py:38
+msgid "Gêneros da Novel"
+msgstr "Novel Genres"
+
+#: .\novels\models.py:41
+msgid "Nome do Autor(es)"
+msgstr "Author(s) Name"
+
+#: .\novels\models.py:44
+msgid "Capa da Novel"
+msgstr "Novel Cover"
+
+#: .\novels\models.py:65
+msgid "Rascunho"
+msgstr "Draft"
+
+#: .\novels\models.py:67
+msgid "Concluída"
+msgstr "Completed"
+
+#: .\novels\models.py:69
+msgid "Cancelada"
+msgstr "Canceled"
+
+#: .\novels\models.py:80
+msgid "Capítulos Novos são VIP por Padrão?"
+msgstr "Are New Chapters VIP by Default?"
+
+#: .\novels\models.py:82
+msgid ""
+"Se marcado, novos capítulos criados para esta novel serão marcados como VIP "
+"automaticamente."
+msgstr ""
+"If checked, new chapters created for this novel will be marked as VIP "
+"automatically."
+
+#: .\novels\models.py:95
+msgid "Informações da Novel"
+msgstr "Novel Information"
+
+#: .\novels\models.py:172
+msgid "Página de Novel"
+msgstr "Novel Page"
+
+#: .\novels\models.py:173
+msgid "Páginas de Novel"
+msgstr "Novel Pages"
+
+#: .\novels\models.py:178
+msgid "Título de Exibição do Capítulo"
+msgstr "Chapter Display Title"
+
+#: .\novels\models.py:179
+msgid "Ex: 'Capítulo 1: O Despertar', 'Prólogo'"
+msgstr "Ex: 'Chapter 1: The Awakening', 'Prologue'"
+
+#: .\novels\models.py:182
+msgid "Número para Ordenação"
+msgstr "Number for Ordering"
+
+#: .\novels\models.py:183
+msgid "Ex: 1.0, 1.5, 2.0. Usado para ordenar capítulos."
+msgstr "Ex: 1.0, 1.5, 2.0. Used to order chapters."
+
+#: .\novels\models.py:186
+msgid "Conteúdo Principal do Capítulo"
+msgstr "Main Chapter Content"
+
+#: .\novels\models.py:191
+msgid "Data de Publicação/Lançamento"
+msgstr "Publication/Release Date"
+
+#: .\novels\models.py:198
+msgid "Thumbnail Personalizada (Opcional)"
+msgstr "Custom Thumbnail (Optional)"
+
+#: .\novels\models.py:257
+msgid "Página de Capítulo de Novel"
+msgstr "Novel Chapter Page"
+
+#: .\novels\models.py:258
+msgid "Páginas de Capítulo de Novel"
+msgstr "Novel Chapter Pages"
+
+#: .\novels\models.py:298 .\novels\models.py:307
+msgid "Favorito"
+msgstr "Favorite"
+
+#: .\novels\models.py:308
+msgid "Favoritos"
+msgstr "Favorites"
+
+#: .\novels\views.py:131
+msgid "Este é um capítulo exclusivo para assinantes VIP."
+msgstr "This is an exclusive chapter for VIP subscribers."
+
+#: .\novels\wagtail_hooks.py:23
+msgid "Upar Capítulos"
+msgstr "Upload Chapters"
+
+#: .\subscriptions\models.py:8
+msgid "Nome do Plano"
+msgstr "Plan Name"
+
+#: .\subscriptions\models.py:11
+msgid "Ex: VIP Mensal"
+msgstr "Ex: Monthly VIP"
+
+#: .\subscriptions\models.py:16
+msgid "Descreva os benefícios deste plano."
+msgstr "Describe the benefits of this plan."
+
+#: .\subscriptions\models.py:19 .\subscriptions\models.py:134
+msgid "Preço (R$)"
+msgstr "Price ($)"
+
+#: .\subscriptions\models.py:22
+msgid "Valor do plano em Reais. Use ponto como separador decimal, ex: 29.90"
+msgstr ""
+"Plan value in local currency. Use a period as a decimal separator, e.g., "
+"29.90"
+
+#: .\subscriptions\models.py:25
+msgid "Duração em Dias"
+msgstr "Duration in Days"
+
+#: .\subscriptions\models.py:26
+msgid ""
+"Número de dias que a assinatura ficará ativa. Ex: 30 para mensal, 365 para "
+"anual."
+msgstr ""
+"Number of days the subscription will be active. Ex: 30 for monthly, 365 for "
+"annual."
+
+#: .\subscriptions\models.py:29
+msgid "Plano Ativo"
+msgstr "Active Plan"
+
+#: .\subscriptions\models.py:31
+msgid "Desmarque para esconder este plano da página de assinaturas."
+msgstr "Uncheck to hide this plan from the subscriptions page."
+
+#: .\subscriptions\models.py:34
+msgid "LivePix Plan ID"
+msgstr "LivePix Plan ID"
+
+#: .\subscriptions\models.py:38
+msgid ""
+"O ID do Plano correspondente criado no painel da LivePix (ex: plan_xxxx...)."
+msgstr ""
+"The corresponding Plan ID created in the LivePix panel (e.g., plan_xxxx...)."
+
+#: .\subscriptions\models.py:42
+msgid "Plano VIP"
+msgstr "VIP Plan"
+
+#: .\subscriptions\models.py:43 .\subscriptions\wagtail_hooks.py:20
+#: .\templates\subscriptions\plans_page.html:4
+msgid "Planos VIP"
+msgstr "VIP Plans"
+
+#: .\subscriptions\models.py:63
+msgid "Plano Assinado"
+msgstr "Subscribed Plan"
+
+#: .\subscriptions\models.py:66
+msgid "Data de Início"
+msgstr "Start Date"
+
+#: .\subscriptions\models.py:70
+msgid "Data de Expiração"
+msgstr "Expiration Date"
+
+#: .\subscriptions\models.py:75
+msgid "Assinatura de Usuário"
+msgstr "User Subscription"
+
+#: .\subscriptions\models.py:76 .\subscriptions\wagtail_hooks.py:31
+msgid "Assinaturas de Usuários"
+msgstr "User Subscriptions"
+
+#: .\subscriptions\models.py:114
+msgid "ID de referência retornado pela API da LivePix"
+msgstr "Reference ID returned by the LivePix API"
+
+#: .\subscriptions\models.py:129
+msgid "Nome do Pacote"
+msgstr "Package Name"
+
+#: .\subscriptions\models.py:132
+msgid "Quantidade de Moedas"
+msgstr "Amount of Coins"
+
+#: .\subscriptions\models.py:138
+msgid "LivePix Product ID (Opcional)"
+msgstr "LivePix Product ID (Optional)"
+
+#: .\subscriptions\models.py:142
+msgid "O ID do produto ou da cobrança correspondente na LivePix."
+msgstr "The ID of the corresponding product or charge in LivePix."
+
+#: .\subscriptions\models.py:145
+msgid "Ativo na Loja?"
+msgstr "Active in Store?"
+
+#: .\subscriptions\models.py:147
+msgid "Ordem de Exibição"
+msgstr "Display Order"
+
+#: .\subscriptions\models.py:150
+msgid "Pacote de Moedas"
+msgstr "Coin Package"
+
+#: .\subscriptions\models.py:151 .\subscriptions\wagtail_hooks.py:60
+msgid "Pacotes de Moedas"
+msgstr "Coin Packages"
+
+#: .\subscriptions\views.py:81
+msgid "ID do plano inválido."
+msgstr "Invalid plan ID."
+
+#: .\subscriptions\views.py:89 .\subscriptions\views.py:225
+msgid "Erro de configuração do servidor."
+msgstr "Server configuration error."
+
+#: .\subscriptions\views.py:100 .\subscriptions\views.py:236
+msgid "Erro de comunicação com o gateway de pagamento."
+msgstr "Communication error with the payment gateway."
+
+#: .\subscriptions\views.py:130 .\subscriptions\views.py:267
+msgid "Não foi possível gerar a cobrança Pix."
+msgstr "Could not generate Pix charge."
+
+#: .\subscriptions\views.py:194
+msgid ""
+"Obrigado pelo seu apoio! Seu pagamento está sendo processado e sua "
+"assinatura ou moedas serão ativadas em breve."
+msgstr ""
+"Thank you for your support! Your payment is being processed and your "
+"subscription or coins will be activated soon."
+
+#: .\subscriptions\views.py:217
+msgid "ID do pacote inválido."
+msgstr "Invalid package ID."
+
+#: .\subscriptions\wagtail_hooks.py:9
+msgid "Saldos de Moedas"
+msgstr "Coin Balances"
+
+#: .\subscriptions\wagtail_hooks.py:45
+msgid "Ativa?"
+msgstr "Active?"
+
+#: .\subscriptions\wagtail_hooks.py:49
+msgid "Transações de Pagamento"
+msgstr "Payment Transactions"
+
+#: .\templates\404.html:4 .\templates\404.html:9
+msgid "Página Não Encontrada"
+msgstr "Page Not Found"
+
+#: .\templates\404.html:11
+msgid ""
+"Opa! O conteúdo que você está procurando não existe, foi removido ou o link "
+"foi digitado incorretamente."
+msgstr ""
+"Oops! The content you are looking for does not exist, has been removed, or "
+"the link was typed incorrectly."
+
+#: .\templates\404.html:14 .\templates\500.html:14
+msgid "Voltar para a Página Inicial"
+msgstr "Back to Homepage"
+
+#: .\templates\500.html:4
+msgid "Erro no Servidor"
+msgstr "Server Error"
+
+#: .\templates\500.html:9
+msgid "Erro Interno no Servidor"
+msgstr "Internal Server Error"
+
+#: .\templates\500.html:11
+msgid ""
+"Desculpe, algo deu errado do nosso lado. Nossa equipe técnica já foi "
+"notificada sobre o problema."
+msgstr ""
+"Sorry, something went wrong on our end. Our technical team has been notified "
+"of the problem."
+
+#: .\templates\account\admin\assinatura_vip_panel.html:11
+msgid "Usuário VIP Ativo"
+msgstr "Active VIP User"
+
+#: .\templates\account\admin\assinatura_vip_panel.html:15
+msgid "Plano:"
+msgstr "Plan:"
+
+#: .\templates\account\admin\assinatura_vip_panel.html:16
+msgid "Expira em:"
+msgstr "Expires on:"
+
+#: .\templates\account\admin\assinatura_vip_panel.html:26
+msgid "Usuário não é VIP."
+msgstr "User is not VIP."
+
+#: .\templates\account\admin\assinatura_vip_panel.html:38
+msgid "App 'subscriptions' não encontrada ou não configurada."
+msgstr "'subscriptions' app not found or not configured."
+
+#: .\templates\account\admin\assinatura_vip_panel.html:46
+msgid "Verifique o status da assinatura VIP deste usuário."
+msgstr "Check this user's VIP subscription status."
+
+#: .\templates\account\admin\assinatura_vip_panel.html:46
+msgid "Gerenciar Planos VIP"
+msgstr "Manage VIP Plans"
+
+#: .\templates\account\logged_out.html:4
+msgid "Sair da Conta"
+msgstr "Log Out"
+
+#: .\templates\account\logged_out.html:21
+msgid "Sair da conta"
+msgstr "Log out"
+
+#: .\templates\account\logged_out.html:25
+msgid "Tem certeza que deseja deslogar da sua conta?"
+msgstr "Are you sure you want to log out of your account?"
+
+#: .\templates\account\logged_out.html:28
+msgid ""
+"Você precisará fazer login novamente para acessar seus favoritos e histórico."
+msgstr "You will need to log in again to access your favorites and history."
+
+#: .\templates\account\logged_out.html:43
+#: .\templates\novels\admin\novel_chapter_uploader_add_single.html:165
+#: .\templates\novels\admin\novel_chapter_uploader_add_zip.html:176
+#: .\templates\socialaccount\login.html:54
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: .\templates\account\logged_out.html:48
+msgid "Sim, sair"
+msgstr "Yes, log out"
+
+#: .\templates\account\login.html:4 .\templates\base\navbar.html:86
+#: .\templates\base\navbar.html:87 .\templates\base\navbar.html:140
+msgid "Login"
+msgstr "Login"
+
+#: .\templates\account\login.html:15
+msgid "Fechar"
+msgstr "Close"
+
+#: .\templates\account\login.html:29
+msgid "Faça login na sua conta"
+msgstr "Log in to your account"
+
+#: .\templates\account\login.html:30
+msgid "Acesse para salvar seus mangás favoritos e receber recomendações."
+msgstr "Access to save your favorite mangas and receive recommendations."
+
+#: .\templates\account\login.html:50
+msgid "Usuário ou E-mail"
+msgstr "User or Email"
+
+#: .\templates\account\login.html:56 .\templates\account\signup.html:45
+msgid "Senha"
+msgstr "Password"
+
+#: .\templates\account\login.html:65
+msgid "Lembrar de mim"
+msgstr "Remember me"
+
+#: .\templates\account\login.html:71
+msgid "Entrar"
+msgstr "Sign In"
+
+#: .\templates\account\login.html:78
+msgid "Ou conecte-se com"
+msgstr "Or connect with"
+
+#: .\templates\account\login.html:81
+msgid "Login com Discord"
+msgstr "Login with Discord"
+
+#: .\templates\account\login.html:89
+msgid "Não tem conta?"
+msgstr "Don't have an account?"
+
+#: .\templates\account\login.html:89
+msgid "Cadastre-se"
+msgstr "Sign up"
+
+#: .\templates\account\password_reset_complete.html:6
+msgid "Senha Redefinida"
+msgstr "Password Reset"
+
+#: .\templates\account\password_reset_complete.html:21
+msgid "Senha Redefinida!"
+msgstr "Password Reset!"
+
+#: .\templates\account\password_reset_complete.html:23
+msgid ""
+"Sua senha foi alterada com sucesso. Agora você pode fazer login com sua nova "
+"senha."
+msgstr ""
+"Your password has been changed successfully. You can now log in with your "
+"new password."
+
+#: .\templates\account\password_reset_complete.html:26
+#: .\templates\account\verification_sent.html:58
+msgid "Ir para Login"
+msgstr "Go to Login"
+
+#: .\templates\account\password_reset_confirm.html:6
+#: .\templates\account\password_reset_confirm.html:21
+#: .\templates\account\password_reset_email.html:45
+msgid "Definir Nova Senha"
+msgstr "Set New Password"
+
+#: .\templates\account\password_reset_confirm.html:22
+msgid "Por favor, insira sua nova senha duas vezes para confirmar."
+msgstr "Please enter your new password twice to confirm."
+
+#: .\templates\account\password_reset_confirm.html:36
+msgid "Nova senha"
+msgstr "New password"
+
+#: .\templates\account\password_reset_confirm.html:42
+msgid "Mostrar/Ocultar senha"
+msgstr "Show/Hide password"
+
+#: .\templates\account\password_reset_confirm.html:56
+msgid "Confirmar nova senha"
+msgstr "Confirm new password"
+
+#: .\templates\account\password_reset_confirm.html:62
+msgid "Mostrar/Ocultar senha de confirmação"
+msgstr "Show/Hide confirmation password"
+
+#: .\templates\account\password_reset_confirm.html:73
+msgid "Alterar Senha"
+msgstr "Change Password"
+
+#: .\templates\account\password_reset_confirm.html:81
+msgid "Link Inválido"
+msgstr "Invalid Link"
+
+#: .\templates\account\password_reset_confirm.html:83
+msgid ""
+"O link de redefinição de senha era inválido, possivelmente porque já foi "
+"usado ou expirou. Por favor, solicite uma nova redefinição de senha."
+msgstr ""
+"The password reset link was invalid, possibly because it has already been "
+"used or has expired. Please request a new password reset."
+
+#: .\templates\account\password_reset_confirm.html:86
+msgid "Solicitar Novo Link"
+msgstr "Request New Link"
+
+#: .\templates\account\password_reset_confirm.html:120
+msgid "As senhas coincidem!"
+msgstr "The passwords match!"
+
+#: .\templates\account\password_reset_confirm.html:122
+msgid "As senhas não coincidem!"
+msgstr "The passwords do not match!"
+
+#: .\templates\account\password_reset_done.html:6
+msgid "Email Enviado"
+msgstr "Email Sent"
+
+#: .\templates\account\password_reset_done.html:21
+msgid "Verifique seu Email"
+msgstr "Check your Email"
+
+#: .\templates\account\password_reset_done.html:23
+msgid ""
+"Enviamos um email com instruções para definir sua senha, **se uma conta "
+"existir com o email que você digitou**. Você deve recebê-lo em breve."
+msgstr ""
+"We have sent an email with instructions to set your password, **if an "
+"account exists with the email you entered**. You should receive it shortly."
+
+#: .\templates\account\password_reset_done.html:26
+msgid ""
+"Se você não receber um email, por favor, certifique-se de que digitou o "
+"endereço com o qual se registrou e verifique sua pasta de spam."
+msgstr ""
+"If you do not receive an email, please make sure you entered the address you "
+"registered with and check your spam folder."
+
+#: .\templates\account\password_reset_done.html:29
+msgid "Voltar para Home"
+msgstr "Back to Home"
+
+#: .\templates\account\password_reset_email.html:38
+#, python-format
+msgid ""
+"Você (ou alguém se passando por você) solicitou uma redefinição de senha "
+"para sua conta em %(site_name)s."
+msgstr ""
+"You (or someone pretending to be you) requested a password reset for your "
+"account at %(site_name)s."
+
+#: .\templates\account\password_reset_email.html:40
+msgid "Por favor, clique no botão abaixo para definir uma nova senha:"
+msgstr "Please click the button below to set a new password:"
+
+#: .\templates\account\password_reset_email.html:49
+msgid ""
+"Se o botão não funcionar, copie e cole o seguinte link no seu navegador:"
+msgstr ""
+"If the button doesn't work, copy and paste the following link into your "
+"browser:"
+
+#: .\templates\account\password_reset_email.html:55
+msgid ""
+"Se você não solicitou esta redefinição, pode ignorar este e-mail com "
+"segurança. Sua senha não será alterada."
+msgstr ""
+"If you did not request this reset, you can safely ignore this email. Your "
+"password will not be changed."
+
+#: .\templates\account\password_reset_email.html:58
+#, python-format
+msgid ""
+"Seu nome de usuário, caso tenha esquecido: <span "
+"class=\"username\">%(user.get_username)s</span>"
+msgstr ""
+"Your username, in case you forgot: <span "
+"class=\"username\">%(user.get_username)s</span>"
+
+#: .\templates\account\password_reset_email.html:62
+msgid "Obrigado,"
+msgstr "Thank you,"
+
+#: .\templates\account\password_reset_form.html:6
+msgid "Redefinir Senha"
+msgstr "Reset Password"
+
+#: .\templates\account\password_reset_form.html:20
+msgid "Redefinir sua Senha"
+msgstr "Reset your Password"
+
+#: .\templates\account\password_reset_form.html:21
+msgid ""
+"Digite seu email abaixo e enviaremos instruções para criar uma nova senha."
+msgstr ""
+"Enter your email below and we will send instructions to create a new "
+"password."
+
+#: .\templates\account\password_reset_form.html:49
+msgid "Enviar Email de Recuperação"
+msgstr "Send Recovery Email"
+
+#: .\templates\account\password_reset_form.html:55
+msgid "Voltar para o Login"
+msgstr "Back to Login"
+
+#: .\templates\account\signup.html:4 .\templates\account\signup.html:59
+msgid "Cadastrar"
+msgstr "Sign Up"
+
+#: .\templates\account\signup.html:24
+msgid "Crie sua conta"
+msgstr "Create your account"
+
+#: .\templates\account\signup.html:25
+msgid "Insira seus dados abaixo para criar uma nova conta."
+msgstr "Enter your details below to create a new account."
+
+#: .\templates\account\signup.html:39
+msgid "Endereço de e-mail"
+msgstr "Email address"
+
+#: .\templates\account\signup.html:52
+msgid "Confirme a senha"
+msgstr "Confirm password"
+
+#: .\templates\account\signup.html:64
+msgid "Ou registre-se com"
+msgstr "Or sign up with"
+
+#: .\templates\account\signup.html:67
+msgid "Registrar com Discord"
+msgstr "Sign up with Discord"
+
+#: .\templates\account\signup.html:73
+msgid "Já é um usuário?"
+msgstr "Already a user?"
+
+#: .\templates\account\signup.html:73
+msgid "Faça login agora"
+msgstr "Log in now"
+
+#: .\templates\account\verification_sent.html:4
+msgid "Verifique seu E-mail"
+msgstr "Verify your Email"
+
+#: .\templates\account\verification_sent.html:35
+msgid "Confirmação de Email Enviada!"
+msgstr "Email Confirmation Sent!"
+
+#: .\templates\account\verification_sent.html:39
+msgid ""
+"Nós enviamos um link de confirmação para o seu endereço de e-mail.\n"
+"                Por favor, verifique sua caixa de entrada (e spam) e clique "
+"no link para ativar sua conta."
+msgstr ""
+"We have sent a confirmation link to your email address.\n"
+"                Please check your inbox (and spam) and click the link to "
+"activate your account."
+
+#: .\templates\account\verification_sent.html:47
+#, python-format
+msgid ""
+"Não recebeu o email? Verifique sua pasta de spam ou <a "
+"href=\"%(resend_url|default:'#')s\" id=\"resendLink\">reenvie a confirmação</"
+"a>."
+msgstr ""
+"Didn't receive the email? Check your spam folder or <a "
+"href=\"%(resend_url|default:'#')s\" id=\"resendLink\">resend the "
+"confirmation</a>."
+
+#: .\templates\account\verification_sent.html:52
+msgid "Você pode solicitar um novo email em"
+msgstr "You can request a new email in"
+
+#: .\templates\account\verification_sent.html:52
+msgid "segundos"
+msgstr "seconds"
+
+#: .\templates\accounts\badge_store.html:93
+msgid "Seu saldo:"
+msgstr "Your balance:"
+
+#: .\templates\accounts\badge_store.html:121
+#: .\templates\accounts\badge_store.html:170
+msgid "Adquirido"
+msgstr "Acquired"
+
+#: .\templates\accounts\badge_store.html:123
+#: .\templates\accounts\badge_store.html:176
+#: .\templates\accounts\badge_store.html:184
+msgid "Comprar"
+msgstr "Buy"
+
+#: .\templates\accounts\badge_store.html:129
+msgid "Nenhum badge disponível na loja no momento."
+msgstr "No badges available in the store at the moment."
+
+#: .\templates\accounts\badge_store.html:148
+msgid "Processando..."
+msgstr "Processing..."
+
+#: .\templates\accounts\badge_store.html:181
+msgid "Ocorreu um erro de conexão. Tente novamente."
+msgstr "A connection error occurred. Please try again."
+
+#: .\templates\accounts\profile.html:102
+#: .\templates\accounts\profile_edit.html:4
+#: .\templates\accounts\profile_edit.html:77
+msgid "Editar Perfil"
+msgstr "Edit Profile"
+
+#: .\templates\accounts\profile.html:107 .\templates\base\navbar.html:79
+#: .\templates\base\navbar.html:135
+msgid "Sair"
+msgstr "Logout"
+
+#: .\templates\accounts\profile.html:113
+msgid "Vincular Contas"
+msgstr "Link Accounts"
+
+#: .\templates\accounts\profile.html:118
+msgid "Conectar com Discord"
+msgstr "Connect with Discord"
+
+#: .\templates\accounts\profile.html:123
+msgid "Discord Conectado"
+msgstr "Discord Connected"
+
+#: .\templates\accounts\profile.html:128
+msgid "Em breve"
+msgstr "Coming soon"
+
+#: .\templates\accounts\profile.html:129
+msgid "Conectar com Google (Em breve)"
+msgstr "Connect with Google (Coming soon)"
+
+#: .\templates\accounts\profile.html:134
+msgid "Google Conectado"
+msgstr "Google Connected"
+
+#: .\templates\accounts\profile.html:202
+msgid "Para alterar sua senha, por favor, entre em contato pelo discord com"
+msgstr "To change your password, please contact us on discord at"
+
+#: .\templates\accounts\profile_edit.html:82
+msgid "Foto de Perfil"
+msgstr "Profile Picture"
+
+#: .\templates\accounts\profile_edit.html:87
+msgid "User avatar"
+msgstr "User avatar"
+
+#: .\templates\accounts\profile_edit.html:91
+msgid "Formatos suportados: JPG, PNG (Max. 5MB)"
+msgstr "Supported formats: JPG, PNG (Max. 5MB)"
+
+#: .\templates\accounts\profile_edit.html:94
+msgid "Alterar Foto"
+msgstr "Change Picture"
+
+#: .\templates\accounts\profile_edit.html:96
+msgid "Salvar Avatar"
+msgstr "Save Avatar"
+
+#: .\templates\accounts\profile_edit.html:121
+msgid "Informações Pessoais"
+msgstr "Personal Information"
+
+#: .\templates\accounts\profile_edit.html:124
+msgid "Nome de Usuário"
+msgstr "Username"
+
+#: .\templates\accounts\profile_edit.html:137
+msgid "Biografia"
+msgstr "Biography"
+
+#: .\templates\accounts\profile_edit.html:141
+msgid "Conte um pouco sobre você (max. 200 caracteres)"
+msgstr "Tell us a bit about yourself (max. 200 characters)"
+
+#: .\templates\accounts\profile_edit.html:151
+msgid "Você ainda não possui nenhum badge. Visite a loja para adquirir!"
+msgstr "You don't own any badges yet. Visit the store to get one!"
+
+#: .\templates\accounts\profile_edit.html:159
+msgid "Escolha até 2 badges para exibir no seu perfil."
+msgstr "Choose up to 2 badges to display on your profile."
+
+#: .\templates\accounts\profile_edit.html:163
+msgid "E-mail"
+msgstr "E-mail"
+
+#: .\templates\accounts\profile_edit.html:167
+msgid "Este é o e-mail associado à sua conta"
+msgstr "This is the email associated with your account"
+
+#: .\templates\accounts\profile_edit.html:172
+msgid "Salvar Alterações"
+msgstr "Save Changes"
+
+#: .\templates\accounts\profile_edit.html:194
+msgid "Formato de arquivo inválido. Apenas JPG e PNG são permitidos."
+msgstr "Invalid file format. Only JPG and PNG are allowed."
+
+#: .\templates\accounts\profile_edit.html:199
+msgid "Arquivo muito grande. O tamanho máximo é 5MB."
+msgstr "File too large. The maximum size is 5MB."
+
+#: .\templates\accounts\saved.html:4 .\templates\base\navbar.html:64
+#: .\templates\base\navbar.html:120
+msgid "Meus Favoritos"
+msgstr "My Favorites"
+
+#: .\templates\accounts\saved.html:85
+msgid "Minhas Obras Favoritas"
+msgstr "My Favorite Works"
+
+#: .\templates\accounts\saved.html:110
+#, python-format
+msgid "Em: %(date)s"
+msgstr "On: %(date)s"
+
+#: .\templates\accounts\saved.html:116
+msgid "Remover dos Favoritos"
+msgstr "Remove from Favorites"
+
+#: .\templates\accounts\saved.html:135
+msgid "Nenhum favorito ainda"
+msgstr "No favorites yet"
+
+#: .\templates\accounts\saved.html:136
+msgid "Quando você marcar obras como favoritas, elas aparecerão aqui."
+msgstr "When you mark works as favorites, they will appear here."
+
+#: .\templates\accounts\saved.html:137
+msgid "Explorar Obras"
+msgstr "Explore Works"
+
+#: .\templates\base\navbar.html:16 .\templates\base\navbar.html:112
+msgid "Início"
+msgstr "Home"
+
+#: .\templates\base\navbar.html:17 .\templates\base\navbar.html:113
+msgid "Comics"
+msgstr "Comics"
+
+#: .\templates\base\navbar.html:19 .\templates\base\navbar.html:20
+#: .\templates\base\navbar.html:114
+msgid "Vip"
+msgstr "Vip"
+
+#: .\templates\base\navbar.html:24 .\templates\base\navbar.html:116
+msgid "Loja"
+msgstr "Store"
+
+#: .\templates\base\navbar.html:28 .\templates\base\navbar.html:29
+#: .\templates\base\navbar.html:145
+msgid "Discord"
+msgstr "Discord"
+
+#: .\templates\base\navbar.html:33 .\templates\base\navbar.html:34
+#: .\templates\base\navbar.html:148
+msgid "Apoiar"
+msgstr "Support"
+
+#: .\templates\base\navbar.html:43 .\templates\base\navbar.html:106
+msgid "Pesquisar comics..."
+msgstr "Search comics..."
+
+#: .\templates\base\navbar.html:43 .\templates\base\navbar.html:106
+msgid "Pesquisar"
+msgstr "Search"
+
+#: .\templates\base\navbar.html:44 .\templates\base\navbar.html:107
+msgid "Buscar"
+msgstr "Find"
+
+#: .\templates\base\navbar.html:63 .\templates\base\navbar.html:119
+msgid "Meu Perfil"
+msgstr "My Profile"
+
+#: .\templates\base\navbar.html:67 .\templates\base\navbar.html:123
+msgid "Histórico"
+msgstr "History"
+
+#: .\templates\base\navbar.html:71 .\templates\base\navbar.html:127
+msgid "Admin Wagtail"
+msgstr "Wagtail Admin"
+
+#: .\templates\base\navbar.html:72 .\templates\base\navbar.html:128
+msgid "Admin Django"
+msgstr ""
+
+#: .\templates\base\navbar.html:89 .\templates\base\navbar.html:90
+#: .\templates\base\navbar.html:141
+msgid "Registrar"
+msgstr "Register"
+
+#: .\templates\comics.html:4 .\templates\manga\comics.html:4
+msgid "Catálogo de Obras"
+msgstr "Works Catalog"
+
+#: .\templates\comics.html:10 .\templates\manga\comics.html:10
+msgid "Todas as Obras"
+msgstr "All Works"
+
+#: .\templates\comics.html:68 .\templates\manga\comics.html:75
+msgid "Nenhuma obra encontrada com os filtros selecionados."
+msgstr "No works found with the selected filters."
+
+#: .\templates\core\admin\core.html:4
+msgid "Uso de Disco"
+msgstr "Disk Usage"
+
+#: .\templates\core\admin\core.html:42
+msgid "Erro ao obter dados do disco:"
+msgstr "Error getting disk data:"
+
+#: .\templates\core\admin\core.html:49
+msgid "Total:"
+msgstr "Total:"
+
+#: .\templates\core\admin\core.html:50
+msgid "Usado:"
+msgstr "Used:"
+
+#: .\templates\core\admin\core.html:51
+msgid "Livre:"
+msgstr "Free:"
+
+#: .\templates\core\admin\core.html:59
+msgid "Gráfico não disponível devido à falta de dados ou dados zerados."
+msgstr ""
+
+#: .\templates\core\admin\core.html:63
+#, python-format
+msgid "Informações para o caminho: %(path_checked)s"
+msgstr "Information for path: %(path_checked)s"
+
+#: .\templates\core\admin\core.html:113
+msgid "Espaço Usado (GB)"
+msgstr "Used Space (GB)"
+
+#: .\templates\core\admin\core.html:113
+msgid "Espaço Livre (GB)"
+msgstr "Free Space (GB)"
+
+#: .\templates\core\admin\core.html:115
+msgid "Uso do Disco"
+msgstr "Disk Usage"
+
+#: .\templates\core\admin\core.html:132
+msgid "Distribuição do Uso de Disco"
+msgstr "Disk Usage Distribution"
+
+#: .\templates\core\admin\core.html:159
+msgid "Dados de uso do disco não suficientes ou zerados para gerar gráfico."
+msgstr "Insufficient or zero disk usage data to generate chart."
+
+#: .\templates\includes\_pagination.html:9
+msgid "Primeira"
+msgstr "First"
+
+#: .\templates\includes\_pagination.html:12
+#: .\templates\novels\novel_chapter_page.html:38
+#: .\templates\novels\novel_chapter_page.html:40
+#: .\templates\novels\novel_chapter_page.html:88
+#: .\templates\novels\novel_chapter_page.html:90
+#: .\templates\search\search.html:41
+msgid "Anterior"
+msgstr "Previous"
+
+#: .\templates\includes\_pagination.html:39 .\templates\search\search.html:49
+msgid "Próxima"
+msgstr "Next"
+
+#: .\templates\includes\_pagination.html:42
+msgid "Última"
+msgstr "Last"
+
+#: .\templates\includes\comment_form.html:25
+msgid "Adicione um comentário..."
+msgstr "Add a comment..."
+
+#: .\templates\includes\comment_form.html:31
+msgid "Campo de texto do formulário não encontrado."
+msgstr "Form text field not found."
+
+#: .\templates\includes\comment_form.html:58
+msgid "Comentar"
+msgstr "Comment"
+
+#: .\templates\includes\comment_form.html:63
+msgid "Erro ao carregar o formulário de comentário."
+msgstr "Error loading comment form."
+
+#: .\templates\includes\comment_form.html:77
+#, python-format
+msgid ""
+"\n"
+"                Você precisa <a href=\"%(login_url_with_next)s\" "
+"class=\"text-[#00B982] hover:underline font-medium\">entrar</a> para "
+"comentar.\n"
+"            "
+msgstr ""
+"\n"
+"                You need to <a href=\"%(login_url_with_next)s\" class=\"text-"
+"[#00B982] hover:underline font-medium\">log in</a> to comment.\n"
+"            "
+
+#: .\templates\includes\comment_list.html:19
+#: .\templates\includes\comment_list.html:70
+msgid "atrás"
+msgstr "ago"
+
+#: .\templates\includes\comment_list.html:30
+#: .\templates\includes\comment_list.html:79
+msgid "[SPOILER]"
+msgstr "[SPOILER]"
+
+#: .\templates\includes\comment_list.html:51
+msgid "Responder"
+msgstr "Reply"
+
+#: .\templates\includes\comment_list.html:104
+msgid "Nenhum comentário ainda. Seja o primeiro!"
+msgstr "No comments yet. Be the first!"
+
+#: .\templates\includes\comment_list.html:115
+msgid "Carregar mais comentários"
+msgstr "Load more comments"
+
+#: .\templates\manga\admin\combined_upload_form.html:14
+msgid ""
+"\n"
+"                Selecione a obra (mangá) na lista abaixo. Em seguida, "
+"escolha o arquivo <code>.zip</code> que contém as pastas dos capítulos.\n"
+"                Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será "
+"tratada como um capítulo separado. As imagens dentro de cada pasta serão "
+"adicionadas ao capítulo correspondente.\n"
+"                "
+msgstr ""
+"\n"
+"                Select the work (manga) from the list below. Then, choose "
+"the <code>.zip</code> file containing the chapter folders.\n"
+"                Each folder inside the ZIP (e.g., '01', '02', '10.5') will "
+"be treated as a separate chapter. The images inside each folder will be "
+"added to the corresponding chapter.\n"
+"                "
+
+#: .\templates\manga\admin\combined_upload_form.html:21
+#, python-format
+msgid ""
+"\n"
+"                Você está upando capítulos para a obra: "
+"<strong>%(manga_title)s</strong>.\n"
+"                Escolha o arquivo <code>.zip</code> que contém as pastas dos "
+"capítulos.\n"
+"                Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será "
+"tratada como um capítulo separado. As imagens dentro de cada pasta serão "
+"adicionadas ao capítulo correspondente.\n"
+"                "
+msgstr ""
+"\n"
+"                You are uploading chapters for the work: "
+"<strong>%(manga_title)s</strong>.\n"
+"                Choose the <code>.zip</code> file containing the chapter "
+"folders.\n"
+"                Each folder inside the ZIP (e.g., '01', '02', '10.5') will "
+"be treated as a separate chapter. The images inside each folder will be "
+"added to the corresponding chapter.\n"
+"                "
+
+#: .\templates\manga\admin\folder_upload_form.html:41
+msgid "1. Selecione a Obra"
+msgstr "1. Select the Work"
+
+#: .\templates\manga\admin\folder_upload_form.html:55
+msgid "2. Arraste as Pastas dos Capítulos"
+msgstr "2. Drag the Chapter Folders"
+
+#: .\templates\manga\admin\folder_upload_form.html:63
+msgid "Clique aqui ou arraste as pastas para esta área"
+msgstr "Click here or drag folders to this area"
+
+#: .\templates\manga\admin\folder_upload_form.html:67
+msgid "Sel. Todos"
+msgstr "Select All"
+
+#: .\templates\manga\admin\folder_upload_form.html:68
+msgid "Des. Todos"
+msgstr "Deselect All"
+
+#: .\templates\manga\admin\folder_upload_form.html:78
+msgid "Processar Capítulos Selecionados"
+msgstr "Process Selected Chapters"
+
+#: .\templates\manga\admin\folder_upload_form.html:85
+msgid "Resultados do Processamento:"
+msgstr "Processing Results:"
+
+#: .\templates\manga\admin\upload_options.html:108
+msgid ""
+"Nenhuma obra encontrada. Por favor, crie uma obra primeiro antes de upar "
+"capítulos."
+msgstr "No works found. Please create a work first before uploading chapters."
+
+#: .\templates\manga\admin\upload_options.html:109
+#: .\templates\novels\admin\novel_chapter_uploader_index.html:106
+msgid "Ir para Páginas"
+msgstr "Go to Pages"
+
+#: .\templates\manga\admin\upload_options.html:132
+#, python-format
+msgid ""
+"\n"
+"                                        %(counter)s Capítulo\n"
+"                                    "
+msgid_plural ""
+"\n"
+"                                        %(counter)s Capítulos\n"
+"                                    "
+msgstr[0] ""
+"\n"
+"                                        %(counter)s Chapter\n"
+"                                    "
+msgstr[1] ""
+"\n"
+"                                        %(counter)s Chapters\n"
+"                                    "
+
+#: .\templates\manga\admin\upload_options.html:144
+msgid "ZIP"
+msgstr "ZIP"
+
+#: .\templates\manga\admin\upload_options.html:148
+msgid "Pastas"
+msgstr "Folders"
+
+#: .\templates\manga\chapter_locked.html:74
+msgid "Capítulo Bloqueado"
+msgstr "Chapter Locked"
+
+#: .\templates\manga\chapter_locked.html:77
+#, python-format
+msgid ""
+"\n"
+"            O Capítulo %(chapter_title)s de \"%(manga_title)s\" é um "
+"conteúdo exclusivo.\n"
+"        "
+msgstr ""
+"\n"
+"            Chapter %(chapter_title)s of \"%(manga_title)s\" is exclusive "
+"content.\n"
+"        "
+
+#: .\templates\manga\chapter_locked.html:93
+msgid "Não quer esperar?"
+msgstr "Don't want to wait?"
+
+#: .\templates\manga\chapter_locked.html:98
+msgid "Torne-se VIP Agora!"
+msgstr "Become VIP Now!"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_pdf.html:4
+#, python-format
+msgid "Upload de PDF(s) para %(title)s"
+msgstr "Upload PDF(s) for %(title)s"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_pdf.html:12
+msgid "Você está upando capítulos para a obra:"
+msgstr "You are uploading chapters for the work:"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_pdf.html:30
+msgid "Upar e Dividir PDF(s)"
+msgstr "Upload and Split PDF(s)"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_single.html:159
+msgid "Adicionar Capítulo"
+msgstr "Add Chapter"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_zip.html:126
+msgid ""
+"\n"
+"            Faça upload de um arquivo .ZIP contendo múltiplos arquivos de "
+"capítulo (ex: .txt ou .md).\n"
+"            O sistema tentará extrair o número e o título do capítulo a "
+"partir dos nomes dos arquivos. Se os\n"
+"            arquivos dentro do ZIP forem PDFs, o sistema tentará extrair o "
+"texto deles e dividi-los em\n"
+"            capítulos baseado no padrão \"Capítulo X: Nome do Capítulo\". As "
+"tags de imagem customizadas\n"
+"            <code>[WAGTAIL_IMG_ID:identificador_da_imagem]</code> serão "
+"processadas.\n"
+"            "
+msgstr ""
+"\n"
+"            Upload a .ZIP file containing multiple chapter files (e.g., .txt "
+"or .md).\n"
+"            The system will try to extract the chapter number and title from "
+"the filenames. If the\n"
+"            files inside the ZIP are PDFs, the system will try to extract "
+"their text and split them into\n"
+"            chapters based on the \"Chapter X: Chapter Name\" pattern. "
+"Custom image tags\n"
+"            <code>[WAGTAIL_IMG_ID:image_identifier]</code> will be "
+"processed.\n"
+"            "
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_zip.html:171
+msgid "Upar e Processar ZIP"
+msgstr "Upload and Process ZIP"
+
+#: .\templates\novels\admin\novel_chapter_uploader_add_zip.html:185
+msgid "Resultados do Processamento do ZIP:"
+msgstr "ZIP Processing Results:"
+
+#: .\templates\novels\admin\novel_chapter_uploader_index.html:4
+#: .\templates\novels\admin\novel_chapter_uploader_index.html:99
+msgid "Upar Capítulos - Selecione a Novel"
+msgstr "Upload Chapters - Select the Novel"
+
+#: .\templates\novels\admin\novel_chapter_uploader_index.html:105
+msgid "Nenhuma novel encontrada. Por favor, crie uma novel primeiro."
+msgstr "No novels found. Please create a novel first."
+
+#: .\templates\novels\admin\novel_chapter_uploader_index.html:126
+#, python-format
+msgid "%(counter)s Capítulo"
+msgid_plural "%(counter)s Capítulos"
+msgstr[0] "%(counter)s Chapter"
+msgstr[1] "%(counter)s Chapters"
+
+#: .\templates\novels\novel_chapter_page.html:65
+#: .\templates\novels\novel_chapter_page.html:67
+#: .\templates\novels\novel_chapter_page.html:102
+#: .\templates\novels\novel_chapter_page.html:104
+msgid "Próximo"
+msgstr "Next"
+
+#: .\templates\novels\novel_chapter_page.html:96
+msgid "Novel"
+msgstr "Novel"
+
+#: .\templates\novels\novel_chapter_page.html:114
+msgid "Comentários do Capítulo"
+msgstr "Chapter Comments"
+
+#: .\templates\novels\novel_chapter_page.html:134
+msgid "Comentários (Sistema Próprio)"
+msgstr "Comments (Custom System)"
+
+#: .\templates\novels\novel_chapter_page.html:134
+msgid "Sistema de comentários próprio será implementado aqui."
+msgstr "Custom comment system will be implemented here."
+
+#: .\templates\search\search.html:4
+msgid "Resultados da busca por"
+msgstr "Search results for"
+
+#: .\templates\search\search.html:11
+msgid "Resultados para"
+msgstr "Results for"
+
+#: .\templates\search\search.html:13
+msgid "Por favor, digite um termo para buscar"
+msgstr "Please enter a term to search"
+
+#: .\templates\search\search.html:45
+msgid "de"
+msgstr "of"
+
+#: .\templates\socialaccount\login.html:6
+#, python-format
+msgid "Conectar %(provider_name)s"
+msgstr "Connect %(provider_name)s"
+
+#: .\templates\socialaccount\login.html:8
+#, python-format
+msgid "Confirmar Login com %(provider_name)s"
+msgstr "Confirm Login with %(provider_name)s"
+
+#: .\templates\socialaccount\login.html:33
+#, python-format
+msgid "Conectar conta %(provider_name)s"
+msgstr "Connect %(provider_name)s account"
+
+#: .\templates\socialaccount\login.html:35
+#, python-format
+msgid "Continuar com %(provider_name)s"
+msgstr "Continue with %(provider_name)s"
+
+#: .\templates\socialaccount\login.html:41
+#, python-format
+msgid ""
+"Você está prestes a conectar sua conta %(provider_name)s à sua conta "
+"AstraToons existente."
+msgstr ""
+"You are about to connect your %(provider_name)s account to your existing "
+"AstraToons account."
+
+#: .\templates\socialaccount\login.html:43
+#, python-format
+msgid ""
+"Confirme para usar sua conta %(provider_name)s para acessar o AstraToons."
+msgstr "Confirm to use your %(provider_name)s account to access AstraToons."
+
+#: .\templates\socialaccount\login.html:51
+msgid "Continuar"
+msgstr "Continue"
+
+#: .\templates\socialaccount\login.html:72
+msgid "Salvar e Continuar"
+msgstr "Save and Continue"
+
+#: .\templates\socialaccount\signup.html:5
+msgid "Completar Cadastro Social"
+msgstr "Complete Social Signup"
+
+#: .\templates\socialaccount\signup.html:26
+msgid "Quase lá! Complete seu cadastro"
+msgstr "Almost there! Complete your registration"
+
+#: .\templates\socialaccount\signup.html:29
+#, python-format
+msgid ""
+"\n"
+"                Você está prestes a usar sua conta %(provider_name)s para se "
+"conectar a %(site_name)s.\n"
+"                Por favor, complete o formulário abaixo.\n"
+"                "
+msgstr ""
+"\n"
+"                You are about to use your %(provider_name)s account to "
+"connect to %(site_name)s.\n"
+"                Please complete the form below.\n"
+"                "
+
+#: .\templates\socialaccount\signup.html:36
+#, python-format
+msgid ""
+"\n"
+"                Você está prestes a se conectar a %(site_name)s. Por favor, "
+"complete o formulário abaixo.\n"
+"                "
+msgstr ""
+"\n"
+"                You are about to connect to %(site_name)s. Please complete "
+"the form below.\n"
+"                "
+
+#: .\templates\socialaccount\signup.html:95
+msgid "Confirmar Cadastro"
+msgstr "Confirm Signup"
+
+#: .\templates\socialaccount\signup.html:102
+msgid "Cancelar e voltar para o Login"
+msgstr "Cancel and go back to Login"
+
+#: .\templates\subscriptions\coin_store.html:73
+#: .\templates\subscriptions\plans_page.html:66
+msgid "Redirecionando..."
+msgstr "Redirecting..."
+
+#: .\templates\subscriptions\coin_store.html:89
+#: .\templates\subscriptions\plans_page.html:82
+msgid "Erro do Servidor:"
+msgstr "Server Error:"
+
+#: .\templates\subscriptions\coin_store.html:98
+#: .\templates\subscriptions\plans_page.html:91
+msgid "URL de redirecionamento não recebida."
+msgstr "Redirect URL not received."
+
+#: .\templates\subscriptions\coin_store.html:103
+#: .\templates\subscriptions\plans_page.html:96
+msgid "Erro:"
+msgstr "Error:"
+
+#: .\templates\subscriptions\plans_page.html:13
+msgid "Nossos Planos VIP"
+msgstr "Our VIP Plans"
+
+#: .\templates\subscriptions\plans_page.html:15
+msgid ""
+"Apoie nosso trabalho e ganhe acesso a capítulos adiantados e outros "
+"benefícios!"
+msgstr "Support our work and get access to early chapters and other benefits!"
+
+#: .\templates\subscriptions\plans_page.html:42
+msgid "Assinar com PIX"
+msgstr "Subscribe with PIX"
+
+#: .\test_livepix.py:185
+msgid "Pagamento confirmado! Seu acesso VIP foi ativado."
+msgstr "Payment confirmed! Your VIP access has been activated."
+
+#: .\venv\Lib\site-packages\click\_termui_impl.py:556
+#, python-brace-format
+msgid "{editor}: Editing failed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\_termui_impl.py:560
+#, python-brace-format
+msgid "{editor}: Editing failed: {e}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1124
+msgid "Aborted!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1349
+#: .\venv\Lib\site-packages\click\core.py:1379
+#, python-brace-format
+msgid "(Deprecated) {text}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1396
+msgid "Options"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1422
+#, python-brace-format
+msgid "Got unexpected extra argument ({args})"
+msgid_plural "Got unexpected extra arguments ({args})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\core.py:1438
+msgid "DeprecationWarning: The command {name!r} is deprecated."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1645
+msgid "Commands"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1677
+msgid "Missing command."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:1755
+msgid "No such command {name!r}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2313
+msgid "Value must be an iterable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2334
+#, python-brace-format
+msgid "Takes {nargs} values but 1 was given."
+msgid_plural "Takes {nargs} values but {len} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\core.py:2783
+#, python-brace-format
+msgid "env var: {var}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2813
+msgid "(dynamic)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2828
+#, python-brace-format
+msgid "default: {default}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\core.py:2841
+msgid "required"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:457
+#, python-format
+msgid "%(prog)s, version %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:520
+msgid "Show the version and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\decorators.py:541
+msgid "Show this message and exit."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:49
+#: .\venv\Lib\site-packages\click\exceptions.py:88
+#, python-brace-format
+msgid "Error: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:80
+#, python-brace-format
+msgid "Try '{command} {option}' for help."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:129
+#, python-brace-format
+msgid "Invalid value: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:131
+#, python-brace-format
+msgid "Invalid value for {param_hint}: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:187
+msgid "Missing argument"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:189
+msgid "Missing option"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:191
+msgid "Missing parameter"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:193
+#, python-brace-format
+msgid "Missing {param_type}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:200
+#, python-brace-format
+msgid "Missing parameter: {param_name}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:220
+#, python-brace-format
+msgid "No such option: {name}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:232
+#, python-brace-format
+msgid "Did you mean {possibility}?"
+msgid_plural "(Possible options: {possibilities})"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:270
+msgid "unknown error"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\exceptions.py:277
+msgid "Could not open file {filename!r}: {message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\formatting.py:156
+msgid "Usage:"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:233
+msgid "Argument {name!r} takes {nargs} values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:415
+msgid "Option {name!r} does not take a value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\parser.py:476
+msgid "Option {name!r} requires an argument."
+msgid_plural "Option {name!r} requires {nargs} arguments."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\shell_completion.py:326
+msgid "Shell completion is not supported for Bash versions older than 4.4."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\shell_completion.py:333
+msgid "Couldn't detect Bash version, shell completion is not supported."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:158
+msgid "Repeat for confirmation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:174
+msgid "Error: The value you entered was invalid."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:176
+#, python-brace-format
+msgid "Error: {e.message}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:187
+msgid "Error: The two entered values do not match."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:243
+msgid "Error: invalid input"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\termui.py:773
+msgid "Press any key to continue..."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:267
+#, python-brace-format
+msgid ""
+"Choose from:\n"
+"\t{choices}"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:299
+msgid "{value!r} is not {choice}."
+msgid_plural "{value!r} is not one of {choices}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\types.py:393
+msgid "{value!r} does not match the format {format}."
+msgid_plural "{value!r} does not match the formats {formats}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\click\types.py:415
+msgid "{value!r} is not a valid {number_type}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:471
+#, python-brace-format
+msgid "{value} is not in the range {range}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:612
+msgid "{value!r} is not a valid boolean."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:636
+msgid "{value!r} is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:826
+msgid "file"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:828
+msgid "directory"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:830
+msgid "path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:881
+msgid "{name} {filename!r} does not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:890
+msgid "{name} {filename!r} is a file."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:898
+msgid "{name} {filename!r} is a directory."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:907
+msgid "{name} {filename!r} is not readable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:916
+msgid "{name} {filename!r} is not writable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:925
+msgid "{name} {filename!r} is not executable."
+msgstr ""
+
+#: .\venv\Lib\site-packages\click\types.py:992
+#, python-brace-format
+msgid "{len_type} values are required, but {len_value} was given."
+msgid_plural "{len_type} values are required, but {len_value} were given."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
+msgid "Messages"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:32
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:33
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:34
+msgid "That page contains no results"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:70
+msgid "Enter a valid domain name."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:153
+#: .\venv\Lib\site-packages\django\forms\fields.py:775
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:200
+msgid "Enter a valid integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:211
+msgid "Enter a valid email address."
+msgstr ""
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:289
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:297
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:309
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+#: .\venv\Lib\site-packages\django\core\validators.py:332
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2220
+#, python-format
+msgid "Enter a valid %(protocol)s address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:311
+msgid "IPv4"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:320
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:43
+msgid "IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:334
+msgid "IPv4 or IPv6"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:375
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:381
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:416
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:425
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:434
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:441
+#, python-format
+msgid ""
+"Ensure this value is a multiple of step size %(limit_value)s, starting from "
+"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:473
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:491
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:514
+#: .\venv\Lib\site-packages\django\forms\fields.py:366
+#: .\venv\Lib\site-packages\django\forms\fields.py:405
+msgid "Enter a number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:516
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:521
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:526
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:597
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\core\validators.py:659
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1600
+#: .\venv\Lib\site-packages\django\forms\models.py:908
+msgid "and"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1602
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:22
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:134
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:136
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:137
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:141
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:180
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1162
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1163
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1165
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1215
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1217
+msgid "String (unlimited)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1326
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1427
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1431
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1566
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1435
+msgid "Date (without time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1562
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1570
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1575
+msgid "Date (with time)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1702
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1704
+msgid "Decimal number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1864
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] "
+"[[HH:]MM:]ss[.uuuuuu] format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1868
+msgid "Duration"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1920
+msgid "Email address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1945
+msgid "File path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2023
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2025
+msgid "Floating point number"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2065
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2067
+msgid "Integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2163
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2180
+msgid "Small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2188
+msgid "IPv4 address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2219
+msgid "IP address"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2310
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2311
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2313
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2364
+msgid "Positive big integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2379
+msgid "Positive integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2394
+msgid "Positive small integer"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2410
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2446
+msgid "Text"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2526
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2530
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2534
+msgid "Time"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2642
+msgid "URL"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2666
+msgid "Raw binary data"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2731
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2733
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:244
+msgid "File"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:420
+msgid "Image"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:24
+msgid "A JSON object"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:978
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r is not a valid choice."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:981
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1275
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1332
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1334
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1382
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:185
+msgid ":?.!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:95
+msgid "This field is required."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:315
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:486
+#: .\venv\Lib\site-packages\django\forms\fields.py:1267
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:509
+#: .\venv\Lib\site-packages\django\forms\fields.py:1268
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:536
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:570
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:571
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:640
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:641
+msgid "No file was submitted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:642
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:644
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:649
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:717
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:889
+#: .\venv\Lib\site-packages\django\forms\fields.py:975
+#: .\venv\Lib\site-packages\django\forms\models.py:1592
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:977
+#: .\venv\Lib\site-packages\django\forms\fields.py:1096
+#: .\venv\Lib\site-packages\django\forms\models.py:1590
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1097
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1339
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1369
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:97
+msgid ":"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:239
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid ""
+"ManagementForm data is missing or has been tampered with. Missing fields: "
+"%(field_names)s. You may need to file a bug report if the issue persists."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:65
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:70
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+msgid "Delete"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:901
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:906
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:913
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:922
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1359
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1450
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1594
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:229
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:527
+msgid "Clear"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:528
+msgid "Currently"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:529
+msgid "Change"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:866
+msgid "Unknown"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:867
+#: .\venv\Lib\site-packages\telepath\tests.py:243
+msgid "Yes"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:868
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:903
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:920
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:922
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:924
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:926
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:928
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:930
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "p.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:75
+msgid "a.m."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "PM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:81
+msgid "AM"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:153
+msgid "midnight"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:155
+msgid "noon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+msgid "Sat"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgid "jan"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:67
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\text.py:278
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:297
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:29
+msgid "Forbidden"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:30
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:34
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:40
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:45
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:54
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:60
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:66
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:353
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:384
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:680
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:720
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:173
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:49
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:51
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\static.py:68
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:8
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:11
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:204
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:208
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
+"configured any URLs."
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:217
+msgid "Django Documentation"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:218
+msgid "Topics, references, &amp; how-to’s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:226
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:227
+msgid "Get started with Django"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:235
+msgid "Django Community"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:82
+msgid "status"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:88
+msgid "enqueued at"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:89
+msgid "started at"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:90
+msgid "finished at"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:92
+msgid "args kwargs"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:94
+msgid "priority"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:96
+msgid "task path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:98
+msgid "queue name"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:99
+msgid "backend name"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:101
+msgid "run after"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:103
+msgid "return value"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:105
+msgid "exception class path"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:106
+msgid "traceback"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:112
+msgid "Task Result"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\backends\database\models.py:113
+msgid "Task Results"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\task.py:48
+msgid "New"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\task.py:49
+msgid "Running"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\task.py:50
+msgid "Failed"
+msgstr ""
+
+#: .\venv\Lib\site-packages\django_tasks\task.py:51
+msgid "Succeeded"
+msgstr ""
+
+#: .\venv\Lib\site-packages\knox\auth.py:43
+msgid "Invalid token header. No credentials provided."
+msgstr ""
+
+#: .\venv\Lib\site-packages\knox\auth.py:46
+msgid "Invalid token header. Token string should not contain spaces."
+msgstr ""
+
+#: .\venv\Lib\site-packages\knox\auth.py:60
+msgid "Invalid token."
+msgstr ""
+
+#: .\venv\Lib\site-packages\knox\auth.py:98
+msgid "User inactive or deleted."
+msgstr ""
+
+#: .\venv\Lib\site-packages\kombu\transport\qpid.py:1311
+#, python-format
+msgid "Attempting to connect to qpid with SASL mechanism %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\kombu\transport\qpid.py:1316
+#, python-format
+msgid "Connected to qpid with SASL mechanism %s"
+msgstr ""
+
+#: .\venv\Lib\site-packages\kombu\transport\qpid.py:1334
+#, python-format
+msgid "Unable to connect to qpid with SASL mechanism %s"
+msgstr ""

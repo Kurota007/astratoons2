@@ -1,0 +1,49 @@
+{% load i18n wagtailadmin_tags %}
+
+<div class="w-field__wrapper">
+    <div class="w-field w-field--boolean_field w-field--checkbox_input">
+        <div class="w-field__input">
+            {% if subscriptions_available %}
+                {% if assinatura and assinatura.esta_ativa %}
+                    <p>
+                        <strong style="color: #22c55e;">
+                            <i class="icon icon-check-circle" aria-hidden="true"></i>
+                            {% trans "Usuário VIP Ativo" %}
+                        </strong>
+                    </p>
+                    <ul>
+                        <li><strong>{% trans "Plano:" %}</strong> {{ assinatura.plano.nome|default:"N/A" }}</li>
+                        <li><strong>{% trans "Expira em:" %}</strong> {{ assinatura.data_fim|date:"d/m/Y H:i" }}</li>
+                    </ul>
+                    <p>
+                        {# Futuramente, aqui pode haver um link para gerenciar a assinatura #}
+                        {# <a href="#" class="button button-small">Gerenciar Assinatura</a> #}
+                    </p>
+                {% else %}
+                    <p>
+                        <strong style="color: #ef4444;">
+                            <i class="icon icon-cross" aria-hidden="true"></i>
+                            {% trans "Usuário não é VIP." %}
+                        </strong>
+                    </p>
+                    <p>
+                        {# Futuramente, aqui pode haver um link para adicionar uma assinatura #}
+                        {# <a href="#" class="button button-small button-secondary">Adicionar Assinatura Manualmente</a> #}
+                    </p>
+                {% endif %}
+            {% else %}
+                <p>
+                    <strong style="color: #f97316;">
+                        <i class="icon icon-warning" aria-hidden="true"></i>
+                        {% trans "App 'subscriptions' não encontrada ou não configurada." %}
+                    </strong>
+                </p>
+            {% endif %}Ent
+        </div>
+        <div class="w-field__help" id="id_vip_status-helpendi. Você já criou o arquivo no local correto.
+
+Peço desculpastext">
+            <p>{% trans "Verifique o status da assinatura VIP deste usuário." %} <a href="{{, a imagem mostra que o caminho que eu indiquei estava errado. O template deveria estar em `accounts/templates/wag planos_vip_url }}">{% trans "Gerenciar Planos VIP" %}</a></p>
+        </div>
+    </div>
+</div>

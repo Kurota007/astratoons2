@@ -1,0 +1,311 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
+{% get_settings %}
+
+{% block title %}Astratoons - Leia seus mangás favoritos{% endblock title %}
+
+{% block body_class %}template-homepage theme-dark{% endblock body_class %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <!-- CSS do Slick Carousel (colado diretamente aqui) -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <style>
+        .releases-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(6, 1fr) !important;
+        }
+        @media (max-width: 1280px) { .releases-grid { grid-template-columns: repeat(5, 1fr) !important; } }
+        @media (max-width: 1024px) { .releases-grid { grid-template-columns: repeat(4, 1fr) !important; } }
+        @media (max-width: 768px) { .releases-grid { grid-template-columns: repeat(3, 1fr) !important; } }
+        @media (max-width: 640px) { .releases-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+        .load-more-container { text-align: center; margin-top: 2rem; }
+
+        /* CSS para garantir que as setas apareçam e o layout fique correto */
+        .slider-wrapper { position: relative; }
+        .slider-wrapper .slick-slide { padding: 0 10px; }
+        .slider-wrapper .slick-list { margin: 0 -10px; }
+        .slick-prev, .slick-next { z-index: 10; width: 40px; height: 40px; }
+        .slick-prev { left: -15px; }
+        .slick-next { right: -15px; }
+        .slick-prev:before, .slick-next:before { font-size: 28px; color: white; opacity: 0.7; }
+        .slick-prev:hover:before, .slick-next:hover:before { opacity: 1; }
+    </style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="main-content-area">
+
+    {% if settings.core.GlobalSettings.livepix_widget_url %}
+    <section class="livepix-widget-section py-8 md:py-12">
+        <div class="container">
+            <h2 class="livepix-widget-title">Apoie Nosso Trabalho! Lembrando site em beta</h2>
+            <p class="livepix-widget-description">
+                Sua contribuição é essencial para manter o Astratoons no ar, com novos capítulos e constantes melhorias para você.
+    Considere fazer uma doação via Pix — é rápido, seguro e ajuda a manter o site 100% livre de anúncios.
+            </p>
+            <div class="livepix-widget-container">
+                <iframe
+                    src="{{ settings.core.GlobalSettings.livepix_widget_url }}"
+                    width="800"
+                    height="200"
+                    title="Widget de Doação LivePix">
+                    Seu navegador não suporta iframes.
+                </iframe>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+  {% if settings.core.GlobalSettings.activate_slider and settings.core.GlobalSettings.slider_items.all %}
+    <section id="home-slider" class="hero-slider-section py-8">
+        <div class="container">
+            <h2 class="section-title slider-main-title">Destaques da Semana</h2>
+            
+            <div class="slider-wrapper">
+                {% for item in settings.core.GlobalSettings.slider_items.all %}
+                <div class="slider-item">
+                     <a href="{{ item.link }}" class="slide-link">
+                         <div class="slide-content">
+                            {% image item.image fill-400x240 format-webp as slide_img %}
+                            <img src="{{ slide_img.url }}" alt="{{ item.caption|default:slide_img.alt|default:'Destaque' }}" class="slide-image">
+                            <div class="slide-text">
+                                {% if item.caption %}<h3 class="slide-title-text">{{ item.caption }}</h3>{% endif %}
+                                 <div class="slide-footer">
+                                    <span class="button button-primary button-small slide-button">Ler agora</span>
+                                 </div>
+                            </div>
+                        </div>
+                     </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% if settings.core.GlobalSettings.activate_premium_banner %}
+    <section class="premium-banner-section">
+        <div class="container">
+            <div class="premium-banner-container">
+                <div class="particles" id="particle-container"></div>
+                <div class="banner-content">
+                    <div class="banner-info">
+                        {% if settings.core.GlobalSettings.premium_banner_badge %}<span class="premium-badge">{{ settings.core.GlobalSettings.premium_banner_badge }}</span>{% endif %}
+                        <h2>{{ settings.core.GlobalSettings.premium_banner_title|default:"Desbloqueie funcionalidades exclusivas" }}</h2>
+                        {% if settings.core.GlobalSettings.premium_banner_price %}<p class="price">{{ settings.core.GlobalSettings.premium_banner_price }}</p>{% endif %}
+                        <a href="/subscriptions/plans/" class="subscribe-button">
+                            {{ settings.core.GlobalSettings.premium_banner_button_text|default:"Assinar Agora" }} →
+                        </a>
+                    </div>
+                    <div class="banner-benefits">
+                        <span class="benefits-badge">VIP</span>
+                        <h3>{{ settings.core.GlobalSettings.premium_banner_benefits_title|default:"Vantagens Premium" }}</h3>
+                        <ul>
+                            {% for benefit in settings.core.GlobalSettings.premium_benefits.all %}
+                                <li>
+                                    {% if benefit.icon == 'lightning' %}<i class="fas fa-bolt"></i>
+                                    {% elif benefit.icon == 'clock' %}<i class="fas fa-clock"></i>
+                                    {% elif benefit.icon == 'book' %}<i class="fas fa-book-open"></i>
+                                    {% else %}<i class="fas fa-check-circle"></i>{% endif %}
+                                    {{ benefit.text }}
+                                </li>
+                            {% empty %}
+                                <li><i class="fas fa-bolt"></i> Leitura sem publicidade</li>
+                                <li><i class="fas fa-clock"></i> Acesso antecipado a novos capítulos</li>
+                                <li><i class="fas fa-book-open"></i> Conteúdo exclusivo premium</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <section class="latest-releases-section py-8">
+        <div class="container">
+            <div class="section-header flex justify-between items-center">
+                <h2 class="section-title">Últimos Lançamentos</h2>
+                {% if settings.core.GlobalSettings.all_mangas_page %}<a href="{% pageurl settings.core.GlobalSettings.all_mangas_page %}" class="section-view-all-link button button-outline button-small">Ver tudo</a>{% endif %}
+            </div>
+            {% if latest_items %}
+                <div id="manga-grid-container" class="manga-grid releases-grid">
+                    {% include "includes/manga_card_list.html" with mangas_to_load=latest_items %}
+                </div>
+                {% if has_more_items %}
+                <div class="load-more-container">
+                    <button id="load-more-btn" class="button button-primary" data-next-page="2">Carregar Mais</button>
+                </div>
+                {% endif %}
+            {% else %}
+                <p class="empty-list-message">Nenhum lançamento encontrado recentemente.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="most-viewed-section py-8">
+        <div class="container">
+             <div class="section-header flex justify-between items-center">
+                <h2 class="section-title">Ranking</h2>
+                 {% if settings.core.GlobalSettings.popular_mangas_page %}<a href="{% pageurl settings.core.GlobalSettings.popular_mangas_page %}" class="section-view-all-link button button-outline button-small">Ver todos</a>{% endif %}
+            </div>
+            {% if popular_mangas %}
+                <div class="manga-list-detailed space-y-3 md:space-y-4">
+                    {% for manga_item_pop in popular_mangas %}
+                        <div class="manga-list-item-ranked">
+                            <div class="ranking-number">{{ forloop.counter }}</div>
+                            <div class="manga-list-item-detailed">
+                                <a href="{% pageurl manga_item_pop %}" class="flex">
+                                    <div class="manga-list-item-image-wrapper">
+                                        {% if manga_item_pop.cover %}{% image manga_item_pop.cover fill-80x112 format-webp as capa_pop_img %}<img src="{{ capa_pop_img.url }}" alt="{{ manga_item_pop.title }} Capa" class="manga-list-item-image">
+                                        {% else %}<div class="manga-list-item-image placeholder flex items-center justify-center text-lg">?</div>{% endif %}
+                                    </div>
+                                    <div class="manga-list-item-content">
+                                        <div class="manga-list-item-header"><h3 class="manga-list-item-title truncate">{{ manga_item_pop.title }}</h3></div>
+                                        <div class="manga-list-item-genres flex flex-wrap gap-1">
+                                             {% for genre in manga_item_pop.genre.all|slice:":2" %}<span class="genre-tag">{{ genre.name }}</span>{% endfor %}
+                                        </div>
+                                        <div class="manga-list-item-footer">
+                                            {% if manga_item_pop.views_count is not None %}<span class="manga-list-item-views"><i class="fas fa-eye"></i> {{ manga_item_pop.views_count }}</span>{% endif %}
+                                            <span class="button button-primary button-small">Ler</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% empty %}
+                         <p class="empty-list-message">Nenhum mangá popular encontrado.</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="loading-message text-center">Carregando populares...</p>
+            {% endif %}
+        </div>
+    </section>
+
+    {% if settings.core.GlobalSettings.donation_link or settings.core.GlobalSettings.paypal_link %}
+    <section class="donation-section py-12 text-center">
+        <div class="container donation-container">
+             <div class="donation-icon"><i class="fas fa-hand-holding-heart"></i></div>
+            <h2 class="donation-title text-2xl font-bold mb-3">Fortaleça a Comunidade Astratoons</h2>
+            <div class="donation-message">
+                {% if settings.core.GlobalSettings.donation_message %}{{ settings.core.GlobalSettings.donation_message|richtext }}{% else %}<p>Sua doação nos ajuda a manter o site funcionando, cobrir custos de servidor e tradução, além de trazer mais novidades e melhorias para toda a comunidade!</p>{% endif %}
+            </div>
+            <div class="donation-buttons mt-6">
+                {% if settings.core.GlobalSettings.donation_link %}<a href="{{ settings.core.GlobalSettings.donation_link }}" target="_blank" rel="noopener noreferrer" class="button button-donate"><i class="fab fa-pix"></i> Doar com Live Pix</a>{% endif %}
+                {% if settings.core.GlobalSettings.paypal_link %}<a href="{{ settings.core.GlobalSettings.paypal_link }}" target="_blank" rel="noopener noreferrer" class="button button-donate paypal"><i class="fab fa-paypal"></i> Doar com Live pix</a>{% endif %}
+            </div>
+            <p class="donation-note mt-4">*Toda contribuição é voluntária e imensamente apreciada!</p>
+        </div>
+    </section>
+    {% endif %}
+
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+   {{ block.super }}
+
+   <!-- jQuery e Slick Carousel JS (colados diretamente aqui) -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script>
+      // Envolve todo o código em um listener do jQuery para garantir que ele rode após o carregamento
+      $(document).ready(function(){
+        // Lógica das partículas (permanece a mesma)
+        try {
+            const particleContainer = document.getElementById('particle-container');
+            if (particleContainer) {
+                const particleCount = 30;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    const size = Math.random() * 5 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.left = `${Math.random() * 100}%`;
+                    const duration = Math.random() * 15 + 10;
+                    const delay = Math.random() * 10;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `-${delay}s`;
+                    particle.style.setProperty('--vx', Math.random());
+                    particleContainer.appendChild(particle);
+                }
+            }
+        } catch (error) { console.error("Homepage JS: ERRO ao criar partículas:", error); }
+
+        /* ================================================== */
+        /* === ATIVAÇÃO DO SLIDER MULTI-ITENS COM SLICK === */
+        /* ================================================== */
+        try {
+            $('.slider-wrapper').slick({
+                dots: false,
+                infinite: true,
+                speed: 300,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                autoplay: true,
+                autoplaySpeed: 4000,
+                arrows: true,
+                responsive: [
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 640,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                            arrows: false
+                        }
+                    }
+                ]
+            });
+        } catch (error) {
+            console.error("ERRO ao inicializar o Slick Carousel:", error);
+        }
+
+        // Lógica do "Carregar Mais" (permanece a mesma)
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        if (loadMoreBtn) {
+            let currentPage = 2;
+            loadMoreBtn.addEventListener('click', function() {
+                const url = `{% url 'manga:load_more_releases' %}?page=${currentPage}`;
+                this.textContent = 'Carregando...';
+                this.disabled = true;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        const grid = document.getElementById('manga-grid-container');
+                        if (data.html.trim() !== "") {
+                            grid.insertAdjacentHTML('beforeend', data.html);
+                        }
+                        if (data.has_next) {
+                            currentPage++;
+                            this.textContent = 'Carregar Mais';
+                            this.disabled = false;
+                        } else {
+                            this.remove();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao carregar mais itens:', error);
+                        this.textContent = 'Erro ao carregar. Tente novamente.';
+                        this.disabled = false;
+                    });
+            });
+        }
+      });
+    </script>
+{% endblock extra_js %}

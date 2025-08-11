@@ -1,0 +1,180 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags static wagtailimages_tags %}
+
+{% block titletag %}{% trans "Upar Capítulos - Selecione a Novel" %}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        .novel-upload-selection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        .novel-upload-card {
+            border: 1px solid var(--w-color-border-furniture, #3a3a3a);
+            border-radius: 6px;
+            background-color: var(--w-color-surface-raised, #2e2e2e);
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s ease-in-out;
+        }
+        .novel-upload-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .novel-upload-card .cover-image-container {
+            background-color: var(--w-color-surface-field, #202324);
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .novel-upload-card img.cover-image {
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 3px;
+            display: block;
+        }
+        .novel-upload-card .novel-details {
+            flex-grow: 1; 
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: center !important;
+        }
+        .novel-upload-card h3 {
+            min-height: 2.4em;
+        }
+        
+        /* Estilo para o Dropdown */
+        .card-actions {
+            position: relative;
+        }
+
+        /* ===== NOVO ESTILO PARA ALINHAR O ÍCONE ===== */
+        .card-actions .dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            bottom: 110%; 
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: var(--w-color-surface-raised, #2e2e2e);
+            border: 1px solid var(--w-color-border-furniture, #3a3a3a);
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            list-style: none;
+            padding: 5px 0;
+            margin: 0;
+        }
+        .card-actions.open .dropdown-menu {
+            display: block;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 8px 15px;
+            color: var(--w-color-text-primary, #ffffff);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .dropdown-menu a:hover {
+            background-color: var(--w-color-surface-field, #202324);
+        }
+        .dropdown-menu .icon {
+            margin-right: 0.8em;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% trans "Upar Capítulos - Selecione a Novel" as page_title_trans %}
+    {% include "wagtailadmin/shared/header.html" with title=page_title_trans icon=header_icon %}
+
+    <div class="nice-padding">
+        {% if not novels %}
+            <div class="help-block help-info">
+                <p>{% trans "Nenhuma novel encontrada. Por favor, crie uma novel primeiro." %}</p>
+                <a href="{% url 'wagtailadmin_explore_root' %}" class="button">{% trans "Ir para Páginas" %}</a>
+            </div>
+        {% else %}
+            <div class="novel-upload-selection-grid">
+                {% for novel_page in novels %}
+                    <div class="novel-upload-card">
+                        <div class="cover-image-container">
+                            {% if novel_page.specific.cover_image %}
+                                {% image novel_page.specific.cover_image fill-200x280 as card_cover %}
+                                <img src="{{ card_cover.url }}" alt="{{ novel_page.title }}" class="cover-image">
+                            {% else %}
+                                <div class="placeholder-cover" style="height: 280px;">
+                                    <span class="icon icon-image" aria-hidden="true"></span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="novel-details">
+                            <h3>{{ novel_page.title }}</h3>
+                            <p class="chapter-count">
+                                {% with chapter_count=novel_page.get_children.type.specific.live.count %}
+                                    {% blocktrans count counter=chapter_count %}{{ counter }} Capítulo{% plural %}{{ counter }} Capítulos{% endblocktrans %}
+                                {% endwith %}
+                            </p>
+                        </div>
+                        
+                        <div class="card-actions">
+                            <!-- ===== BOTÃO ATUALIZADO COM O ÍCONE ===== -->
+                            <button type="button" class="button button-primary dropdown-toggle" style="width: 100%;">
+                                <span>Opções de Upload</span>
+                                <span class="icon icon-arrow-down-open" aria-hidden="true"></span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="{% url 'novels:novel_chapter_uploader_add_single' novel_id=novel_page.id %}">
+                                    <span class="icon icon-plus" aria-hidden="true"></span>Capítulo Único
+                                </a>
+                                <a href="{% url 'novels:novel_chapter_uploader_add_zip' novel_id=novel_page.id %}">
+                                    <span class="icon icon-doc-full-inverse" aria-hidden="true"></span>ZIP (Arquivos TXT)
+                                </a>
+                                <a href="{% url 'novels:novel_chapter_uploader_add_pdf' novel_id=novel_page.id %}">
+                                    <span class="icon icon-doc-full" aria-hidden="true"></span>PDF (Divide Capítulos)
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+            toggle.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const currentActions = this.closest('.card-actions');
+                
+                document.querySelectorAll('.card-actions.open').forEach(function(openMenu) {
+                    if (openMenu !== currentActions) {
+                        openMenu.classList.remove('open');
+                    }
+                });
+
+                currentActions.classList.toggle('open');
+            });
+        });
+
+        window.addEventListener('click', function() {
+            document.querySelectorAll('.card-actions.open').forEach(function(openMenu) {
+                openMenu.classList.remove('open');
+            });
+        });
+    });
+    </script>
+{% endblock %}

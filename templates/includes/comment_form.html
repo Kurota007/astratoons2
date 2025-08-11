@@ -1,0 +1,83 @@
+{# templates/includes/comment_form.html #}
+{% load i18n %} {# Adicione 'crispy_forms_tags' se usar crispy #}
+
+{# Verifica se o usuário está logado para exibir o formulário #}
+{% if request.user.is_authenticated %}
+    <div class="mb-8"> {# Mantém a margem inferior do design original #}
+        <div class="flex items-start space-x-4">
+            {# Avatar do usuário logado - Adapte conforme seu UserProfile #}
+            <div class="avatar-placeholder flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-[#00B982] text-white font-bold">
+                {# Tenta pegar a primeira letra do username, ou 'U' como fallback #}
+                {{ request.user.username|first|upper|default:"U" }}
+            </div>
+
+            <div class="flex-1">
+                {# Verifica se o formulário foi passado pela view #}
+                {% if form %}
+                    <form method="post" action="{{ request.path }}#comments-section" id="main-comment-form"> {# Envia para a mesma página, ancora nos comentários #}
+                        {% csrf_token %}
+
+                        {# Campo de texto do comentário - Adapte 'text' se o nome no seu form for diferente #}
+                        {% if form.text %}
+                             <textarea name="{{ form.text.name }}" id="{{ form.text.id_for_label }}"
+                                      class="w-full bg-[#0a0a0a] border border-[#333] text-white rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-[#00B982]"
+                                      rows="3"
+                                      placeholder="{% trans 'Adicione um comentário...' %}"
+                                      required>{{ form.text.value|default:"" }}</textarea>
+                             {% if form.text.errors %}
+                                 <p class="text-red-500 text-sm mt-1">{{ form.text.errors|striptags }}</p>
+                             {% endif %}
+                        {% else %}
+                             <p class="text-red-500">{% trans "Campo de texto do formulário não encontrado." %}</p>
+                        {% endif %}
+
+                        {# Input oculto para parent ID (para replies) - JS preenche #}
+                        <input type="hidden" name="parent" id="id_parent">
+
+                         {# Se houver campo is_spoiler no form: #}
+                         {% if form.is_spoiler %}
+                         <div class="mt-2 flex items-center">
+                             <input type="checkbox" name="{{ form.is_spoiler.name }}" id="{{ form.is_spoiler.id_for_label }}" {% if form.is_spoiler.value %}checked{% endif %}>
+                             <label for="{{ form.is_spoiler.id_for_label }}" class="ml-2 text-sm text-gray-400">{{ form.is_spoiler.label }}</label>
+                         </div>
+                         {% endif %}
+
+
+                        <div class="mt-2 flex justify-between items-center">
+                            {# Botões extras (Emoji, Imagem) - Funcionalidade requer JS/Backend adicional #}
+                            <div class="flex items-center space-x-2">
+                                <button type="button" class="text-gray-400 hover:text-[#00B982]" title="Emojis (Não funcional)">
+                                    <i class="far fa-smile"></i>
+                                </button>
+                                <button type="button" class="text-gray-400 hover:text-[#00B982]" title="Anexar Imagem (Não funcional)">
+                                    <i class="fas fa-image"></i>
+                                </button>
+                            </div>
+                            {# Botão de Envio #}
+                            <button type="submit" class="btn-primary px-4 py-2 rounded-lg">
+                                {% trans "Comentar" %}
+                            </button>
+                        </div>
+                    </form>
+                {% else %}
+                    <p class="text-red-500">{% trans "Erro ao carregar o formulário de comentário." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    {# --- CORREÇÃO APLICADA AQUI --- #}
+    {# Gera a URL de login FORA do blocktrans #}
+    {% url 'account_login' as login_url %}
+
+    {# Mensagem para usuários não logados #}
+    <div class="mb-8 text-center p-4 bg-[#171717] rounded-lg">
+        <p>
+            {# Usa 'blocktrans' com 'with' para passar a URL gerada com o parâmetro 'next' #}
+            {% blocktrans with login_url_with_next=login_url|add:"?next="|add:request.path|add:"#comments-section" %}
+                Você precisa <a href="{{ login_url_with_next }}" class="text-[#00B982] hover:underline font-medium">entrar</a> para comentar.
+            {% endblocktrans %}
+        </p>
+    </div>
+    {# --- FIM DA CORREÇÃO --- #}
+{% endif %}

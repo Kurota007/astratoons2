@@ -1,0 +1,295 @@
+/* Importa Poppins se não estiver no base.html ou CSS global */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+body.template-login { /* Aplicar especificamente para a página de login */
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg-color, #000000);
+    color: var(--main-text-color, #ffffff);
+    /* Padding top para compensar navbar fixa (se existir no base.html) */
+    /* O padding-top deve ser gerenciado pelo template base se a navbar for fixa */
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4rem; /* Mantenha se o base não lidar com isso */
+    padding-bottom: 4rem;
+}
+
+/* Estilos baseados no seu CSS original */
+.btn-primary {
+    background-color: var(--button-primary-bg, #00B982);
+    color: var(--button-primary-text, white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Garante que links pareçam botões */
+}
+.btn-primary:hover {
+    background-color: var(--button-primary-hover-bg, #008a63);
+    transform: translateY(-2px);
+}
+.btn-secondary {
+    background-color: var(--button-secondary-bg, #171717);
+    color: var(--button-secondary-text, white);
+    border: 1px solid var(--button-secondary-border, #00B982);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.btn-secondary:hover {
+    background-color: var(--button-secondary-hover-bg, rgba(0, 185, 130, 0.1));
+}
+
+.input-field-container {
+     margin-bottom: 1rem;
+}
+.input-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #cbd5e1; /* text-gray-300 */
+    margin-bottom: 0.25rem;
+}
+.input-wrapper {
+    position: relative;
+}
+/* Aplica estilo ao input renderizado pelo Django */
+.input-wrapper input[type="text"],
+.input-wrapper input[type="email"],
+.input-wrapper input[type="password"] {
+    background-color: var(--input-bg-color, #171717);
+    border: 1px solid var(--input-border-color, #333);
+    color: var(--input-text-color, white);
+    border-radius: 0.5rem;
+    padding: 0.75rem 2.75rem 0.75rem 1rem; /* Ajustado padding para ícone à direita */
+    width: 100%;
+    transition: all 0.3s ease;
+    font-size: 0.875rem;
+    box-sizing: border-box; /* Importante para padding não aumentar tamanho total */
+}
+.input-wrapper input::placeholder {
+     color: #6b7280;
+}
+.input-wrapper input:focus {
+    border-color: var(--accent-color, #00B982);
+    box-shadow: 0 0 0 2px rgba(0, 185, 130, 0.2);
+    outline: none;
+}
+.input-icon-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding-right: 0.75rem;
+}
+.input-icon {
+    color: #6b7280;
+}
+.input-icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 0.25rem;
+    line-height: 1; /* Evita altura extra */
+}
+.input-icon-button:hover {
+    color: #9ca3af;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #666;
+    margin: 20px 0;
+    font-size: 0.875rem;
+}
+.divider::before,
+.divider::after {
+    content: ""; flex: 1; border-bottom: 1px solid #333;
+}
+.divider::before { margin-right: 10px; }
+.divider::after { margin-left: 10px; }
+
+.login-card {
+    background: var(--card-bg-gradient, linear-gradient(135deg, rgba(23, 23, 23, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%));
+    background-color: var(--card-bg-color, #171717);
+    border: 1px solid var(--card-border-color, #333);
+    box-shadow: 0 10px 30px rgba(0, 185, 130, 0.1);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    max-width: 28rem;
+    margin: auto;
+    width: 100%; /* Garante que ocupe espaço em telas menores */
+}
+.login-card .text-center { text-align: center; }
+.login-card .mb-8 { margin-bottom: 2rem; }
+.login-card .mb-2 { margin-bottom: 0.5rem; }
+.login-card .text-3xl { font-size: 1.875rem; }
+.login-card .font-bold { font-weight: 700; }
+.login-card .text-white { color: #ffffff; }
+.login-card .text-gray-400 { color: #9ca3af; }
+
+.social-btn {
+    background-color: #171717;
+    border: 1px solid #333;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+    margin-bottom: 0.75rem; /* Adiciona espaço entre botões sociais */
+}
+.social-btn:last-child {
+    margin-bottom: 0;
+}
+.social-btn:hover {
+    background-color: rgba(0, 185, 130, 0.1);
+    border-color: #00B982;
+}
+.social-btn i {
+    margin-right: 8px;
+}
+/* Cores específicas para ícones sociais (opcional) */
+.social-btn .fa-google { color: #DB4437; }
+.social-btn .fa-discord { color: #7289DA; }
+/* Adicione cores para Facebook, Twitter, etc. se precisar */
+
+
+.remember-forgot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+.remember-me input[type="checkbox"] {
+    height: 1rem;
+    width: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #4b5563;
+    color: #00B982;
+    margin-right: 0.5rem;
+    background-color: #374151;
+    cursor: pointer;
+    flex-shrink: 0; /* Evita que o checkbox encolha */
+    appearance: none; /* Remove estilo padrão */
+    position: relative; /* Para o check customizado */
+}
+.remember-me input[type="checkbox"]:checked {
+    background-color: #00B982;
+    border-color: #00B982;
+}
+/* Adiciona o "check" customizado */
+.remember-me input[type="checkbox"]:checked::before {
+    content: '\f00c'; /* Código do ícone check do FontAwesome */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    font-size: 0.8rem;
+}
+
+.remember-me input[type="checkbox"]:focus {
+     box-shadow: 0 0 0 2px rgba(0, 185, 130, 0.2);
+     outline: none;
+}
+.remember-me label {
+    color: #d1d5db;
+    cursor: pointer;
+    user-select: none; /* Evita seleção de texto no label */
+    padding-top: 2px; /* Alinhamento vertical fino */
+}
+
+.forgot-password a {
+    color: #00B982;
+    text-decoration: none;
+}
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.register-link-container {
+     text-align: center;
+     margin-top: 1.5rem;
+}
+ .register-link-container p {
+      font-size: 0.875rem;
+      color: #9ca3af;
+ }
+ .register-link-container a {
+      color: #00B982;
+      font-weight: 500;
+      text-decoration: none;
+ }
+ .register-link-container a:hover {
+     text-decoration: underline;
+ }
+
+/* Mensagens de Erro/Sucesso */
+.django-messages { margin-bottom: 1.5rem; }
+.message { padding: 0.75rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; border-width: 1px; border-style: solid; margin-bottom: 0.75rem; }
+.message:last-child { margin-bottom: 0; }
+.message.success { background-color: rgba(16, 185, 129, 0.1); border-color: #059669; color: #a7f3d0; }
+.message.error { background-color: rgba(239, 68, 68, 0.1); border-color: #dc2626; color: #fca5a5; }
+.message.info { background-color: rgba(59, 130, 246, 0.1); border-color: #2563eb; color: #93c5fd; }
+.message.warning { background-color: rgba(245, 158, 11, 0.1); border-color: #d97706; color: #fcd34d; }
+
+.field-errors p {
+     color: #f87171;
+     font-size: 0.75rem;
+     margin-top: 0.25rem;
+}
+
+/* Estilos para o formulário do allauth */
+.auth-form .space-y-4 > * + * { margin-top: 1rem; } /* Simula space-y-4 */
+.auth-form .w-full { width: 100%; }
+.auth-form .mr-2 { margin-right: 0.5rem; }
+
+/* Adiciona classes para os inputs do allauth se necessário */
+#id_login, #id_password, #id_remember {
+    /* Herda estilos de .input-field via CSS ou aplica aqui */
+}
+#id_login, #id_password { /* Garante que input do allauth tenha estilo */
+     background-color: var(--input-bg-color, #171717);
+     border: 1px solid var(--input-border-color, #333);
+     color: var(--input-text-color, white);
+     border-radius: 0.5rem;
+     padding: 0.75rem 2.75rem 0.75rem 1rem;
+     width: 100%;
+     transition: all 0.3s ease;
+     font-size: 0.875rem;
+     box-sizing: border-box;
+}
+#id_remember { /* Estilo do checkbox */
+    height: 1rem; width: 1rem; border-radius: 0.25rem; border: 1px solid #4b5563; color: #00B982; margin-right: 0.5rem; background-color: #374151; cursor: pointer; flex-shrink: 0; appearance: none; position: relative;
+}
+#id_remember:checked { background-color: #00B982; border-color: #00B982; }
+#id_remember:checked::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.7); font-size: 0.8rem; }
+#id_remember:focus { box-shadow: 0 0 0 2px rgba(0, 185, 130, 0.2); outline: none; }

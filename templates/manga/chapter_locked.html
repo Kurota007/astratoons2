@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load i18n wagtailcore_tags %}
+
+{% block title %}Capítulo Bloqueado - {{ chapter.title }}{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .locked-page-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 60vh;
+            padding: 40px 20px;
+            color: #e0e0e0;
+        }
+        .locked-icon {
+            font-size: 4rem;
+            color: #0d6efd; /* Azul do seu tema */
+            margin-bottom: 1.5rem;
+        }
+        .locked-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+        .locked-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 1.5rem;
+            color: #b0b0b0;
+        }
+        .locked-timer-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            font-size: 1.1rem; /* Adicionado para consistência */
+        }
+        .locked-separator {
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .vip-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #ffd700; /* Ouro */
+            color: #1a1a1a;
+            font-weight: bold;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .vip-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            color: #1a1a1a;
+        }
+        .vip-button .fa-crown {
+            font-size: 1.1em;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="locked-page-container">
+    <i class="fas fa-lock locked-icon"></i>
+    <h1 class="locked-title">{% trans "Capítulo Bloqueado" %}</h1>
+
+    <p class="locked-description">
+        {% blocktrans with chapter_title=chapter.title manga_title=manga.title %}
+            O Capítulo {{ chapter_title }} de "{{ manga_title }}" é um conteúdo exclusivo.
+        {% endblocktrans %}
+    </p>
+
+    {% comment %} ---- INÍCIO DA CORREÇÃO APLICADA AQUI ---- {% endcomment %}
+    {% if vip_status.unlock_date %}
+        <div class="locked-timer-box">
+            Este capítulo será desbloqueado gratuitamente em aproximadamente <strong>{{ vip_status.unlock_date|timeuntil }}</strong>.
+        </div>
+    {% endif %}
+    {% comment %} ---- FIM DA CORREÇÃO ---- {% endcomment %}
+
+    <div class="locked-separator">
+        {% trans "Não quer esperar?" %}
+    </div>
+
+    <a href="{% url 'subscriptions:plans_page' %}" class="vip-button">
+        <i class="fas fa-crown"></i>
+        <span>{% trans "Torne-se VIP Agora!" %}</span>
+    </a>
+
+</div>
+{% endblock %}

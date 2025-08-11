@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Sair da Conta" %}{% endblock %}
+
+{% block body_class %}template-logout-confirm theme-dark{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {# --- LINK CSS EXTERNO --- #}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/account_logout.css' %}">
+    {# ------------------------ #}
+{% endblock %}
+
+{% block content %}
+<main class="logout-confirmation-wrapper"> {# Wrapper principal #}
+    <div class="logout-card">
+        <div class="logout-icon-wrapper">
+            <i class="fas fa-sign-out-alt logout-icon"></i>
+        </div>
+        <h3>{% trans "Sair da conta" %}</h3>
+
+        <div class="logout-text-content">
+            <p>
+                {% blocktrans %}Tem certeza que deseja deslogar da sua conta?{% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans %}Você precisará fazer login novamente para acessar seus favoritos e histórico.{% endblocktrans %}
+            </p>
+        </div>
+
+        {# Formulário real do Allauth para POST do logout #}
+        <form method="post" action="{% url 'account_logout' %}" id="logoutForm">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+
+            <div class="logout-actions">
+                {# Botão Cancelar (pode voltar para a página anterior ou home) #}
+                {# Allauth não tem botão de cancelar, mas podemos adicionar um link visual #}
+                <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="button btn-secondary">
+                     <i class="fas fa-times mr-2"></i>{% trans "Cancelar" %}
+                </a>
+
+                {# Botão Confirmar (faz o POST) #}
+                <button type="submit" class="button btn-danger" id="confirm-logout">
+                    <i class="fas fa-sign-out-alt mr-2"></i>{% trans "Sim, sair" %}
+                </button>
+            </div>
+        </form>
+
+    </div> {# Fim .logout-card #}
+</main>
+{% endblock content %}
+
+
+{% block extra_js %}
+<script>
+    // Adiciona um feedback visual de "loading" ao botão de confirmação
+    const logoutForm = document.getElementById('logoutForm');
+    const confirmButton = document.getElementById('confirm-logout');
+
+    if (logoutForm && confirmButton) {
+        logoutForm.addEventListener('submit', function() {
+            // Altera o texto e adiciona ícone de spin ao confirmar
+            confirmButton.disabled = true;
+            confirmButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saindo...';
+        });
+    }
+
+    // O JS de cancelamento original foi removido pois agora o link 'Cancelar'
+    // tenta voltar à página anterior ou vai para a home.
+</script>
+{% endblock %}

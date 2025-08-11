@@ -1,0 +1,146 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<style>
+    .manga-card-simple-image-wrapper {
+        position: relative;
+        display: block;
+    }
+    .manga-card-simple-image-wrapper .vip-badge {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        background-color: #ffd700;
+        color: #1a1a1a;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .manga-card-simple-image-wrapper .status-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        color: #ffffff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        z-index: 10;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .manga-card-simple-image-wrapper .scanlator-badge {
+        position: absolute;
+        left: 8px;
+        background-color: #374151;
+        color: #e5e7eb;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+    .scanlator-badge.has-vip-above {
+        top: 40px;
+    }
+    .scanlator-badge:not(.has-vip-above) {
+        top: 8px;
+    }
+    .latest-chapters-list-on-card .fa-crown {
+        color: #ffd700;
+        font-size: 0.8em;
+        margin-right: 4px;
+        vertical-align: middle;
+    }
+    /* Adicionado para estilizar o ícone de música de forma consistente */
+    .latest-chapters-list-on-card .fa-music {
+        color: #a78bfa; /* Cor roxa, igual à da página de detalhes */
+        font-size: 0.8em;
+        margin-left: 6px;
+        vertical-align: middle;
+    }
+    .manga-card-simple-content {
+        margin-top: 0.5rem;
+    }
+    .manga-card-simple-title {
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+{% for item in mangas_to_load %}
+    <div class="manga-card-simple">
+        <a href="{% pageurl item %}" class="manga-card-simple-image-wrapper">
+            {% if item.specific.cover %}
+                {% image item.specific.cover fill-250x350 format-webp as capa_img %}
+                <img src="{{ capa_img.url }}" alt="{{ item.title }} Capa" class="manga-card-simple-image">
+            {% else %}
+                <div class="manga-card-simple-image placeholder flex items-center justify-center">?</div>
+            {% endif %}
+
+            {% if item.specific.chapters_are_vip or item.specific.has_vip_chapters %}
+                <span class="vip-badge"><i class="fas fa-crown"></i> VIP</span>
+            {% endif %}
+
+            {% if item.specific.scanlator %}
+                <span class="scanlator-badge {% if item.specific.chapters_are_vip or item.specific.has_vip_chapters %}has-vip-above{% endif %}">
+                    {{ item.specific.scanlator }}
+                </span>
+            {% endif %}
+            
+            {% with status_badge=item.specific.display_status %}
+                {% if status_badge %}
+                    <span class="status-badge" style="background-color: {{ status_badge.color }};">
+                        {{ status_badge.text }}
+                    </span>
+                {% endif %}
+            {% endwith %}
+        </a>
+        <div class="manga-card-simple-content">
+            <h3 class="manga-card-simple-title">
+                <a href="{% pageurl item %}">{{ item.title }}</a>
+            </h3>
+            
+            {% with recent_chapters_list=item.specific.get_recent_chapters %}
+                {% if recent_chapters_list %}
+                    <ul class="latest-chapters-list-on-card">
+                        {% for chapter in recent_chapters_list|slice:":3" %}
+                            <li>
+                                {% if item.specific.content_type.model == 'mangapage' %}
+                                    <a href="{% url 'manga:chapter_reader' manga_slug=item.slug chapter_slug=chapter.slug %}" title="{{ chapter.title|default:'' }}">
+                                {% else %}
+                                    <a href="{% pageurl chapter %}" title="{{ chapter.title|default:'' }}">
+                                {% endif %}
+                                        <span class="chapter-text">
+                                            {% if chapter.is_effectively_vip %}
+                                                <i class="fas fa-crown" title="Capítulo VIP"></i>
+                                            {% endif %}
+                                            Cap. {{ chapter.chapter_number }}
+                                            
+                                            {# --- ADICIONADO AQUI --- #}
+                                            {# Verifica se o capítulo tem música e exibe o ícone #}
+                                            {% if chapter.background_music %}
+                                                <i class="fas fa-music" title="Contém música"></i>
+                                            {% endif %}
+                                        </span>
+                                        {% with badge=chapter.get_badge_info %}{% if badge.show %}<span class="new-chapter-badge">{% if badge.image_url %}<img src="{{ badge.image_url }}" alt="{{ badge.text|default:'Novo' }}" class="new-chapter-badge-image">{% else %}{{ badge.text }}{% endif %}</span>{% endif %}{% endwith %}
+                                    </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="manga-card-simple-chapter">
+                        <span class="text-xs">Nenhum capítulo</span>
+                    </p>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+{% endfor %}

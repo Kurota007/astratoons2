@@ -1,0 +1,36 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{% blocktrans with title=novel.title %}Upload de PDF(s) para {{ title }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=page_title icon=header_icon %}
+
+    <div class="nice-padding">
+        <div class="w-card w-mb-4">
+            <div class="w-card__content">
+                <p class="w-mb-2">{% trans "Você está upando capítulos para a obra:" %}</p>
+                <h2 class="w-mb-4">{{ novel.title }}</h2>
+
+                <form action="{{ action_url }}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <ul class="w-list-unstyled">
+                        <li class="w-field__wrapper w-mb-4">
+                            <label for="id_pdf_files" class="w-label">Arquivo(s) .PDF para Dividir</label>
+                            <div class="w-field__input">
+                                <input type="file" name="pdf_files" multiple required id="id_pdf_files" class="w-w-full">
+                            </div>
+                            <p class="help">Envie um ou mais arquivos .pdf. Eles serão processados em ordem alfabética.</p>
+                        </li>
+                    </ul>
+                    
+                    <button type="submit" class="button">
+                        <span class="w-icon w-icon-upload" aria-hidden="true"></span>
+                        {% trans "Upar e Dividir PDF(s)" %}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+{% load comment_tags reaction_tags %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags humanize %}
+{% get_settings %}
+
+{% block title %}{% if manga %}{{ manga.title }} - {% endif %}Capítulo {{ page.chapter_number }}{% endblock %}
+
+{% block body_class %}template-chapterpage theme-dark reading-mode-vertical{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chapter-image-canvas { margin: 0; padding: 0; display: block; max-width: 100%; width: 100%; height: auto; min-height: 200px; background-color: #2b2c2e; }
+    .chapter-image { display: block; max-width: 100%; width: 100%; height: auto; margin: 0 auto; background-color: #1a1a1a; }
+    .chapter-navigation-top { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background-color: rgba(20, 20, 20, 0.9); backdrop-filter: blur(5px); height: 60px; display: flex; align-items: center; padding: 0 1rem; transition: top 0.3s ease-in-out; }
+    .chapter-navigation-top.hidden { top: -70px; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .nav-left, .nav-right { flex: 0 1 auto; }
+    .nav-center { flex: 1 1 auto; text-align: center; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+    .series-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+    .series-title-nav { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1rem; margin: 0; }
+    .chapter-title-nav { font-size: 0.8rem; opacity: 0.7; margin: 0; }
+    .chapter-reading-main-content-wrapper { padding-top: 70px; }
+    .chapter-comments-section { background-color: #0D0D0D; border-top: 1px solid #343a40; }
+    .reactions-container { border-bottom: 1px solid var(--color-border, #27272a); padding-bottom: 1.5rem; margin-bottom: 1.5rem; }
+    .reactions-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; text-align: center; color: var(--color-text, #e0e0e0); }
+    .reactions-buttons-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 450px; margin: 0 auto; }
+    .reaction-button { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; background-color: transparent; border: 2px solid var(--color-card-background, #18181b); padding: 0.75rem 1rem; border-radius: 8px; cursor: pointer; transition: all 0.2s ease-in-out; min-width: 90px; color: inherit; }
+    .reaction-button:hover, .reaction-button.active { border-color: var(--color-accent, #00B982); background-color: rgba(0, 185, 130, 0.1); }
+    .reaction-button.disabled { cursor: not-allowed; opacity: 0.5; }
+    .reaction-icon-img { width: 32px; height: 32px; object-fit: contain; }
+    .reaction-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text-light, #a0a0a0); }
+    .reaction-count { font-size: 0.8rem; font-weight: bold; color: var(--color-text, #e0e0e0); }
+    .floating-action-buttons { position: fixed; bottom: 20px; right: 20px; z-index: 1050; display: flex; flex-direction: column; gap: 10px; }
+    .fab-button { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out, background-color 0.3s ease; text-decoration: none; color: #fff; }
+    .fab-button:hover { transform: scale(1.1); }
+    .fab-scroll-top { background-color: #36363c; font-size: 24px; opacity: 0; visibility: hidden; transform: translateY(10px); }
+    .fab-scroll-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+    .fab-comments { background: #1c1c1e; font-size: 24px; }
+    .fab-music { background-color: #6c757d; font-size: 22px; }
+    .fab-music.playing { background-color: var(--color-accent, #00B982); }
+    .bgm-indicator { color: #6c757d; font-size: 1.3rem; margin-left: 15px; cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; vertical-align: middle; }
+    .bgm-indicator:hover { transform: scale(1.15); }
+    .bgm-indicator.playing { color: var(--color-accent, #00B982); animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+</style>
+{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="chapter-reading-page">
+
+    <nav class="chapter-navigation-top">
+        <div class="container nav-container">
+            <div class="nav-left">
+                {% if prev_chapter and prev_chapter.slug and manga and manga.slug %}<a href="{% url 'manga:chapter_reader' manga_slug=manga.slug chapter_slug=prev_chapter.slug %}" class="nav-button prev-button" title="Capítulo Anterior"><i class="fas fa-chevron-left"></i><span class="button-text">Anterior</span></a>{% else %}<button class="nav-button prev-button disabled" disabled title="Primeiro Capítulo"><i class="fas fa-chevron-left"></i><span class="button-text">Anterior</span></button>{% endif %}
+            </div>
+            <div class="nav-center">
+                {% if manga %}
+                <a href="{% pageurl manga %}" class="series-link" title="{{ manga.title }}">
+                    {% if manga.cover %}{% image manga.cover width-40 as nav_thumb %}<img src="{{ nav_thumb.url }}" alt="Capa de {{ manga.title }}" class="series-thumb">{% endif %}
+                    <div class="series-chapter-info">
+                        <h1 class="series-title-nav">{{ manga.title }}</h1>
+                        <h2 class="chapter-title-nav">Capítulo {{ page.chapter_number }}</h2>
+                    </div>
+                </a>
+                {% if page.background_music %}
+                <span id="music-toggle-menu" class="bgm-indicator" role="button" title="Tocar Trilha Sonora"><i class="fas fa-music"></i></span>
+                {% endif %}
+                {% else %}
+                <div class="series-chapter-info">
+                    <h2 class="chapter-title-nav">Capítulo {{ page.chapter_number }}</h2>
+                </div>
+                {% endif %}
+            </div>
+            <div class="nav-right">
+                {% if next_chapter and next_chapter.slug and manga and manga.slug %}<a href="{% url 'manga:chapter_reader' manga_slug=manga.slug chapter_slug=next_chapter.slug %}" class="nav-button next-button" title="Próximo Capítulo"><span class="button-text">Próximo</span><i class="fas fa-chevron-right"></i></a>{% else %}<button class="nav-button next-button disabled" disabled title="Último Capítulo"><span class="button-text">Próximo</span><i class="fas fa-chevron-right"></i></button>{% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container chapter-reading-main-content-wrapper">
+        <div class="chapter-content-main">
+            <div class="chapter-images-container" id="chapterImagesContainer">
+                {% if chapter_images_urls %}
+                    {% if settings.core.GlobalSettings.use_canvas_reader %}
+                        {% for image_url in chapter_images_urls %}
+                            <canvas class="chapter-image-canvas" data-src-url="{{ image_url }}">Seu navegador não suporta o elemento canvas.</canvas>
+                        {% endfor %}
+                    {% else %}
+                        {% for image_url in chapter_images_urls %}
+                            <img class="chapter-image" src="{{ image_url }}" alt="Página do Capítulo {{ page.chapter_number }}" loading="lazy" decoding="async">
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    <p class="empty-list-message">Nenhuma página encontrada para este capítulo.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    {% if settings.core.GlobalSettings.comment_provider == 'custom' %}
+        <section id="interactions-section" class="chapter-interactions-section py-5">
+            <div class="container">
+                {% csrf_token %}
+                {% reaction_section page=page %}
+                <hr class="my-5" style="border-color: var(--color-border, #27272a);">
+                <div class="chapter-comments-section">
+                    {% comment_section page %}
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    {% if page.background_music %}
+        <audio id="bgm-audio" loop preload="metadata" style="display: none;">
+            <source src="{{ page.background_music.url }}" type="{{ page.background_music.file.content_type }}">
+        </audio>
+    {% endif %}
+
+    <div class="floating-action-buttons">
+        {% if page.background_music %}
+            <button id="music-toggle-btn" class="fab-button fab-music" title="Tocar Trilha Sonora"><i class="fas fa-music"></i></button>
+        {% endif %}
+        <button id="scrollTopBtn" class="fab-button fab-scroll-top" title="Voltar ao Topo"><i class="fas fa-arrow-up"></i></button>
+        {% if settings.core.GlobalSettings.comment_provider == 'custom' %}
+        <a href="#interactions-section" id="scrollToCommentsBtn" class="fab-button fab-comments" title="Ir para os Comentários"><i class="fas fa-comments"></i></a>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+    {{ block.super }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const topNav = document.querySelector('.chapter-navigation-top');
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > lastScrollY && window.scrollY > 100) {
+                    topNav.classList.add('hidden');
+                } else {
+                    topNav.classList.remove('hidden');
+                }
+                lastScrollY = window.scrollY;
+            });
+
+            document.addEventListener('keydown', function(event) {
+                if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+                if (event.key === 'ArrowLeft') {
+                    const prevButton = document.querySelector('.nav-button.prev-button:not(.disabled)');
+                    if (prevButton) window.location.href = prevButton.href;
+                }
+                else if (event.key === 'ArrowRight') {
+                    const nextButton = document.querySelector('.nav-button.next-button:not(.disabled)');
+                    if (nextButton) window.location.href = nextButton.href;
+                }
+            });
+
+            const canvasElements = document.querySelectorAll('.chapter-image-canvas');
+            if (canvasElements.length > 0) {
+                function loadAndDrawImage(canvas) {
+                    const imageUrlEndpoint = canvas.dataset.srcUrl;
+                    if (!imageUrlEndpoint) return;
+                    canvas.addEventListener('contextmenu', e => e.preventDefault());
+                    fetch(imageUrlEndpoint)
+                        .then(response => {
+                            if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+                            return response.blob();
+                        })
+                        .then(imageBlob => {
+                            const objectURL = URL.createObjectURL(imageBlob);
+                            const img = new Image();
+                            img.src = objectURL;
+                            img.onload = function() {
+                                const ctx = canvas.getContext('2d');
+                                canvas.width = img.naturalWidth;
+                                canvas.height = img.naturalHeight;
+                                ctx.drawImage(img, 0, 0);
+                                URL.revokeObjectURL(objectURL);
+                            };
+                            img.onerror = () => console.error('Image load error from Blob URL.');
+                        })
+                        .catch(error => console.error(`Failed to load or draw slice:`, error));
+                }
+                canvasElements.forEach(loadAndDrawImage);
+            }
+
+            const commentSection = document.querySelector('.chapter-comments-section');
+            if (commentSection) {
+                const mainForm = commentSection.querySelector('.comment-form > form');
+                if (mainForm) {
+                    const mainTextarea = mainForm.querySelector('textarea');
+                    const mainFormActions = mainForm.querySelectorAll('.submit-row, .formatting-toolbar');
+                    if (mainTextarea && mainFormActions.length > 0) {
+                         mainTextarea.addEventListener('focus', () => {
+                            mainFormActions.forEach(el => { el.style.display = 'block'; });
+                        }, { once: true });
+                    }
+                }
+                
+                commentSection.addEventListener('click', function(event) {
+                    const replyButton = event.target.closest('a.comment-reply-link');
+                    if (!replyButton) return;
+                    
+                    event.preventDefault();
+                    const targetId = replyButton.getAttribute('href');
+                    if (!targetId || !targetId.startsWith('#')) return;
+                    const targetForm = document.querySelector(targetId);
+                    if (!targetForm) return;
+                    const isVisible = targetForm.style.display === 'block';
+                    commentSection.querySelectorAll('.comment-reply-form').forEach(form => {
+                        form.style.display = 'none';
+                    });
+                    if (!isVisible) {
+                        targetForm.style.display = 'block';
+                        const textarea = targetForm.querySelector('textarea');
+                        if (textarea) textarea.focus();
+                    }
+                });
+            }
+
+            document.body.addEventListener('click', function(event) {
+                const button = event.target.closest('.reaction-button:not(.disabled)');
+                if (!button) return;
+                const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+                if (!csrfTokenElement) return;
+                const pageId = button.dataset.pageId;
+                // PRIMEIRA CORREÇÃO: De 'reactionTypeId' para 'reactionType'
+                const reactionTypeId = button.dataset.reactionType;
+                const csrfToken = csrfTokenElement.value;
+                document.querySelectorAll('.reaction-button').forEach(btn => { btn.disabled = true; });
+                fetch("{% url 'core:api_toggle_reaction' %}", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                        body: JSON.stringify({ page_id: pageId, reaction_type_id: reactionTypeId })
+                    })
+                    .then(response => {
+                        if (response.status === 401 || response.status === 403) {
+                            window.location.href = "{% url 'account_login' %}?next=" + window.location.pathname;
+                            throw new Error('Usuário não autenticado.');
+                        }
+                        if (!response.ok) throw new Error('Falha na resposta da rede.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && data.status === 'ok') {
+                            data.counts.forEach(item => {
+                                const countElement = document.getElementById(`reaction-count-${pageId}-${item.type_id}`);
+                                if (countElement) countElement.textContent = item.count;
+                            });
+                            document.querySelectorAll('.reaction-button').forEach(btn => {
+                                btn.classList.remove('active');
+                                // SEGUNDA CORREÇÃO: De 'reactionTypeId' para 'reactionType'
+                                if (data.user_reacted_with && btn.dataset.reactionType == data.user_reacted_with) {
+                                    btn.classList.add('active');
+                                }
+                            });
+                        } else {
+                            throw new Error(data.message || 'Erro desconhecido da API.');
+                        }
+                    })
+                    .catch(error => { console.error('Erro no fetch da reação:', error); })
+                    .finally(() => { document.querySelectorAll('.reaction-button').forEach(btn => { btn.disabled = false; }); });
+            });
+
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            const scrollToCommentsBtn = document.getElementById('scrollToCommentsBtn');
+            const interactionsSection = document.getElementById('interactions-section');
+
+            if (scrollTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        scrollTopBtn.classList.add('visible');
+                    } else {
+                        scrollTopBtn.classList.remove('visible');
+                    }
+                });
+                scrollTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+
+            if (scrollToCommentsBtn && interactionsSection) {
+                scrollToCommentsBtn.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    interactionsSection.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            const musicFabButton = document.getElementById('music-toggle-btn');
+            const musicMenuButton = document.getElementById('music-toggle-menu');
+            const backgroundMusic = document.getElementById('bgm-audio');
+
+            if (backgroundMusic && (musicFabButton || musicMenuButton)) {
+                
+                const toggleMusicState = (isPlaying) => {
+                    const fabIcon = musicFabButton ? musicFabButton.querySelector('i') : null;
+                    const menuIcon = musicMenuButton ? musicMenuButton.querySelector('i') : null;
+                    const newTitle = isPlaying ? 'Pausar Trilha Sonora' : 'Tocar Trilha Sonora';
+                    const newIconClass = isPlaying ? 'fa-pause' : 'fa-music';
+                    const oldIconClass = isPlaying ? 'fa-music' : 'fa-pause';
+
+                    if (musicFabButton) {
+                        musicFabButton.classList.toggle('playing', isPlaying);
+                        musicFabButton.title = newTitle;
+                        if (fabIcon) { fabIcon.classList.remove(oldIconClass); fabIcon.classList.add(newIconClass); }
+                    }
+
+                    if (musicMenuButton) {
+                        musicMenuButton.classList.toggle('playing', isPlaying);
+                        musicMenuButton.title = newTitle;
+                        if (menuIcon) { menuIcon.classList.remove(oldIconClass); menuIcon.classList.add(newIconClass); }
+                    }
+                };
+                
+                const handleMusicToggle = () => {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play().catch(e => console.error("Audio playback failed:", e));
+                        toggleMusicState(true);
+                    } else {
+                        backgroundMusic.pause();
+                        toggleMusicState(false);
+                    }
+                };
+
+                if (musicFabButton) musicFabButton.addEventListener('click', handleMusicToggle);
+                if (musicMenuButton) musicMenuButton.addEventListener('click', handleMusicToggle);
+            }
+        });
+    </script>
+{% endblock %}

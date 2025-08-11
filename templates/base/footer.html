@@ -1,0 +1,29 @@
+{% load static wagtailcore_tags %}
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>© {% now "Y" %} {% if settings.core.GlobalSettings.footer_scan_name %}{{ settings.core.GlobalSettings.footer_scan_name }}{% else %}{{ request.site.site_name|default:'Astraverse' }}{% endif %}. Todos os direitos reservados.</p>
+                {% if settings.core.GlobalSettings.footer_credits %}
+                    <p>{{ settings.core.GlobalSettings.footer_credits|richtext }}</p>
+                {% endif %}
+            </div>
+
+            <div class="footer-links">
+                {# Links diretos usando a tag 'url' para as rotas que criamos #}
+                <a href="{% url 'dmca' %}">DMCA</a>
+                <a href="{% url 'politica_de_privacidade' %}">Política de Privacidade</a>
+                <a href="{% url 'termos_de_uso' %}">Termos de Uso</a>
+
+                {# Links dinâmicos que você já tinha #}
+                {% if settings.core.GlobalSettings.discord_link %}
+                    <a href="{{ settings.core.GlobalSettings.discord_link }}" target="_blank" rel="noopener noreferrer">Discord</a>
+                {% endif %}
+                {% if settings.core.GlobalSettings.donation_link %}
+                    <a href="{{ settings.core.GlobalSettings.donation_link }}" target="_blank" rel="noopener noreferrer">Doação</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>

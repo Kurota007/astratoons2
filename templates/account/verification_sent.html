@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Verifique seu E-mail" %}{% endblock %}
+
+{% block body_class %}template-email-confirm-sent theme-dark{% endblock %}
+
+{% block extra_css %}
+    {# Link FontAwesome se não global #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {# --- REMOVA OU COMENTE A LINHA ABAIXO --- #}
+    {# <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/account_confirm_email_sent.css' %}"> #}
+    {# -------------------------------------- #}
+{% endblock %}
+
+{% block content %}
+    <main class="auth-page-wrapper"> {# Reutiliza o wrapper se definido globalmente #}
+        <div class="confirmation-card"> {# Card principal #}
+
+             {# Exibe a mensagem padrão do allauth (se houver) #}
+             {% if messages %}
+                <div class="django-messages">
+                    {% for message in messages %}
+                    <div class="message {{ message.tags }}" role="alert">
+                        {{ message }} {# Ex: "E-mail de confirmação enviado para ..." #}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="checkmark-circle mb-6">
+                <i class="fas fa-check text-white text-4xl"></i>
+            </div>
+
+            <h1>{% trans "Confirmação de Email Enviada!" %}</h1>
+
+            <p>
+                {# O email geralmente vem na mensagem acima, mas podemos adicionar um texto genérico #}
+                {% blocktrans %}Nós enviamos um link de confirmação para o seu endereço de e-mail.
+                Por favor, verifique sua caixa de entrada (e spam) e clique no link para ativar sua conta.{% endblocktrans %}
+            </p>
+
+            {# Caixa de Reenvio #}
+            <div class="resend-box">
+                <i class="fas fa-envelope-open-text"></i>
+                <p class="resend-text">
+                    {% blocktrans %}Não recebeu o email? Verifique sua pasta de spam ou <a href="{{ resend_url|default:'#' }}" id="resendLink">reenvie a confirmação</a>.{% endblocktrans %}
+                    {% comment %} <a href="{% url 'account_email' %}" class="text-[#00B982] hover:underline">{% trans "tente reenviar" %}</a> {% endcomment %}
+                </p>
+                <p id="countdownText" class="resend-text mt-2 hidden">
+                   {% trans "Você pode solicitar um novo email em" %} <span id="countdown" class="countdown">60</span> {% trans "segundos" %}
+                </p>
+            </div>
+
+            <div class="actions-container">
+                <a href="{% url 'account_login' %}" class="btn-primary"> {# Link para login #}
+                    <i class="fas fa-sign-in-alt mr-2"></i> {% trans "Ir para Login" %}
+                </a>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+
+{% block extra_js %}
+<script>
+    // Lógica para o link de reenvio (simulando cooldown visualmente)
+    const resendLink = document.getElementById('resendLink');
+    const countdownText = document.getElementById('countdownText');
+    const countdownElement = document.getElementById('countdown');
+    let countdownInterval;
+    let seconds = 60;
+
+    if (resendLink && countdownText && countdownElement) {
+        resendLink.addEventListener('click', function(e) {
+            if (resendLink.classList.contains('disabled')) {
+                e.preventDefault();
+                return;
+            }
+            // --- AÇÃO REAL DE REENVIO (Implementar AJAX) ---
+            e.preventDefault(); // Previne o link default por enquanto
+            startCooldown();
+            alert('Simulando reenvio! (Implementar chamada AJAX real)');
+            // --- Fim Simulação ---
+        });
+    }
+
+    function startCooldown() {
+        if (!resendLink || !countdownText || !countdownElement) return;
+        resendLink.classList.add('disabled');
+        resendLink.style.opacity = '0.5';
+        resendLink.style.pointerEvents = 'none';
+        countdownText.classList.remove('hidden');
+        seconds = 60;
+        countdownElement.textContent = seconds;
+        if (countdownInterval) { clearInterval(countdownInterval); }
+        countdownInterval = setInterval(function() {
+            seconds--;
+            countdownElement.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                resendLink.classList.remove('disabled');
+                resendLink.style.opacity = '1';
+                resendLink.style.pointerEvents = 'auto';
+                countdownText.classList.add('hidden');
+            }
+        }, 1000);
+    }
+</script>
+{% endblock %}

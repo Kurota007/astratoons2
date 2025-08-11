@@ -1,0 +1,203 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags static %}
+
+{% block titletag %}{{ page_title }}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .field .field-content .input,
+        .field .field-content input[type="file"] {
+            width: 100%;
+            background-color: var(--w-color-surface-field, #202324);
+            color: var(--w-color-text-input, #e0e0e0);
+            border: 1px solid var(--w-color-border-field-weak, #555);
+            padding: 0.5em 0.6em;
+            border-radius: 3px;
+        }
+        .field .help {
+            color: var(--w-color-text-meta, #aaa);
+            font-size: 0.9em;
+            margin-top: 0.3em;
+        }
+        .field label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4em;
+        }
+        .field.required label::after {
+            content: " *";
+            color: var(--w-color-text-error, #cd3238);
+        }
+        .errorlist {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 1em 0;
+            color: var(--w-color-text-error, #cd3238);
+        }
+        .errorlist li {
+            padding: 0.5em;
+            background-color: var(--w-color-surface-error, rgba(205, 50, 56, 0.1));
+            border: 1px solid var(--w-color-border-error, #cd3238);
+            border-radius: 3px;
+        }
+        .field .error-message {
+            color: var(--w-color-text-error, #cd3238);
+            font-size: 0.9em;
+            margin-top: 0.3em;
+        }
+        .field .error-message span {
+            margin-right: 0.3em;
+        }
+        .processing-results {
+            margin-top: 2em;
+            padding: 1em;
+            background-color: var(--w-color-surface-field, #202324);
+            border: 1px solid var(--w-color-border-furniture, #3a3a3a);
+            border-radius: 3px;
+        }
+        .processing-results h3 {
+            margin-top: 0;
+            color: var(--w-color-text-loud, #e0e0e0);
+        }
+        .processing-results ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .processing-results li {
+            padding: 0.3em 0;
+            border-bottom: 1px dotted var(--w-color-border-field-weak, #555);
+        }
+        .processing-results li:last-child {
+            border-bottom: none;
+        }
+        .processing-results .status-success { color: var(--w-color-text-positive, #2e9b46); }
+        .processing-results .status-warning { color: var(--w-color-text-warning, #ff9900); }
+        .processing-results .status-error { color: var(--w-color-text-error, #cd3238); }
+
+        /* Estilos para os botões no rodapé do formulário */
+        .footer-actions .button {
+            padding: 0.6em 1em;
+            text-decoration: none;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            border-width: 1px;
+            border-style: solid;
+        }
+        .footer-actions .button .icon {
+            margin-right: 0.4em;
+            width: 1.1em;
+            height: 1.1em;
+        }
+        .footer-actions .button.button-primary {
+            background-color: #007d7e; /* Cor do botão de upload de ZIP */
+            border-color: #007d7e;
+            color: #ffffff !important;
+        }
+        .footer-actions .button.button-primary:hover,
+        .footer-actions .button.button-primary:focus {
+            background-color: #005f5f;
+            border-color: #005f5f;
+            color: #ffffff !important;
+        }
+        .footer-actions .button.button-secondary { /* Botão Cancelar */
+            background-color: var(--w-color-button-secondary-bg, #383838);
+            border-color: var(--w-color-button-secondary-border, #505050);
+            color: var(--w-color-button-secondary-text, #e0e0e0);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=page_title icon=header_icon search_url="wagtailadmin_pages:search" %}
+
+    <div class="nice-padding form-container">
+        <p class="help-block help-info">
+            {% blocktrans %}
+            Faça upload de um arquivo .ZIP contendo múltiplos arquivos de capítulo (ex: .txt ou .md).
+            O sistema tentará extrair o número e o título do capítulo a partir dos nomes dos arquivos. Se os
+            arquivos dentro do ZIP forem PDFs, o sistema tentará extrair o texto deles e dividi-los em
+            capítulos baseado no padrão "Capítulo X: Nome do Capítulo". As tags de imagem customizadas
+            <code>[WAGTAIL_IMG_ID:identificador_da_imagem]</code> serão processadas.
+            {% endblocktrans %}
+        </p>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>
+                        <div class="message-inner">
+                            <span class="message-text">{{ message }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action="{{ action_url }}" method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <ul class="errorlist">{% for error in form.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+
+            <ul class="fields">
+                {% for field in form %}
+                    <li class="field field--{{ field.name }} {% if field.field.required %}required{% endif %} {% if field.errors %}error{% endif %}">
+                        <div class="field-content">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}<p class="help">{{ field.help_text|safe }}</p>{% endif %}
+                            {% for error in field.errors %}<p class="error-message"><span>!</span>{{ error }}</p>{% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <footer>
+                <ul class="footer-actions">
+                    <li class="actions-first">
+                            <button type="submit" class="button button-primary">
+                                {% icon name="folder-upload-alt" %}{% trans "Upar e Processar ZIP" %}
+                            </button>
+                    </li>
+                    <li class="actions-last">
+                        <a href="{% url 'novels:novel_chapter_uploader_index' %}" class="button button-secondary">
+                            {% trans "Cancelar" %}
+                        </a>
+                    </li>
+                </ul>
+            </footer>
+        </form>
+
+        {% if processed_files_info %}
+        <section class="processing-results">
+            <h3>{% trans "Resultados do Processamento do ZIP:" %}</h3>
+            <ul>
+                {% for info_item in processed_files_info %} {# Renomeado 'info' para 'info_item' para evitar conflito se 'info' for uma tag de mensagem #}
+                    {% if info_item.status == 'success' %}
+                        <li class="status-success">{{ info_item.message }}</li>
+                    {% elif info_item.status == 'warning' %}
+                        <li class="status-warning">{{ info_item.message }}</li>
+                    {% elif info_item.status == 'error' %}
+                        <li class="status-error">{{ info_item.message }}</li>
+                    {% else %}
+                        <li>{{ info_item.message|default:info_item }}</li> {# Mostra .message se for dict, ou o item direto se for string #}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+    </div>
+{% endblock %}

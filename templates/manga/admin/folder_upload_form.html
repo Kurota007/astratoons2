@@ -1,0 +1,356 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags static %}
+
+{% block titletag %}{{ header_title|default:_("Upar Capítulos por Pastas") }}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        .upload-area-container { border: 1px solid #3a3a3a; padding: 20px; border-radius: 6px; background-color: #2e2e2e; color: #e0e0e0; margin-top: 20px; }
+        .upload-area-container h4 { color: #ffffff; margin-bottom: 10px; }
+        .upload-area-container .help { color: #b0b0b0; font-size: 0.9em; }
+        .drop-area { border: 2px dashed #555; padding: 40px 20px; text-align: center; cursor: pointer; background-color: #383838; margin-top: 15px; margin-bottom: 20px; border-radius: 5px; color: #c0c0c0; }
+        .drop-area.dragover { background-color: #4a4a4a; border-color: #00a8e0; }
+        .drop-area svg { display: block; margin: 0 auto 15px auto; width: 60px; height: 60px; fill: #999; }
+        #selected-folders-preview .folder-preview-item { background-color: #383838; border: 1px solid #4a4a4a; padding: 10px 15px; margin-bottom: 8px; border-radius: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 15px; color: #e0e0e0; }
+        #selected-folders-preview .folder-preview-item .main-info { display: flex; align-items: center; gap: 15px; width: 100%; flex-grow: 1; }
+        #selected-folders-preview .folder-preview-item input[type="text"].chapter-number-input { width: 100px; flex-shrink: 0; background-color: #2e2e2e; color: #ffffff; border: 1px solid #555; }
+        #selected-folders-preview .folder-preview-item .folder-name-display { font-weight: bold; flex-grow: 1; text-align: left; }
+        #selected-folders-preview .folder-preview-item .image-count-display { font-size: 0.9em; color: #b0b0b0; min-width: 80px; text-align: right; }
+        /* -- CSS MODIFICADO/ADICIONADO -- */
+        #selected-folders-preview .thumbnail-preview { width: 100px; height: 56px; border-radius: 3px; object-fit: cover; background-color: #2e2e2e; border: 1px solid #555; }
+        #thumb-drop-area { margin-top: 25px; } /* Estilo para nova área de upload de thumbs */
+        .preview-controls { margin-bottom: 20px; display: flex; gap: 10px; }
+        #processing-results .list-group-item { color: #e0e0e0; background-color: #383838; border-color: #4a4a4a; padding: 0.5rem 1rem; margin-bottom: 5px; border-radius: .25rem; }
+        #processing-results .list-group-item-success { color: #d4edda !important; background-color: #155724 !important; border-color: #c3e6cb !important; }
+        #processing-results .list-group-item-danger { color: #f8d7da !important; background-color: #721c24 !important; border-color: #f5c6cb !important; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=header_title icon=header_icon|default:"folder-open-inverse" %}
+
+    <div class="nice-padding">
+        {% include "wagtailadmin/shared/messages.html" %}
+
+        <form id="folderUploadForm" method="POST" onsubmit="return false;"> {# Adicionado onsubmit para previnir envio acidental #}
+            {% csrf_token %}
+            
+            <ul class="fields">
+                <li class="required">
+                    <div class="field">
+                        <label for="id_manga_page_select" class="required">{% trans "1. Selecione a Obra" %}:</label>
+                        <div class="field-content">
+                            <select name="manga_page_id" id="id_manga_page_select" required class="input" onchange="if(this.value) window.location.href='?manga_id=' + this.value;">
+                                <option value="" disabled {% if not selected_manga_from_url %}selected{% endif %}>--- Selecione uma Obra ---</option>
+                                {% for manga in all_manga_pages %}
+                                    <option value="{{ manga.pk }}" {% if selected_manga_from_url.pk == manga.pk %}selected{% endif %}>{{ manga.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </li>
+
+                {% if selected_manga_from_url %}
+                    <li>
+                        <div class="upload-area-container">
+                            <h4>{% trans "2. Arraste as Pastas dos Capítulos" %}</h4>
+                            <p class="help">
+                                Arraste para a área abaixo uma ou mais pastas. Cada pasta será tratada como um capítulo.
+                            </p>
+                            <div class="drop-area" id="folderDropArea"> {# Classe alterada para reutilização de estilo #}
+                                <input type="file" id="folderInput" webkitdirectory directory multiple style="display: none;">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M260-160q-91 0-155.5-63T40-377q0-78 47-139t123-78q25-92 100-149t170-57q117 0 198.5 81.5T760-520q69 8 114.5 59.5T920-340q0 75-52.5 127.5T740-160H520q-33 0-56.5-23.5T440-240v-206l-64 62-56-56 160-160 160 160-56 56-64-62v206h220q42 0 71-29t29-71q0-42-29-71t-71-29h-60v-80q0-83-58.5-141.5T480-720q-83 0-141.5 58.5T280-520h-20q-58 0-99 41t-41 99q0 58 41 99t99 41h100v80H260Zm220-280Z"></path></svg>
+                                {% trans "Clique aqui ou arraste as pastas para esta área" %}
+                            </div>
+                            <div id="preview-controls" class="preview-controls" style="display: none;">
+                                <button type="button" id="selectAllPreviewBtn" class="button button-small button-secondary">{% trans "Sel. Todos" %}</button>
+                                <button type="button" id="deselectAllPreviewBtn" class="button button-small button-secondary">{% trans "Des. Todos" %}</button>
+                            </div>
+                            <div id="selected-folders-preview" class="mt-3"></div>
+                        </div>
+                    </li>
+                    
+                    <!-- ========== NOVA ÁREA PARA UPLOAD DE THUMBNAILS ========== -->
+                    <li id="thumb-upload-container" style="display: none;">
+                         <div class="upload-area-container">
+                            <h4>{% trans "3. Arraste as Thumbnails (Opcional)" %}</h4>
+                            <p class="help">
+                                Arraste as imagens de thumbnail aqui. Nomeie-as com o número do capítulo (ex: 15.jpg, 16.png).
+                            </p>
+                            <div class="drop-area" id="thumb-drop-area">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-280q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 200q-134 0-227-93t-93-227q0-134 93-227t227-93q134 0 227 93t93 227q0 134-93 227t-227 93Zm0-80q100 0 170-70t70-170q0-100-70-170t-170-70q-100 0-170 70t-70 170q0 100 70 170t170 70Zm0-240Z"/></svg>
+                                {% trans "Arraste as imagens de thumbnail para esta área" %}
+                            </div>
+                        </div>
+                    </li>
+                    <!-- ========================================================= -->
+
+                    <li class="submit" style="margin-top: 20px;">
+                        <button type="button" id="processSelectedFoldersBtn" class="button button-longrunning" disabled>
+                            <span class="icon icon-folder-open-inverse" aria-hidden="true"></span>
+                            {% trans "Processar Capítulos Selecionados" %}
+                        </button>
+                    </li>
+                {% endif %}
+            </ul>
+        </form>
+
+        <div id="processing-results" class="mt-4" style="display: none;">
+            <h4>{% trans "Resultados do Processamento:" %}</h4>
+            <ul class="list-group" id="resultsListUL"></ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    if (!document.getElementById('folderDropArea')) return;
+
+    const folderDropArea = document.getElementById('folderDropArea');
+    const folderInput = document.getElementById('folderInput');
+    const selectedFoldersPreview = document.getElementById('selected-folders-preview');
+    const processBtn = document.getElementById('processSelectedFoldersBtn');
+    const mangaSelect = document.getElementById('id_manga_page_select');
+    const previewControls = document.getElementById('preview-controls');
+    const selectAllBtn = document.getElementById('selectAllPreviewBtn');
+    const deselectAllBtn = document.getElementById('deselectAllPreviewBtn');
+    const resultsListUL = document.getElementById('resultsListUL'); 
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    const singleChapterProcessUrl = "{% url 'manga:api_process_chapter_folder' %}";
+    
+    const thumbDropArea = document.getElementById('thumb-drop-area');
+    const thumbUploadContainer = document.getElementById('thumb-upload-container');
+
+    let chaptersToProcessData = {};
+
+    function checkCanProcess() {
+        const hasMangaSelected = mangaSelect && mangaSelect.value;
+        const hasCheckedItems = selectedFoldersPreview.querySelector('.folder-preview-item input[type="checkbox"]:checked');
+        processBtn.disabled = !(hasMangaSelected && hasCheckedItems);
+        
+        const hasChapters = Object.keys(chaptersToProcessData).length > 0;
+        thumbUploadContainer.style.display = hasChapters ? 'list-item' : 'none';
+    }
+
+    if (mangaSelect) { mangaSelect.addEventListener('change', checkCanProcess); }
+
+    folderDropArea.addEventListener('click', () => folderInput.click());
+    
+    function setupDropArea(area, handler) {
+        area.addEventListener('dragover', (e) => { e.preventDefault(); area.classList.add('dragover'); });
+        area.addEventListener('dragleave', (e) => { e.preventDefault(); area.classList.remove('dragover'); });
+        area.addEventListener('drop', (e) => {
+            e.preventDefault();
+            area.classList.remove('dragover');
+            handler(e.dataTransfer.files);
+        });
+    }
+
+    setupDropArea(folderDropArea, handleFileSelection);
+    folderInput.addEventListener('change', (event) => handleFileSelection(event.target.files));
+
+    // ======================================================================
+    // A ÚNICA FUNÇÃO MODIFICADA
+    // ======================================================================
+    function handleFileSelection(fileList) {
+        chaptersToProcessData = {};
+        const imageFiles = Array.from(fileList).filter(f => f.type.startsWith('image/') && f.webkitRelativePath);
+
+        if (imageFiles.length === 0) {
+            renderAndCheck();
+            return;
+        }
+
+        const chaptersByDir = new Map();
+        for (const file of imageFiles) {
+            const path = file.webkitRelativePath;
+            const dir = path.substring(0, path.lastIndexOf('/'));
+            if (!chaptersByDir.has(dir)) {
+                chaptersByDir.set(dir, []);
+            }
+            chaptersByDir.get(dir).push(file);
+        }
+        
+        for (let [dir, files] of chaptersByDir.entries()) {
+            let displayName = dir.split('/').pop() || "Capítulo";
+            if (displayName) {
+                // ----- A MUDANÇA ESTÁ AQUI -----
+                // A thumbnailFile agora sempre começa como nula,
+                // forçando o espaço a ficar vazio até o upload manual.
+                chaptersToProcessData[displayName] = { files: files, thumbnailFile: null };
+            }
+        }
+        renderAndCheck();
+    }
+    // ======================================================================
+
+    function renderAndCheck() {
+        renderFolderPreviews(chaptersToProcessData);
+        checkCanProcess();
+    }
+
+    function parseChapterFromName(name) {
+        const cleanedName = name.replace(/capitulo|chapter|capítulo|cap|ch/gi, ' ').replace(/[_.\s-]+/g, ' ').trim();
+        const match = cleanedName.match(/(\d+[.,]?\d*)/);
+        return match ? match[0].replace(',', '.') : name;
+    }
+
+    function renderFolderPreviews(folders) {
+        selectedFoldersPreview.innerHTML = '';
+        if (Object.keys(folders).length > 0) {
+            const ul = document.createElement('ul');
+            ul.className = 'fields';
+
+            const sortedFolderNames = Object.keys(folders).sort((a, b) => {
+                const numA = parseFloat(parseChapterFromName(a));
+                const numB = parseFloat(parseChapterFromName(b));
+                if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+                return a.localeCompare(b, undefined, {numeric: true});
+            });
+
+            sortedFolderNames.forEach((folderName) => {
+                const data = folders[folderName];
+                if (data.files.length === 0) return;
+
+                const li = document.createElement('li');
+                li.className = 'folder-preview-item field';
+                li.dataset.originalFolderName = folderName;
+
+                li.innerHTML = `
+                    <div class="main-info">
+                        <input type="checkbox" class="form-check-input" checked>
+                        <img src="" class="thumbnail-preview" style="display: none;">
+                        <span class="folder-name-display">${folderName}</span>
+                        <label style="margin-left: auto; margin-right: 5px; flex-shrink: 0;">Nº Cap.:</label>
+                        <input type="text" class="chapter-number-input input" value="${parseChapterFromName(folderName)}">
+                        <span class="image-count-display">${data.files.length} img(s)</span>
+                        <button type="button" class="button button-small no button-secondary" style="margin-left: 10px;">
+                            <span class="icon icon-cross" aria-hidden="true"></span> Remover
+                        </button>
+                    </div>
+                `;
+
+                li.querySelector('.button.no').onclick = () => {
+                    li.remove();
+                    delete chaptersToProcessData[folderName];
+                    renderAndCheck();
+                };
+                li.querySelector('input[type="checkbox"]').onchange = checkCanProcess;
+                
+                // Esta parte agora só vai rodar se a thumbnail for adicionada manualmente
+                const thumbPreview = li.querySelector('.thumbnail-preview');
+                if (data.thumbnailFile) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        thumbPreview.src = e.target.result;
+                        thumbPreview.style.display = 'inline-block';
+                    };
+                    reader.readAsDataURL(data.thumbnailFile);
+                }
+                
+                ul.appendChild(li);
+            });
+            selectedFoldersPreview.appendChild(ul);
+            previewControls.style.display = 'flex';
+        } else {
+            selectedFoldersPreview.innerHTML = '<p class="help" style="color: #b0b0b0;">Nenhuma pasta com imagens válidas foi encontrada.</p>';
+            previewControls.style.display = 'none';
+        }
+    }
+    
+    function handleThumbDrop(thumbFiles) {
+        for (const file of thumbFiles) {
+            const chapterNumberMatch = file.name.match(/\d+/);
+            if (!chapterNumberMatch) continue;
+
+            const chapterNumber = chapterNumberMatch[0];
+            
+            const chapterInput = document.querySelector(`.chapter-number-input[value="${chapterNumber}"]`);
+            if (chapterInput) {
+                const chapterItem = chapterInput.closest('.folder-preview-item');
+                const originalFolderName = chapterItem.dataset.originalFolderName;
+                const thumbPreview = chapterItem.querySelector('.thumbnail-preview');
+
+                chaptersToProcessData[originalFolderName].thumbnailFile = file;
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    thumbPreview.src = e.target.result;
+                    thumbPreview.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    }
+    setupDropArea(thumbDropArea, handleThumbDrop);
+
+    selectAllBtn.onclick = () => { selectedFoldersPreview.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true); checkCanProcess(); };
+    deselectAllBtn.onclick = () => { selectedFoldersPreview.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false); checkCanProcess(); };
+
+    processBtn.addEventListener('click', async function() {
+        processBtn.classList.add('button-longrunning-active');
+        processBtn.disabled = true;
+        resultsListUL.innerHTML = ''; 
+        document.getElementById('processing-results').style.display = 'block';
+
+        const mangaId = mangaSelect.value;
+        if (!mangaId) { return; }
+
+        const itemsToUpload = [];
+        selectedFoldersPreview.querySelectorAll('.folder-preview-item input[type="checkbox"]:checked').forEach(checkbox => {
+            const itemDiv = checkbox.closest('.folder-preview-item');
+            const originalFolderName = itemDiv.dataset.originalFolderName;
+            const chapterNumber = itemDiv.querySelector('.chapter-number-input').value;
+            if (chaptersToProcessData[originalFolderName]) {
+                itemsToUpload.push({
+                    folderName: originalFolderName,
+                    chapterNumber: chapterNumber,
+                    files: chaptersToProcessData[originalFolderName].files,
+                    thumbnailFile: chaptersToProcessData[originalFolderName].thumbnailFile
+                });
+            }
+        });
+
+        for (const item of itemsToUpload) {
+            const statusLi = document.createElement('li');
+            statusLi.className = 'list-group-item';
+            statusLi.innerHTML = `<strong>Capítulo ${item.chapterNumber} (${item.folderName}):</strong> Enviando...`;
+            resultsListUL.appendChild(statusLi);
+
+            const formData = new FormData();
+            formData.append('manga_id', mangaId);
+            formData.append('chapter_number', item.chapterNumber);
+            item.files.forEach(file => formData.append('files[]', file, file.webkitRelativePath));
+            
+            if (item.thumbnailFile) {
+                formData.append('thumbnail', item.thumbnailFile);
+            }
+
+            try {
+                const response = await fetch(singleChapterProcessUrl, {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': csrfToken },
+                    body: formData,
+                });
+                const data = await response.json();
+                if (response.ok && data.status === 'success') {
+                    statusLi.innerHTML = `<strong>Capítulo ${item.chapterNumber}:</strong> <a href="${data.chapter_url}" target="_blank">${data.message}</a>`;
+                    statusLi.classList.add('list-group-item-success');
+                } else {
+                    throw new Error(data.message || 'Falha no processamento.');
+                }
+            } catch (error) {
+                statusLi.innerHTML = `<strong>Capítulo ${item.chapterNumber}:</strong> Erro - ${error.message}`;
+                statusLi.classList.add('list-group-item-danger');
+            }
+        }
+        processBtn.classList.remove('button-longrunning-active');
+    });
+
+    checkCanProcess(); 
+});
+    </script>
+{% endblock %}

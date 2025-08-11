@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Planos VIP" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Seus estilos originais... */
+    .plans-page-header { text-align: center; margin-bottom: 2rem; }
+    .page-main-title { font-size: 2.5rem; }
+    .plans-page-subtitle { color: var(--light-text-color); }
+    .plans-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+    .plan-card { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .plan-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+    .plan-details { flex-grow: 1; }
+    .plan-name { font-size: 1.8rem; font-weight: 700; }
+    .plan-price { font-size: 2.5rem; font-weight: 800; margin: 1rem 0; }
+    .plan-price .currency { font-size: 1.5rem; font-weight: 500; vertical-align: super; }
+    .plan-description { color: var(--light-text-color); }
+    .plan-footer { margin-top: 2rem; }
+    .plan-duration { font-size: 0.9rem; color: var(--light-text-color); margin-bottom: 1.5rem; }
+    
+    .subscription-buttons { display: flex; flex-direction: column; gap: 1rem; }
+    .button.btn-subscribe { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; color: var(--button-primary-text); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: background-color 0.2s; text-decoration: none; width: 100%; }
+    .button.btn-subscribe.pix { background-color: #32BCAD; }
+    .button.btn-subscribe.paypal { background-color: #00457C; }
+    .button.btn-subscribe:hover { filter: brightness(1.1); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    
+    <header class="plans-page-header">
+        <h1 class="page-main-title">{% trans "Nossos Planos VIP" %}</h1>
+        <p class="plans-page-subtitle">
+            {% trans "Apoie nosso trabalho e ganhe acesso a capítulos adiantados e outros benefícios!" %}
+        </p>
+    </header>
+
+    {% if messages %}
+        <div class="messages-container mb-4" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert" style="background-color: var(--card-bg-color); border: 1px solid var(--warning-color, orange); padding: 1rem; border-radius: 5px; color: var(--warning-color, orange); text-align: center;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="plans-container">
+    {% for plano in planos %}
+        <div class="plan-card">
+            <div class="plan-details">
+                <h2 class="plan-name">{{ plano.nome }}</h2>
+                
+                {% if settings.core.GlobalSettings.default_currency == 'BRL' %}
+                    <p class="plan-price"><span class="currency">R$</span>{{ plano.price|floatformat:2 }}</p>
+                {% elif settings.core.GlobalSettings.default_currency == 'USD' %}
+                    <p class="plan-price"><span class="currency">$</span>{{ plano.price|floatformat:2 }}</p>
+                {% endif %}
+                
+                <div class="plan-description">
+                    {{ plano.descricao|linebreaksbr }}
+                </div>
+            </div>
+            <div class="plan-footer">
+                <p class="plan-duration">Acesso VIP por {{ plano.duracao_dias }} dias.</p>
+                
+                <div class="subscription-buttons">
+                    {% if settings.core.GlobalSettings.default_currency == 'BRL' %}
+                        <button class="button btn-subscribe pix" data-plano-id="{{ plano.id }}">
+                            <i class="fa-brands fa-pix"></i> {% trans "Assinar com PIX" %}
+                        </button>
+                    {% elif settings.core.GlobalSettings.default_currency == 'USD' %}
+                        <!-- --- INÍCIO DA ATUALIZAÇÃO --- -->
+                        <!-- Formulário simplificado para compra única -->
+                        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <!-- Comando de compra única -->
+                            <input type="hidden" name="cmd" value="_xclick">
+                            
+                            <input type="hidden" name="business" value="{{ paypal_receiver_email }}">
+                            
+                            <!-- Nome do item agora inclui a duração -->
+                            <input type="hidden" name="item_name" value="Acesso VIP: {{ plano.nome }} ({{ plano.duracao_dias }} dias)">
+                            <input type="hidden" name="item_number" value="{{ plano.id }}">
+                            
+                            <!-- Campo de preço único -->
+                            <input type="hidden" name="amount" value="{{ plano.price|stringformat:'.2f' }}">
+                            
+                            <input type="hidden" name="currency_code" value="USD">
+                            <input type="hidden" name="invoice" value="{{ plano.invoice_id }}">
+                            <input type="hidden" name="return" value="{{ request.scheme }}://{{ request.get_host }}{% url 'subscriptions:payment_success' %}">
+                            <input type="hidden" name="cancel_return" value="{{ request.scheme }}://{{ request.get_host }}{% url 'subscriptions:plans_page' %}">
+                            <input type="hidden" name="notify_url" value="{{ request.scheme }}://{{ request.get_host }}{% url 'paypal-ipn' %}">
+
+                            <button type="submit" class="button btn-subscribe paypal">
+                                <i class="fa-brands fa-paypal"></i> {% trans "Pay with PayPal" %}
+                            </button>
+                        </form>
+                        <!-- --- FIM DA ATUALIZAÇÃO --- -->
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Código para o botão de PIX (inalterado)
+    const subscribeButtons = document.querySelectorAll('.btn-subscribe.pix');
+    if (subscribeButtons.length > 0) {
+        const knoxToken = "{{ knox_token }}";
+        subscribeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // ... seu código fetch para o PIX continua aqui
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

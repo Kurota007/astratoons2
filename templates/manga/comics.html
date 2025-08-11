@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags i18n %}
+
+{% block title %}{{ page_title|default:_("Catálogo de Obras") }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="comics-listing-container container my-4">
+    
+    <header class="page-header mb-4">
+        <h1 class="page-main-title">{% trans "Todas as Obras" %}</h1>
+    </header>
+
+    <aside class="filters-sidebar mb-4 p-3">
+        <!-- Seu formulário de filtros aqui -->
+    </aside>
+
+    <main class="comics-grid-main">
+        {% if mangas_page_obj and mangas_page_obj.object_list %}
+            
+            <div class="comics-grid">
+                
+                {% for item in mangas_page_obj.object_list %}
+                    <article class="comic-card">
+                        <a href="{% pageurl item %}" class="comic-card-link">
+                            <div class="comic-card-image-wrapper">
+                                {% if item.cover %}
+                                    {% image item.cover fill-200x280 as card_cover %}
+                                    <img src="{{ card_cover.url }}" alt="Capa de {{ item.title }}" class="comic-card-image">
+                                {% else %}
+                                    <div class="comic-card-image-placeholder">
+                                        <i class="fas fa-image fa-3x"></i>
+                                    </div>
+                                {% endif %}
+
+                                {# --- TAG DE STATUS PERSONALIZADA SOBRE A CAPA --- #}
+                                {# Este bloco busca as informações de cor e texto do seu modelo #}
+                                {% with status_badge=item.display_status %}
+                                    {% if status_badge %}
+                                        <div class="status-badge-on-cover" style="background-color: {{ status_badge.color }};">
+                                            {{ status_badge.text }}
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                                {# --- FIM DA TAG DE STATUS --- #}
+                            </div>
+                            <div class="comic-card-content">
+                                <h3 class="comic-card-title">{{ item.title|truncatechars:50 }}</h3>
+                                
+                                <div class="comic-card-meta">
+                                    {% if item.content_type.model == 'mangapage' %}
+                                        <span class="tag type-tag">{{ item.get_manga_type_display }}</span>
+                                    {% elif item.content_type.model == 'novelpage' %}
+                                        <span class="tag type-tag">Novel</span>
+                                    {% endif %}
+                                </div>
+
+                                {% with chapter_count=item.get_chapters.count %}
+                                    {% if chapter_count > 0 %}
+                                        <p class="comic-card-chapters">{{ chapter_count }} {% if chapter_count == 1 %}Capítulo{% else %}Capítulos{% endif %}</p>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+
+            {% if mangas_page_obj.has_other_pages %}
+                <div class="pagination-container">
+                    {% include "includes/_pagination.html" with page_obj=mangas_page_obj %}
+                </div>
+            {% endif %}
+
+        {% else %}
+            <p class="empty-results-message">{% trans "Nenhuma obra encontrada com os filtros selecionados." %}</p>
+        {% endif %}
+    </main>
+
+</div>
+
+<style>
+    .comic-card-image-wrapper {
+        position: relative; /* Essencial para posicionar a tag filha */
+        display: block;
+    }
+
+    .status-badge-on-cover {
+        position: absolute;
+        top: 8px;       /* Distância do topo */
+        right: 8px;     /* Distância da direita */
+        z-index: 10;
+        
+        color: white;   /* Cor do texto */
+        padding: 4px 10px; /* Espaçamento interno */
+        border-radius: 5px; /* Bordas arredondadas */
+        font-size: 0.75rem; /* Tamanho da fonte */
+        font-weight: bold;  /* Negrito */
+        text-transform: uppercase; /* Texto em maiúsculas */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4); /* Sombra para destaque */
+    }
+
+    .pagination-container ul {
+        list-style: none; 
+        padding-left: 0;  
+        margin: 0;
+    }
+</style>
+
+{% endblock content %}

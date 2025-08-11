@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block body_class %}template-novelpage theme-dark{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/novel_page_astratoons_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    .pagination li { list-style: none; list-style-type: none; }
+        .pagination ul { padding-left: 0; margin: 0; }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="manga-detail-page"> {# Reutilizando classes de estilo do mangá #}
+    <section class="manga-detail-header">
+        {% if page.cover_image %}
+            {% image page.cover_image fill-1920x400 as header_bg %}
+            <div class="header-background-image" style="background-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.2) 60%, transparent 100%), url('{{ header_bg.url }}');"></div>
+        {% endif %}
+    </section>
+
+    <section class="manga-detail-main-section">
+        <div class="container">
+            <div class="manga-detail-grid">
+                <div class="manga-detail-content">
+                    <div class="manga-info-block">
+                        <div class="manga-title-area">
+                            <h1 class="manga-title">{{ page.title }}</h1>
+                        </div>
+                        <div class="manga-tags">
+                            <span class="tag status-tag status-{{ page.get_status_display|slugify }}">{{ page.get_status_display }}</span>
+                            {% for tag_item in page.genres.all %}
+                                <a href="#" class="tag genre-tag">{{ tag_item.name }}</a>
+                            {% endfor %}
+                        </div>
+                        {% if page.synopsis %}<div class="manga-description">{{ page.synopsis|richtext }}</div>{% endif %}
+                    </div>
+                    <hr class="separator">
+
+                    <div class="tabs-container">
+                        <div class="tab-list" role="tablist">
+                            <button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="tab-content-chapters">Lista de Capítulos</button>
+                        </div>
+
+                        <div class="tab-content active" id="tab-content-chapters" role="tabpanel">
+                            <div class="chapter-list-controls">
+                                <form method="GET" action="." id="chapter-filter-form" class="chapter-filter-form">
+                                    <input type="search" name="q_chapter" class="chapter-filter-input" placeholder="Filtrar capítulos..." value="{{ search_query|default:'' }}">
+                                    <button type="submit" class="button button-small" title="Filtrar"><i class="fas fa-search"></i></button>
+                                </form>
+                                <div class="chapter-sort-buttons">
+                                    <a href="?sort=desc" title="Ordenar Decrescente" class="sort-button active">
+                                        <i class="fas fa-arrow-down-short-wide"></i>
+                                    </a>
+                                    <a href="?sort=asc" title="Ordenar Crescente" class="sort-button">
+                                        <i class="fas fa-arrow-up-wide-short"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="chapter-group">
+                                {% if chapters %}
+                                    <ul class="chapter-item-list">
+                                        {% for chapter in chapters %}
+                                            <li class="chapter-item">
+                                                <a href="{% pageurl chapter %}" class="chapter-link">
+                                                    <div class="chapter-thumbnail-wrapper">
+                                                        {% with final_thumb=chapter.get_thumbnail %}
+                                                            {% if final_thumb %}
+                                                                {% image final_thumb fill-140x80 as chapter_thumb_rendition %}
+                                                                <img src="{{ chapter_thumb_rendition.url }}" alt="Thumbnail para {{ chapter.chapter_number_display }}" class="chapter-thumbnail-img" loading="lazy">
+                                                            {% else %}
+                                                                <div class="chapter-thumbnail-placeholder"><i class="fas fa-image"></i></div>
+                                                            {% endif %}
+                                                        {% endwith %}
+                                                    </div>
+                                                    <div class="chapter-info">
+                                                        <span class="chapter-number">{{ chapter.chapter_number_display }}</span>
+                                                    </div>
+                                                    <div class="chapter-meta">
+                                                        {# ▼▼▼ ÁREA DO CONTADOR DE VIEWS ▼▼▼ #}
+                                                        {# Acessando o campo .views diretamente do objeto chapter. #}
+                                                        {# A lógica no models.py garante que este valor seja atualizado. #}
+                                                        <span class="chapter-views">
+                                                            <i class="fas fa-eye"></i> {{ chapter.views }}
+                                                        </span>
+                                                        <span class="chapter-date">
+                                                            <i class="far fa-clock"></i> {{ chapter.release_date|date:"d/m/Y" }}
+                                                        </span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% if chapters.paginator.num_pages > 1 %}
+                                        {% include "includes/_pagination.html" with page_obj=chapters %}
+                                    {% endif %}
+                                {% else %}
+                                    <p class="empty-list-message">Nenhum capítulo encontrado.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="manga-detail-sidebar">
+                    <div class="sidebar-sticky-content">
+                        <div class="sidebar-cover-image">
+                            {% if page.cover_image %}{% image page.cover_image fill-300x450 as cover_img %}<img src="{{ cover_img.url }}" alt="{{ page.title }} Capa">{% endif %}
+                        </div>
+                        <div class="sidebar-actions">
+                             <button type="button" class="button button-secondary button-rate" disabled title="Funcionalidade em breve"><i class="far fa-star"></i> Avaliar Obra (em breve)</button>
+                            {% if user.is_authenticated %}
+                                <button type="button" class="button button-bookmark {% if is_following %}button-secondary bookmarked{% else %}button-primary{% endif %}" id="follow-novel-btn" data-novel-id="{{ page.id }}" data-api-url="/novel/api/toggle-favorite/" aria-label="{% if is_following %}Remover dos Favoritos{% else %}Adicionar aos Favoritos{% endif %}">
+                                    <i class="{% if is_following %}fas fa-bookmark{% else %}far fa-bookmark{% endif %}"></i> <span class="follow-text">{% if is_following %}Favoritado{% else %}Favoritar{% endif %}</span>
+                                </button>
+                            {% else %}
+                                 <a href="{% url 'account_login' %}?next={{ request.path }}" class="button button-primary" title="Faça login para favoritar"><i class="far fa-bookmark"></i> Favoritar</a>
+                            {% endif %}
+                        </div>
+                        <div class="sidebar-details-box">
+                            <h4 class="details-title">Detalhes</h4>
+                            <dl class="details-list">
+                                <dt>Autor:</dt><dd>{{ page.author_name|default:"Não informado" }}</dd>
+                                <dt>Capítulos:</dt><dd>{{ chapter_count }}</dd>
+                                <dt class="followers-label">Favoritos:</dt><dd class="followers-value" id="followers-count-display">{{ followers_count }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</div>
+
+<form style="display: none;">{% csrf_token %}</form>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const bookmarkButton = document.getElementById('follow-novel-btn');
+    const followersCountElement = document.getElementById('followers-count-display');
+    const csrfTokenInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+
+    if (bookmarkButton && csrfTokenInput && followersCountElement) {
+        const csrfToken = csrfTokenInput.value;
+        bookmarkButton.addEventListener('click', function() {
+            const novelId = this.dataset.novelId;
+            const apiUrl = this.dataset.apiUrl;
+            const followTextElement = this.querySelector('.follow-text');
+            const iconElement = this.querySelector('i');
+            
+            this.disabled = true;
+            const originalText = followTextElement.textContent;
+            followTextElement.textContent = '...';
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken },
+                body: JSON.stringify({ 'novel_id': novelId })
+            })
+            .then(response => {
+                if (!response.ok) { return response.json().then(errData => { throw new Error(errData.message || `Erro ${response.status}`); }).catch(() => { throw new Error(`Erro ${response.status}`); }); }
+                return response.json();
+            })
+            .then(data => {
+                let currentCount = parseInt(followersCountElement.textContent);
+                if (isNaN(currentCount)) currentCount = 0;
+                
+                if (data.action === 'added' && data.is_favorited === true) {
+                    followTextElement.textContent = 'Favoritado'; 
+                    iconElement.className = 'fas fa-bookmark';
+                    this.classList.remove('button-primary');
+                    this.classList.add('button-secondary', 'bookmarked');
+                    this.setAttribute('aria-label', 'Remover dos Favoritos');
+                    followersCountElement.textContent = currentCount + 1;
+                } else if (data.action === 'removed' && data.is_favorited === false) {
+                    followTextElement.textContent = 'Favoritar'; 
+                    iconElement.className = 'far fa-bookmark';
+                    this.classList.remove('button-secondary', 'bookmarked');
+                    this.classList.add('button-primary');
+                    this.setAttribute('aria-label', 'Adicionar aos Favoritos');
+                    if (currentCount > 0) followersCountElement.textContent = currentCount - 1;
+                } else {
+                    followTextElement.textContent = originalText;
+                }
+            })
+            .catch(error => { 
+                console.error('Erro ao favoritar:', error); 
+                alert('Erro: ' + error.message); 
+                followTextElement.textContent = originalText; 
+            })
+            .finally(() => { 
+                this.disabled = false; 
+            });
+        });
+    }
+    
+    const rateButton = document.querySelector('.button-rate');
+    if (rateButton) {
+        rateButton.addEventListener('click', function() {
+            alert('Funcionalidade de avaliação ainda não implementada.');
+        });
+    }
+});
+</script>
+{% endblock %}

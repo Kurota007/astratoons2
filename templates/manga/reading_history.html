@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags humanize %}
+
+{% block title %}Meu Histórico de Leitura{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estilo para a data e hora do histórico de leitura */
+    .history-read-time {
+        color: #8c95a3 !important; /* Um cinza azulado que combina com temas escuros */
+        font-size: 0.85em;
+        display: inline-flex; /* Alinha o ícone e o texto corretamente */
+        align-items: center;
+        margin-top: 5px; /* Adiciona um pequeno espaço acima */
+    }
+
+    /* Estilo para a tag "Lido" */
+    .status-tag {
+        display: inline-block;
+        background-color: #4A5568; /* Cinza-azulado */
+        color: #E2E8F0;           /* Cinza claro */
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<main class="main-content" style="padding-top: 80px; padding-bottom: 40px;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 text-white">Meu Histórico de Leitura</h1>
+        </div>
+
+        {% if history_list %}
+            <div class="list-group">
+                {% for group in history_list %}
+                    {# O link sempre aponta para o capítulo mais recente lido no grupo #}
+                    <a href="{% pageurl group.end_chapter %}" class="list-group-item list-group-item-action d-flex align-items-center mb-2 rounded-3" style="background-color: #1f2128; border-color: #363944 !important; color: #d1d1d1;">
+                        <div class="flex-shrink-0 me-3">
+                            {% if group.manga.cover %}
+                                {% image group.manga.cover width-80 as thumb %}
+                                <img src="{{ thumb.url }}" alt="{{ group.manga.title }}" class="img-fluid rounded" style="width: 80px; height: 120px; object-fit: cover;">
+                            {% else %}
+                                <div class="bg-secondary rounded" style="width: 80px; height: 120px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas fa-image fa-2x text-light"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1 text-white">{{ group.manga.title }}</h5>
+                            
+                            {# Lógica para exibir capítulo único ou intervalo com a tag "Lido" #}
+                            <p class="mb-1">
+                                <span class="status-tag">Lido</span>
+                                {% if group.start_chapter.id == group.end_chapter.id %}
+                                    Capítulo {{ group.end_chapter.chapter_number|floatformat:"-g" }}
+                                {% else %}
+                                    Capítulos {{ group.start_chapter.chapter_number|floatformat:"-g" }} a {{ group.end_chapter.chapter_number|floatformat:"-g" }}
+                                {% endif %}
+                            </p>
+                            
+                            {# Timestamp da última leitura do grupo #}
+                            <small class="history-read-time" title="Lido em: {{ group.read_at|date:'d/m/Y \à\s H:i' }}">
+                                <i class="fas fa-clock fa-fw me-1"></i> Lido {{ group.read_at|naturaltime }}
+                            </small>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center p-5 rounded-3" style="background-color: #1f2128; border: 1px solid #363944;">
+                <h4 class="text-white">Seu histórico de leitura está vazio.</h4>
+                <p class="text-white-50">Comece a ler alguns capítulos e eles aparecerão aqui!</p>
+                <a href="{% url 'manga:manga_list_all' %}" class="btn btn-primary mt-3">Ver Comics</a>
+            </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

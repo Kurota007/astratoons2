@@ -1,0 +1,173 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags static %}
+
+{% block titletag %}{{ page_title }}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .field .field-content .input,
+        .field .field-content textarea.input {
+            width: 100%;
+            background-color: var(--w-color-surface-field, #202324);
+            color: var(--w-color-text-input, #e0e0e0);
+            border: 1px solid var(--w-color-border-field-weak, #555);
+            padding: 0.5em 0.6em;
+            border-radius: 3px;
+        }
+        .field .field-content textarea.input {
+            min-height: 250px;
+            line-height: 1.5;
+        }
+        .field .help {
+            color: var(--w-color-text-meta, #aaa);
+            font-size: 0.9em;
+            margin-top: 0.3em;
+        }
+        .field label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4em;
+        }
+        .field.required label::after {
+            content: " *";
+            color: var(--w-color-text-error, #cd3238);
+        }
+        .errorlist {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 1em 0;
+            color: var(--w-color-text-error, #cd3238);
+        }
+        .errorlist li {
+            padding: 0.5em;
+            background-color: var(--w-color-surface-error, rgba(205, 50, 56, 0.1));
+            border: 1px solid var(--w-color-border-error, #cd3238);
+            border-radius: 3px;
+        }
+        .field .error-message {
+            color: var(--w-color-text-error, #cd3238);
+            font-size: 0.9em;
+            margin-top: 0.3em;
+        }
+        .field .error-message span {
+            margin-right: 0.3em;
+        }
+
+        /* Estilos para os botões no rodapé do formulário */
+        .footer-actions .button {
+            padding: 0.6em 1em; /* Padding padrão dos botões Wagtail */
+            text-decoration: none;
+            border-radius: 3px; /* Raio de borda padrão do Wagtail */
+            font-weight: 600; /* Peso da fonte padrão */
+            font-size: 0.9rem; /* Tamanho da fonte padrão */
+            line-height: 1.5; /* Altura da linha padrão */
+            display: inline-flex; /* Para alinhar ícone e texto */
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle; /* Ajuda no alinhamento */
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .footer-actions .button .icon {
+            margin-right: 0.4em; /* Espaço entre ícone e texto */
+            width: 1.1em; /* Controla a largura do container do ícone */
+            height: 1.1em; /* Controla a altura do container do ícone */
+            /* O ícone SVG do Wagtail geralmente se ajusta ao font-size e color do pai */
+        }
+
+        .footer-actions .button.button-primary {
+            background-color: #007d7e; /* Cor de fundo turquesa */
+            border-color: #007d7e;
+            color: #ffffff !important; /* Forçar texto e ícone para branco */
+        }
+        .footer-actions .button.button-primary:hover,
+        .footer-actions .button.button-primary:focus {
+            background-color: #005f5f; /* Mais escuro no hover */
+            border-color: #005f5f;
+            color: #ffffff !important; /* Manter branco */
+        }
+
+        .footer-actions .button.button-secondary {
+            background-color: var(--w-color-button-secondary-bg, #383838);
+            border-color: var(--w-color-button-secondary-border, #505050);
+            color: var(--w-color-button-secondary-text, #e0e0e0);
+        }
+         .footer-actions .button.button-secondary:hover,
+         .footer-actions .button.button-secondary:focus {
+            background-color: var(--w-color-button-secondary-bg-hover, #484848);
+            border-color: var(--w-color-button-secondary-border-hover, #606060);
+            color: var(--w-color-button-secondary-text-hover, #f0f0f0);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=page_title icon=header_icon search_url="wagtailadmin_pages:search" %}
+
+    <div class="nice-padding form-container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="message {{ message.tags }}"{% endif %}>
+                        <div class="message-inner">
+                            <span class="message-text">{{ message }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form action="{{ action_url }}" method="POST" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <ul class="fields">
+                {% for field in form %}
+                    <li class="field field--{{ field.name }} {% if field.field.required %}required{% endif %} {% if field.errors %}error{% endif %}">
+                        <div class="field-content">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <p class="error-message"><span>!</span>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <footer>
+                <ul class="footer-actions">
+                    <li class="actions-first">
+                        <div class="dropdown dropup dropdown-button match-width">
+                            <button type="submit" class="button button-primary">
+                                {% icon name="plus" %}{% trans "Adicionar Capítulo" %}
+                            </button>
+                        </div>
+                    </li>
+                   <li class="actions-last">
+    <a href="{% url 'novels:novel_chapter_uploader_index' %}" class="button button-secondary">
+        {% trans "Cancelar" %}
+    </a>
+</li>
+                </ul>
+            </footer>
+        </form>
+    </div>
+    {{ form.media }}
+{% endblock %}

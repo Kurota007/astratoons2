@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags %} {# Certifique-se que wagtailsettings_tags está aqui #}
+{% get_settings %} {# Carrega as settings globais para o contexto #}
+
+{# --- Título da Página --- #}
+{% block title %}{{ page.title }}{% endblock %} {# Usa o título da página do mangá #}
+
+{# --- Classe CSS para o Body (Opcional) --- #}
+{% block body_class %}template-mangapage theme-dark{% endblock %}
+
+{% block extra_css %}
+    {# CSS específico para esta página, se necessário #}
+    {# Font Awesome já é carregado pelo base.html #}
+    {# main.css já é carregado pelo base.html #}
+{% endblock %}
+
+{# --- Conteúdo Principal da Página --- #}
+{% block content %}
+<div class="manga-detail-page">
+
+    {# --- Seção do Cabeçalho com Imagem de Fundo (Simplificado) --- #}
+    <section class="manga-detail-header">
+        {% if page.cover %}
+            {% image page.cover fill-1920x400 as header_bg %}
+            <div class="header-background-image" style="background-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 20%, rgba(0,0,0,0.2) 60%, transparent 100%), url('{{ header_bg.url }}');">
+            </div>
+        {% endif %}
+    </section>
+
+    {# --- Container Principal para Grid --- #}
+    <section class="manga-detail-main-section">
+        <div class="container">
+            <div class="manga-detail-grid">
+
+                {# --- Coluna Principal (Esquerda) --- #}
+                <div class="manga-detail-content">
+                    {# --- Bloco de Informações Superior --- #}
+                    <div class="manga-info-block">
+                        <div class="manga-title-area">
+                            <h1 class="manga-title">{{ page.title }}</h1>
+                            {% if page.rating %}
+                            <div class="manga-rating">
+                                <i class="fas fa-star"></i> {{ page.rating|floatformat:1 }} / 10
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if page.alternative_titles %}
+                            <p class="manga-alternative-titles">({{ page.alternative_titles }})</p>
+                        {% endif %}
+
+                        {# --- Tags (Status, Tipo, Gêneros) --- #}
+                        <div class="manga-tags">
+                            {% if page.status %}
+                                <span class="tag status-tag status-{{ page.get_status_display|slugify }}">{{ page.get_status_display }}</span>
+                            {% endif %}
+                             {% if page.manga_type %}
+                                <span class="tag type-tag type-{{ page.get_manga_type_display|slugify }}">{{ page.get_manga_type_display }}</span>
+                            {% endif %}
+                            {% for genre_item in page.genre_items.all %}
+                                {# TODO: Link para página de gênero se existir #}
+                                <a href="#" class="tag genre-tag genre-{{ genre_item.tag.slug }}">{{ genre_item.tag.name }}</a>
+                            {% endfor %}
+                        </div>
+
+                        {# --- Descrição --- #}
+                        {% if page.description %}
+                            <div class="manga-description">
+                                {{ page.description|richtext }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# --- Separador --- #}
+                    <hr class="separator">
+
+                    {# --- Abas (Tabs) --- #}
+                    <div class="tabs-container">
+                        <div class="tab-list" role="tablist">
+                            <button class="tab-trigger active" role="tab" aria-selected="true" aria-controls="tab-content-chapters" data-tab-target="chapters">
+                                Lista de Capítulos
+                            </button>
+                            {% if page.news_updates %}
+                            <button class="tab-trigger" role="tab" aria-selected="false" aria-controls="tab-content-notices" data-tab-target="notices">
+                                Avisos
+                            </button>
+                            {% endif %}
+                        </div>
+
+                        {# --- Conteúdo da Aba de Capítulos --- #}
+                        <div class="tab-content active" id="tab-content-chapters" role="tabpanel">
+                            <div class="chapter-list-controls">
+                                <input type="search" class="chapter-filter-input" placeholder="Filtrar capítulos...">
+                                <div class="chapter-sort-buttons">
+                                    <button title="Ordenar Decrescente (Padrão)" class="sort-button active"><i class="fas fa-arrow-down-short-wide"></i></button>
+                                    <button title="Ordenar Crescente" class="sort-button"><i class="fas fa-arrow-up-wide-short"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="chapter-group">
+                                {% if chapters %}
+                                    <ul class="chapter-item-list">
+                                        {% for chapter in chapters %}
+                                        <li class="chapter-item">
+                                            <a href="{% pageurl chapter %}" class="chapter-link">
+                                                <div class="chapter-info">
+                                                    <span class="chapter-number">Capítulo {{ chapter.chapter_number }}</span>
+                                                    {% if chapter.chapter_title %}
+                                                        <span class="chapter-title-separator">-</span>
+                                                        <span class="chapter-title">{{ chapter.chapter_title }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="chapter-meta">
+                                                    <span class="chapter-date">
+                                                        <i class="far fa-clock"></i>
+                                                        {{ chapter.release_date_or_published|date:"d/m/Y" }}
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    {# --- Paginação (Placeholder) --- #}
+                                    <nav class="pagination" aria-label="Paginação de capítulos">
+                                        <a href="#" class="page-item disabled">Anterior</a>
+                                        <a href="#" class="page-item active" aria-current="page">1</a>
+                                        <a href="#" class="page-item">2</a>
+                                        <span class="page-item ellipsis">...</span>
+                                        <a href="#" class="page-item">10</a>
+                                        <a href="#" class="page-item">Próximo</a>
+                                    </nav>
+
+                                {% else %}
+                                    <p class="empty-list-message">Nenhum capítulo encontrado para esta obra ainda.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {# --- Conteúdo da Aba de Avisos --- #}
+                        {% if page.news_updates %}
+                        <div class="tab-content" id="tab-content-notices" role="tabpanel" style="display: none;">
+                            <div class="manga-notices">
+                                {{ page.news_updates|richtext }}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+                {# --- Coluna Lateral (Direita) --- #}
+                <aside class="manga-detail-sidebar">
+                    <div class="sidebar-sticky-content">
+                        <div class="sidebar-cover-image">
+                            {% if page.cover %}
+                                {% image page.cover fill-300x450 as cover_img %}
+                                <img src="{{ cover_img.url }}" alt="{{ page.title }} Capa" loading="lazy">
+                            {% else %}
+                                <div class="cover-placeholder">Sem Capa</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="sidebar-actions">
+                            <button class="button button-secondary button-rate">
+                                <i class="far fa-star"></i> Avaliar Obra
+                            </button>
+                            <button class="button button-secondary button-bookmark {% if is_following %}bookmarked{% endif %}">
+                                <i class="{% if is_following %}fas{% else %}far{% endif %} fa-bookmark"></i>
+                                {% if is_following %}Favoritado{% else %}Favoritar{% endif %}
+                            </button>
+                        </div>
+
+                         {% if page.release_day %}
+                         <div class="sidebar-release-schedule">
+                             <span class="schedule-title">Lançamentos:</span>
+                             <div class="schedule-days">
+                                 <span class="day {% if page.release_day == 'MON' %}active{% endif %}">S</span>
+                                 <span class="day {% if page.release_day == 'TUE' %}active{% endif %}">T</span>
+                                 <span class="day {% if page.release_day == 'WED' %}active{% endif %}">Q</span>
+                                 <span class="day {% if page.release_day == 'THU' %}active{% endif %}">Q</span>
+                                 <span class="day {% if page.release_day == 'FRI' %}active{% endif %}">S</span>
+                                 <span class="day {% if page.release_day == 'SAT' %}active{% endif %}">S</span>
+                                 <span class="day {% if page.release_day == 'SUN' %}active{% endif %}">D</span>
+                             </div>
+                         </div>
+                         {% endif %}
+
+                        <div class="sidebar-details-box">
+                            <h4 class="details-title">Detalhes</h4>
+                            <dl class="details-list">
+                                {% if page.release_year %}
+                                <dt>Ano:</dt><dd>{{ page.release_year }}</dd>
+                                {% endif %}
+                                {% if page.author %}
+                                <dt>Autor:</dt><dd>{{ page.author }}</dd>
+                                {% endif %}
+                                {% if page.artist %}
+                                <dt>Artista:</dt><dd>{{ page.artist }}</dd>
+                                {% endif %}
+                                {% if page.publisher %}
+                                <dt>Editora:</dt><dd>{{ page.publisher }}</dd>
+                                {% endif %}
+                                {% if chapter_count is not None %}
+                                <dt>Total Capítulos:</dt><dd>{{ chapter_count }}</dd>
+                                {% endif %}
+                                {% if followers_count is not None %}
+                                <dt>Favoritos:</dt><dd>{{ followers_count }}</dd> {# Exibe contagem de favoritos #}
+                                {% endif %}
+                            </dl>
+                        </div>
+
+                        {# --- INÍCIO DA NOVA SEÇÃO DE LINKS OFICIAIS --- #}
+                        {# Verifica se existe pelo menos um link oficial para exibir a seção #}
+                        {% if page.original_link_kr or page.original_link_jp or page.original_link_cn or page.original_link_en %}
+                        <div class="sidebar-official-links-box">
+                            <h4 class="details-title">Links Oficiais</h4> {# Reutilizando estilo do título ou crie .official-links-title #}
+                            <div class="official-links-list">
+                                {% if page.original_link_kr %}
+                                    <div class="official-link-item">
+                                        <span class="link-label"><i class="fas fa-link"></i> Coreano:</span>
+                                        <a href="{{ page.original_link_kr }}" target="_blank" rel="noopener noreferrer" class="link-url" title="{{ page.original_link_kr }}">
+                                            Visitar Link KR
+                                            {# Ou mostrar parte da URL: {{ page.original_link_kr|truncatechars:25 }} #}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if page.original_link_jp %}
+                                    <div class="official-link-item">
+                                        <span class="link-label"><i class="fas fa-link"></i> Japonês:</span>
+                                        <a href="{{ page.original_link_jp }}" target="_blank" rel="noopener noreferrer" class="link-url" title="{{ page.original_link_jp }}">
+                                             Visitar Link JP
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if page.original_link_cn %}
+                                    <div class="official-link-item">
+                                        <span class="link-label"><i class="fas fa-link"></i> Chinês:</span>
+                                        <a href="{{ page.original_link_cn }}" target="_blank" rel="noopener noreferrer" class="link-url" title="{{ page.original_link_cn }}">
+                                             Visitar Link CN
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                {% if page.original_link_en %}
+                                    <div class="official-link-item">
+                                        <span class="link-label"><i class="fas fa-link"></i> Inglês:</span>
+                                        <a href="{{ page.original_link_en }}" target="_blank" rel="noopener noreferrer" class="link-url" title="{{ page.original_link_en }}">
+                                            Visitar Link EN
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {# --- FIM DA NOVA SEÇÃO DE LINKS OFICIAIS --- #}
+
+                    </div> {# Fim sidebar-sticky-content #}
+                </aside> {# --- Fim Coluna Lateral --- #}
+
+            </div> {# --- Fim manga-detail-grid --- #}
+
+             {# --- Seção de Reviews/Comentários (Placeholder) --- #}
+            <section class="manga-reviews-section">
+                <h2 class="section-title">Reviews e Comentários</h2>
+                <div class="comments-placeholder">
+                    <p>Sistema de comentários será implementado aqui.</p>
+                </div>
+            </section>
+
+        </div> {# --- Fim container --- #}
+    </section> {# --- Fim manga-detail-main-section --- #}
+
+</div> {# --- Fim manga-detail-page --- #}
+{% endblock %}
+
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lógica básica para Tabs (sem animações complexas)
+            const tabContainer = document.querySelector('.tabs-container');
+            if (tabContainer) {
+                const tabTriggers = tabContainer.querySelectorAll('.tab-trigger');
+                const tabContents = tabContainer.querySelectorAll('.tab-content');
+
+                tabTriggers.forEach(trigger => {
+                    trigger.addEventListener('click', function() {
+                        const targetId = this.getAttribute('aria-controls');
+
+                        // Desativa todos os triggers e oculta todos os conteúdos
+                        tabTriggers.forEach(t => {
+                            t.classList.remove('active');
+                            t.setAttribute('aria-selected', 'false');
+                         });
+                        tabContents.forEach(c => {
+                            c.classList.remove('active');
+                            c.style.display = 'none'; // Garante que está oculto
+                        });
+
+                        // Ativa o trigger clicado e mostra o conteúdo correspondente
+                        this.classList.add('active');
+                        this.setAttribute('aria-selected', 'true');
+                        const targetContent = tabContainer.querySelector('#' + targetId);
+                        if (targetContent) {
+                            targetContent.classList.add('active');
+                            targetContent.style.display = 'block'; // Mostra o conteúdo
+                        }
+                    });
+                });
+
+                // Garante que apenas o conteúdo da aba ativa inicial seja exibido
+                const activeTrigger = tabContainer.querySelector('.tab-trigger.active');
+                const activeContentId = activeTrigger ? activeTrigger.getAttribute('aria-controls') : null;
+                tabContents.forEach(c => {
+                    if (c.id !== activeContentId) {
+                        c.style.display = 'none';
+                    } else {
+                        c.style.display = 'block';
+                    }
+                });
+            }
+
+            // Lógica para Favoritar/Bookmark (Exemplo - precisa de AJAX/Backend)
+            const bookmarkButton = document.querySelector('.button-bookmark');
+            if (bookmarkButton) {
+                bookmarkButton.addEventListener('click', function() {
+                    const isBookmarked = this.classList.contains('bookmarked');
+                    const mangaId = "{{ page.pk }}"; // Pega o ID da página atual
+
+                    // TODO: Enviar requisição AJAX para o backend (ex: /api/manga/{mangaId}/toggle_favorite/)
+                    console.log(`Toggle bookmark para manga ID: ${mangaId}. Estava favoritado: ${isBookmarked}`);
+
+                    // Simula a atualização visual (o backend deve confirmar)
+                    if (isBookmarked) {
+                        this.classList.remove('bookmarked');
+                        this.innerHTML = '<i class="far fa-bookmark"></i> Favoritar';
+                    } else {
+                        this.classList.add('bookmarked');
+                        this.innerHTML = '<i class="fas fa-bookmark"></i> Favoritado';
+                    }
+                    // TODO: Atualizar contador de favoritos na página se o backend retornar o novo valor
+                });
+            }
+        });
+    </script>
+{% endblock %}

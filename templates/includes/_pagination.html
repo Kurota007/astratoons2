@@ -1,0 +1,50 @@
+{% load i18n %} {# Adicionado para as tags trans #}
+
+{% if page_obj.has_other_pages %}
+<nav aria-label="Paginação" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {# Botão Primeira e Anterior #}
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" aria-label="{% trans 'Primeira' %}">«</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="{% trans 'Anterior' %}">‹</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">«</span></li>
+            <li class="page-item disabled"><span class="page-link">‹</span></li>
+        {% endif %}
+
+        {# Números das Páginas com Lógica de Reticências #}
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num == 1 or num == page_obj.paginator.num_pages %}
+                {% if forloop.first and page_obj.number > 4 %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% if forloop.last and page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {# Botão Próxima e Última #}
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="{% trans 'Próxima' %}">›</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="{% trans 'Última' %}">»</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled"><span class="page-link">›</span></li>
+            <li class="page-item disabled"><span class="page-link">»</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}

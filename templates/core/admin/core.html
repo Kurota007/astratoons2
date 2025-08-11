@@ -1,0 +1,164 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static i18n %}
+
+{% block titletag %}{% trans "Uso de Disco" %}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .content-wrapper .nice-padding h1.page-title {color: #e0e0e0; margin-bottom: 1.5rem;}
+        .disk-usage-container {
+            padding: 20px; background-color: #2e2e2e; border-radius: 8px;
+            color: #e0e0e0; max-width: 900px; margin: 0 auto;
+            border: 1px solid #3a3a3a;
+        }
+        .usage-summary { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #444;}
+        .usage-summary p { font-size: 1.1em; margin-bottom: 0.7em; line-height: 1.6; }
+        .usage-summary strong { color: #f0f0f0; min-width: 100px; display: inline-block; }
+        
+        .chart-wrapper {
+            position: relative; width: 80%; max-width: 400px; height: 300px;   
+            margin: 20px auto; padding: 15px;
+            /* background-color será definido por JS */
+            border-radius: 6px;
+            /* border será definido por JS */
+        }
+        .path-checked-info { margin-top: 25px; font-size: 0.9em; font-style: italic; color: #b0b0b0; text-align: center; }
+        .messages .error ul { list-style-type: none; padding-left: 0; margin-bottom: 0; }
+        .messages .error li { padding: 10px 15px; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=header_title icon=header_icon subtitle="" %}
+
+    <div class="nice-padding">
+        <div class="disk-usage-container">
+            {% if error_message %}
+                <div class="messages">
+                    <div class="error w-panel w-panel--critical">
+                        <div class="w-panel__content">
+                            <p><strong>{% trans "Erro ao obter dados do disco:" %}</strong></p>
+                            <p>{{ error_message }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="usage-summary">
+                    <p><strong>{% trans "Total:" %}</strong> {{ total_gb|default_if_none:"N/A" }} GB</p>
+                    <p><strong>{% trans "Usado:" %}</strong> {{ used_gb|default_if_none:"N/A" }} GB ({{ percent_used|default_if_none:"N/A" }}%)</p>
+                    <p><strong>{% trans "Livre:" %}</strong> {{ free_gb|default_if_none:"N/A" }} GB</p>
+                </div>
+
+                {% if total_gb is not None and used_gb is not None and free_gb is not None %}
+                    <div class="chart-wrapper">
+                        <canvas id="diskUsageChart"></canvas> {# ID Fixo, pois é só um gráfico #}
+                    </div>
+                {% else %}
+                     <div class="messages"><div class="info w-panel w-panel--neutral"><div class="w-panel__content"><p>{% trans "Gráfico não disponível devido à falta de dados ou dados zerados." %}</p></div></div></div>
+                {% endif %}
+
+                {% if path_checked and path_checked != "N/A" %}
+                    <p class="path-checked-info">{% blocktrans %}Informações para o caminho: {{ path_checked }}{% endblocktrans %}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Estes valores vêm diretamente do contexto para um único disco
+            const usedSpaceStr = "{{ used_gb|default_if_none:'0'|escapejs }}".replace(",", ".");
+            const freeSpaceStr = "{{ free_gb|default_if_none:'0'|escapejs }}".replace(",", ".");
+            
+            const usedSpace = parseFloat(usedSpaceStr) || 0;
+            const freeSpace = parseFloat(freeSpaceStr) || 0;
+
+            const chartCanvas = document.getElementById('diskUsageChart'); // ID Fixo
+            console.log("Canvas do gráfico:", chartCanvas); // DEBUG
+            console.log("Dados para o gráfico: Usado =", usedSpace, "Livre =", freeSpace); // DEBUG
+
+
+            if (chartCanvas && chartCanvas.parentElement) {
+                const rootStyles = getComputedStyle(document.documentElement);
+                const chartBackgroundColor = '#1c1c1c'; // Mesmo fundo de antes
+                chartCanvas.parentElement.style.backgroundColor = chartBackgroundColor;
+                chartCanvas.parentElement.style.borderColor = rootStyles.getPropertyValue('--w-color-border-furniture').trim() || '#3a3a3a';
+            }
+
+
+            if (chartCanvas && (usedSpace > 0 || freeSpace > 0)) {
+                const ctx = chartCanvas.getContext('2d');
+                if (!ctx) {
+                    console.error("Não foi possível obter o contexto 2D para diskUsageChart");
+                    return;
+                }
+                
+                const rootStyles = getComputedStyle(document.documentElement);
+                const textColor = rootStyles.getPropertyValue('--w-color-text-context').trim() || '#f0f0f0'; // Default mais claro
+                const accentColor = rootStyles.getPropertyValue('--w-color-accent').trim() || '#43b1b0';
+                const errorColor = rootStyles.getPropertyValue('--w-color-text-error').trim() || '#e35252'; // Cor de erro do Wagtail
+                const panelBackgroundColor = rootStyles.getPropertyValue('--w-color-surface-panel').trim() || '#2e2e2e';
+                const chartBgForBorder = '#1c1c1c';
+
+
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['{% trans "Espaço Usado (GB)" %}', '{% trans "Espaço Livre (GB)" %}'],
+                        datasets: [{
+                            label: '{% trans "Uso do Disco" %}',
+                            data: [usedSpace, freeSpace],
+                            backgroundColor: [ errorColor, accentColor ],
+                            borderColor: [ chartBgForBorder, chartBgForBorder ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: textColor, padding: 20, font: {size: 13} } 
+                            },
+                            title: {
+                                display: true,
+                                text: '{% trans "Distribuição do Uso de Disco" %}',
+                                color: textColor,
+                                padding: { top: 10, bottom: 20 },
+                                font: { size: 16, weight: 'normal' }
+                            },
+                            tooltip: {
+                                bodyColor: textColor, titleColor: textColor,
+                                backgroundColor: panelBackgroundColor,
+                                borderColor: accentColor, borderWidth: 1,
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed !== null) {
+                                            label += context.parsed.toFixed(2) + ' GB';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            } else if (chartCanvas) {
+                // Se não há erro na view e os dados são zero ou não existem
+                if (!document.querySelector('.disk-usage-container .messages .error')) {
+                     chartCanvas.parentElement.innerHTML = "<p style='text-align:center; color: #a0a0a0;'>{% trans "Dados de uso do disco não suficientes ou zerados para gerar gráfico." %}</p>";
+                }
+            }
+        });
+    </script>
+{% endblock %}

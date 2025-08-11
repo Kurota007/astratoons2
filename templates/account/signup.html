@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailsettings_tags wagtailimages_tags socialaccount %}
+
+{% block title %}{% trans "Cadastrar" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="login-page-container">
+    <div class="login-form-card">
+        {% if request.site.root_page %}
+            <a href="{% pageurl request.site.root_page %}" class="login-close-button" aria-label="Fechar"><i class="fas fa-times"></i></a>
+        {% endif %}
+        <div class="login-header">
+            {% get_settings use_default_site=True %}
+            {% if settings.core.GlobalSettings.logo %}
+                {% image settings.core.GlobalSettings.logo width-48 as signup_page_logo %}
+                <img class="login-page-logo" src="{{ signup_page_logo.url }}" alt="{{ settings.core.GlobalSettings.site_name_text|default:'AstraToons' }} Logo">
+            {% else %}
+                <span class="site-name-login-page">{{ settings.core.GlobalSettings.site_name_text|default:'AstraToons' }}</span>
+            {% endif %}
+            <h2 class="login-main-title">{% trans "Crie sua conta" %}</h2>
+            <span class="login-subtitle-text">{% trans "Insira seus dados abaixo para criar uma nova conta." %}</span>
+        </div>
+        <div class="login-form-body">
+            <form class="login-actual-form signup-form" method="POST" action="{% url 'account_signup' %}">
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                    <div class="form-errors global-form-errors">{% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}</div>
+                {% endif %}
+                <div class="form-field-group">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">{% trans "Nome de usuário" %}</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}<ul class="errorlist">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                <div class="form-field-group">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">{% trans "Endereço de e-mail" %}</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}<ul class="errorlist">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+
+                <div class="form-field-group">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">{% trans "Senha" %}</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}<ul class="errorlist">{% for error in form.password1.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+
+                {% if form.password2 %}
+                <div class="form-field-group">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">{% trans "Confirme a senha" %}</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}<ul class="errorlist">{% for error in form.password2.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+                {% endif %}
+
+                {% if redirect_field_value %}<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />{% endif %}
+                <div class="login-actions-group"><button class="form-submit-button" type="submit">{% trans "Cadastrar" %}</button></div>
+            </form>
+
+            {# --- INÍCIO DO BLOCO DE LOGIN/REGISTRO COM DISCORD --- #}
+            <div class="social-login-container" style="text-align: center; margin-top: 25px; margin-bottom: 15px;">
+                <p style="color: #b9bbbe; margin-bottom: 12px; font-size: 0.9em;">{% trans "Ou registre-se com" %}:</p>
+                <a href="{% provider_login_url 'discord' process='login' %}" class="social-login-button discord-login-button">
+                    <i class="fab fa-discord" aria-hidden="true" style="margin-right: 10px; vertical-align: middle; font-size: 1.2em;"></i>
+                    <span>{% trans "Registrar com Discord" %}</span>
+                </a>
+            </div>
+            {# --- FIM DO BLOCO DE LOGIN/REGISTRO COM DISCORD --- #}
+
+            <div class="login-divider-alt"></div>
+            <p class="login-footer-text">{% trans "Já é um usuário?" %} <a href="{% url 'account_login' %}" class="footer-link">{% trans "Faça login agora" %}</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

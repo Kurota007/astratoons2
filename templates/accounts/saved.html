@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}{% trans "Meus Favoritos" %}{% endblock %}
+
+{% block body_class %}template-saved-mangas theme-dark{% endblock %}
+
+{% block extra_css %}
+{{ block.super }}
+<style>
+    /* CSS para criar o grid horizontal responsivo */
+    .favorites-grid {
+        display: grid;
+        /* A linha mágica: cria quantas colunas couberem, com um tamanho mínimo de 200px. */
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem; /* Espaçamento entre os cards */
+    }
+
+    /* Estilos para cada card individual */
+    .favorite-item-card {
+        background-color: #2b2c2e; /* Cor de fundo do card, como antes */
+        border-radius: 8px; /* Bordas arredondadas */
+        overflow: hidden; /* Garante que a imagem não vaze */
+        display: flex;
+        flex-direction: column; /* Organiza o conteúdo (imagem em cima, texto embaixo) */
+        border: 1px solid transparent;
+        transition: border-color 0.2s ease-in-out;
+    }
+
+    .favorite-item-card:hover {
+        border-color: #89b8ff; /* Cor da borda ao passar o mouse */
+    }
+
+    .favorite-item-card a.cover-link {
+        display: block;
+        aspect-ratio: 2 / 3; /* Proporção da capa */
+    }
+
+    .favorite-item-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+    }
+
+    .favorite-item-card .details {
+        padding: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* Faz esta área crescer para preencher o espaço */
+    }
+
+    .favorite-item-card .details h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Adiciona "..." se o título for muito longo */
+        margin-bottom: 0.25rem;
+    }
+    
+    .favorite-item-card .details .footer {
+        margin-top: auto; /* Empurra para o fundo do card */
+        padding-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: #9ca3af; /* cinza claro */
+    }
+    
+    .favorite-item-card .remove-favorite-btn {
+        color: #9ca3af;
+        transition: color 0.2s ease-in-out;
+    }
+    .favorite-item-card .remove-favorite-btn:hover {
+        color: #ef4444; /* vermelho */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="favorites-page-wrapper py-8">
+    <div class="container">
+
+        <h1 class="page-title text-3xl font-bold text-white mb-6">{% trans "Minhas Obras Favoritas" %}</h1>
+
+        <div id="favorites-list-container">
+            {% if favorites_list %}
+                <!-- Este é o container que o nosso novo CSS vai estilizar -->
+                <div class="favorites-grid">
+                    {% for fav_item in favorites_list %}
+                        {% with item=fav_item.content_object %}
+                            <div class="favorite-item-card" id="fav-item-{{ item.id }}-{{ fav_item.item_type }}">
+                                <a href="{% pageurl item %}" class="cover-link">
+                                    {% if item.cover %}
+                                        {% image item.cover fill-200x300 as fav_cover %}
+                                        <img src="{{ fav_cover.url }}" alt="{{ item.title }}" width="200" height="300" loading="lazy">
+                                    {% else %}
+                                         <div class="placeholder w-full h-full flex items-center justify-center text-lg text-[color:var(--placeholder-text)] bg-[color:var(--placeholder-bg)]">?</div>
+                                    {% endif %}
+                                </a>
+
+                                <div class="details">
+                                    <h3>
+                                        <a href="{% pageurl item %}" class="hover:text-[color:var(--accent-color)] transition-colors" title="{{ item.title }}">
+                                            {{ item.title }}
+                                        </a>
+                                    </h3>
+                                    <div class="footer">
+                                        <p>{% blocktrans with date=fav_item.favorited_at|date:"d/m/y" %}Em: {{ date }}{% endblocktrans %}</p>
+                                        <button class="remove-favorite-btn"
+                                                data-object-id="{{ item.id }}"
+                                                data-content-type="{{ fav_item.item_type }}"
+                                                data-api-url="{% url 'accounts:api_toggle_favorite' %}"
+                                                data-csrf-token="{{ csrf_token }}"
+                                                title="{% trans 'Remover dos Favoritos' %}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+
+                {% if favorites_list.has_other_pages %}
+                    <div class="pagination-container mt-8">
+                        {% include "includes/pagination.html" with items=favorites_list request=request %}
+                    </div>
+                {% endif %}
+
+            {% else %}
+                <div class="empty-state card-bg rounded-lg p-8 md:p-12 text-center mt-8">
+                    <div class="icon text-5xl text-[color:var(--accent-color)] opacity-50 mb-6"><i class="fas fa-bookmark"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-2">{% trans "Nenhum favorito ainda" %}</h3>
+                    <p class="text-[color:var(--light-text-color)] mb-6">{% trans "Quando você marcar obras como favoritas, elas aparecerão aqui." %}</p>
+                    <a href="#" class="button button-primary inline-block px-6 py-3">{% trans "Explorar Obras" %}</a>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block extra_js %}
+{{ block.super }}
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const favoritesContainer = document.getElementById('favorites-list-container');
+        if (!favoritesContainer) return;
+
+        favoritesContainer.addEventListener('click', function(event) {
+            const removeButton = event.target.closest('.remove-favorite-btn');
+            if (!removeButton) return;
+
+            event.preventDefault();
+
+            const objectId = removeButton.dataset.objectId;
+            const contentType = removeButton.dataset.contentType;
+            const apiUrl = removeButton.dataset.apiUrl;
+            const csrfToken = removeButton.dataset.csrfToken;
+            const favoriteItemElement = document.getElementById(`fav-item-${objectId}-${contentType}`);
+            
+            if (!objectId || !contentType) {
+                console.error("Erro: ID ou Tipo de Conteúdo não encontrado no botão.");
+                return;
+            }
+
+            removeButton.disabled = true;
+            const originalIcon = removeButton.innerHTML;
+            removeButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({
+                    object_id: objectId,
+                    content_type: contentType
+                })
+            })
+            .then(response => response.ok ? response.json() : Promise.reject(response))
+            .then(data => {
+                if (data.action === 'removed') {
+                    if (favoriteItemElement) {
+                        favoriteItemElement.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        favoriteItemElement.style.opacity = '0';
+                        favoriteItemElement.style.transform = 'scale(0.9)';
+                        setTimeout(() => { favoriteItemElement.remove(); }, 300);
+                    }
+                } else {
+                    throw new Error(data.message || 'A API não retornou a ação esperada.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao remover favorito:', error);
+                alert('Ocorreu um erro ao remover o favorito.');
+                removeButton.innerHTML = originalIcon;
+                removeButton.disabled = false;
+            });
+        });
+    });
+    </script>
+{% endblock extra_js %}

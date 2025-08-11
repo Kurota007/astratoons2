@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags i18n %}
+
+{% block title %}{% trans "Resultados da busca por" %} "{{ search_query }}"{% endblock %}
+
+{% block content %}
+<div class="search-page-container">
+    <div class="search-header">
+        <h1>
+            {% if search_query %}
+                {% trans "Resultados para" %} <span class="query">"{{ search_query }}"</span>
+            {% else %}
+                {% trans "Por favor, digite um termo para buscar" %}
+            {% endif %}
+        </h1>
+    </div>
+
+    {% if search_results %}
+        <div class="search-results-grid">
+            {% for result in search_results %}
+                {% with page=result.specific %}
+                    <a href="{% pageurl page %}" class="search-result-card">
+                        <div class="search-result-cover-wrapper">
+                            {% if page.cover %}
+                                {% image page.cover fill-250x350 as cover_img %}
+                                <img src="{{ cover_img.url }}" alt="Capa de {{ page.title }}" class="search-result-cover" loading="lazy">
+                            {% else %}
+                                <div class="search-result-cover placeholder" style="display:flex; align-items:center; justify-content:center; font-size: 2rem;">?</div>
+                            {% endif %}
+                        </div>
+                        <h3 class="search-result-title">{{ page.title }}</h3>
+                    </a>
+                {% endwith %}
+            {% endfor %}
+        </div>
+
+        {% if search_results.paginator.num_pages > 1 %}
+            <nav class="pagination" aria-label="Paginação">
+                {% if search_results.has_previous %}
+                    <a href="{% url 'custom_search' %}?query={{ search_query|urlencode }}&page=1">«</a>
+                    <a href="{% url 'custom_search' %}?query={{ search_query|urlencode }}&page={{ search_results.previous_page_number }}">{% trans "Anterior" %}</a>
+                {% endif %}
+
+                <span class="current">
+                    {% trans "Página" %} {{ search_results.number }} {% trans "de" %} {{ search_results.paginator.num_pages }}
+                </span>
+
+                {% if search_results.has_next %}
+                    <a href="{% url 'custom_search' %}?query={{ search_query|urlencode }}&page={{ search_results.next_page_number }}">{% trans "Próxima" %}</a>
+                    <a href="{% url 'custom_channel' %}?query={{ search_query|urlencode }}&page={{ search_results.paginator.num_pages }}">»</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+
+    {% elif search_query %}
+        <div class="no-results-message">
+            <h2>Nenhum resultado encontrado.</h2>
+            <p>Tente buscar por um termo diferente.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

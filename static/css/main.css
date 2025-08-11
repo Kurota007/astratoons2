@@ -1,0 +1,4777 @@
+/* static/css/main.css - INÍCIO ou adicione a um comics_page.css */
+
+/* === VARIAVEIS GLOBAIS === */
+:root {
+    /* Cores Base do seu Tema */
+    --navbar-bg-color: #171717;
+    --body-bg-color: #0d0d0d;
+    --main-text-color: #e0e0e0;
+    --light-text-color: #a0a0a0; /* Para textos secundários, placeholders */
+    --accent-color: #2803ca;     /* Cor principal de destaque */
+    --accent-color-rgb: 40, 3, 202; /* Componentes RGB de --accent-color (corrigido) */
+    --border-color: #2f2f2f;     /* Cor para bordas sutis e divisores */
+    
+    /* Cores de Componentes */
+    --card-bg-color: #1e1e1e;
+    --input-bg-color: #2a2a2a;
+    --input-border-color: #4a4a4a;
+    --input-focus-border-color: var(--accent-color);
+    --input-focus-shadow-color-rgb: var(--accent-color-rgb); /* Para o brilho do foco */
+    --button-primary-bg: var(--accent-color);
+    --button-primary-text: white;
+    --button-secondary-bg: #333333;
+    --button-secondary-text: #dddddd;
+    --button-secondary-border: #555555;
+    --section-bg-color: #101013; /* Fundo para seções, se diferente do body */
+
+    /* Cores de Feedback/Estado */
+    /* --- Success --- */
+    --success-color: #22c55e;
+    --success-bg-color-rgb: 34, 197, 94; /* Usado com alfa para fundos */
+    /* --- Warning --- */
+    --warning-color: #f97316;
+    --warning-bg-color-rgb: 249, 115, 22; /* Usado com alfa para fundos */
+    /* --- Info --- */
+    --info-color: #3b82f6;
+    --info-bg-color-rgb: 59, 130, 246; /* Usado com alfa para fundos */
+    /* --- Danger (Consolidado) --- */
+    --danger-color: #ef4444;
+    --danger-color-hover: #DC2626;
+    --danger-color-rgb: 239, 68, 68; /* Para uso com rgba() se necessário (ex: texto ou bordas com alfa) */
+    --danger-box-bg: #3B0B0B; /* Fundo escuro para o box da Zona de Perigo. Ajuste esta cor conforme sua preferência! */
+    --danger-box-border: #5A1A1A; /* Borda sutil para o box da Zona de Perigo (opcional) */
+    --text-primary-color-ondark: #FFFFFF; /* Texto principal sobre fundos escuros (como --danger-box-bg) */
+    --text-secondary-color-ondark: #E0E0E0; /* Texto secundário sobre fundos escuros */
+    
+    /* Cores Específicas de Status de Mangá */
+    --status-ongoing-text: var(--accent-color);
+    --status-ongoing-bg-rgb: var(--accent-color-rgb); /* Usado com alfa para fundo */
+    --status-ongoing-border: var(--accent-color);
+    --status-completed-text: #60a5fa;
+    --status-completed-bg-rgb: 96, 165, 250;
+    --status-completed-border: #60a5fa;
+    --status-hiatus-text: #f59e0b;
+    --status-hiatus-bg-rgb: 245, 158, 11;
+    --status-hiatus-border: #f59e0b;
+    --status-cancelled-text: var(--danger-color);
+    --status-cancelled-bg-rgb: var(--danger-color-rgb);
+    --status-cancelled-border: var(--danger-color);
+
+    /* Cores para Dropdown */
+    --dropdown-bg-color: #1f2023;
+    --dropdown-border-color: #374151;
+    --dropdown-text-color: #d1d5db;
+    --dropdown-hover-bg-color: #374151;
+    --dropdown-hover-text-color: #ffffff;
+    --dropdown-divider-color: #374151;
+
+    /* Cores para Placeholder de Imagem e Tags */
+    --image-placeholder-bg: #2c2c2c;
+    --image-placeholder-icon-color: var(--light-text-color);
+    --tag-bg-color: var(--input-bg-color);
+    --tag-text-color: var(--light-text-color);
+    --tag-border-color: var(--border-color);
+    --rating-star-color: #ffc107;
+    --type-tag-bg-color: #2803ca(244, 55%, 41%);
+    --type-tag-text-color: #e0e7ff;
+    --type-tag-border-color: #2803ca;
+
+    /* Outras cores que podem ser necessárias */
+    --paypal-button-bg-color: #0070ba;
+    --paypal-button-hover-bg-color: #005ea6;
+    --link-hover-color: var(--main-text-color);
+    --disabled-text-color: #6b7280;
+    --disabled-bg-color: #374151;
+
+    /* Fontes */
+    --font-primary: 'Poppins', sans-serif;
+
+    /* Espaçamentos */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+
+    /* Variáveis específicas do login */
+    --login-card-bg: #2a2a2a;
+    --login-card-border: #444444;
+    --login-input-bg: #333333;
+    --login-input-border: #4a4a4a;
+    --login-text-main: #e0e0e0;
+    --login-text-secondary: #b0b0b0;
+    --login-text-placeholder: #888888;
+    --login-link-color: var(--accent-color);
+}
+
+
+/* === RESET BÁSICO E ESTILOS GLOBAIS === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-size: 16px; /* Base para REMs */
+    scroll-behavior: smooth; /* Rolagem suave */
+}
+
+body {
+    background-color: var(--body-bg-color);
+    color: var(--main-text-color);
+    font-family: var(--font-primary), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    line-height: 1.6;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased; /* Melhor renderização de fontes */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main { /* Ou o seletor do seu container principal de conteúdo no base.html */
+   flex-grow: 1;
+}
+
+img, svg, video, canvas, audio, iframe, embed, object {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove espaço extra abaixo de imagens inline */
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--link-hover-color, var(--main-text-color));
+    text-decoration: underline;
+}
+
+/* Classe container global (se você usa) */
+.container {
+    width: 100%;
+    max-width: 1320px; /* Largura máxima do conteúdo principal */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-md, 1rem); /* Espaçamento lateral */
+    padding-right: var(--spacing-md, 1rem);
+}
+
+
+/* static/css/pages/login_page.css (ou seu arquivo CSS principal para login) */
+
+/* === LOGIN PAGE SPECIFIC STYLES === */
+.login-page-container {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: var(--spacing-md, 1rem);
+    box-sizing: border-box;
+}
+
+.login-form-card {
+    background: var(--login-card-bg, #2a2a2a);
+    border: 1px solid var(--login-card-border, #444444);
+    border-radius: 0.5rem;
+    padding: var(--spacing-xl, 2rem);
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    color: var(--login-text-main, #e0e0e0);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+@media (max-width: 480px) {
+    .login-form-card {
+        padding: var(--spacing-lg, 1.5rem);
+        margin-top: var(--spacing-md, 1rem);
+        margin-bottom: var(--spacing-md, 1rem);
+    }
+}
+
+.login-close-button {
+    position: absolute;
+    top: var(--spacing-sm, 0.5rem);
+    right: var(--spacing-sm, 0.5rem);
+    color: var(--login-text-secondary, #b0b0b0);
+    font-size: 1.25rem;
+    padding: var(--spacing-xs, 0.25rem);
+    line-height: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.login-close-button:hover {
+    color: var(--login-text-main, #e0e0e0);
+}
+
+.login-header {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: var(--spacing-lg, 1.5rem);
+}
+.login-page-logo {
+    height: 3.5rem;
+    width: auto;
+    margin-bottom: var(--spacing-md, 1rem);
+    align-self: flex-start;
+}
+.site-name-login-page {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--login-text-main, #e0e0e0);
+    margin-bottom: var(--spacing-md, 1rem);
+}
+.login-main-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--login-text-main, #e0e0e0);
+    margin-bottom: 0.5rem;
+    width: 100%;
+}
+.login-subtitle-text {
+    color: var(--login-text-secondary, #b0b0b0);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+.login-form-body {
+    /* Sem estilos diretos */
+}
+
+.login-actual-form .form-field-group {
+    margin-bottom: 1.25rem;
+}
+.login-actual-form label.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--login-text-secondary, #b0b0b0);
+    margin-bottom: 0.4rem;
+    text-align: left;
+}
+
+/* 
+   A REGRA PROBLEMÁTICA QUE ESTAVA AQUI FOI REMOVIDA.
+   .login-actual-form input[type="password"], { display: none !important; }
+*/
+
+.login-actual-form input[type="text"],
+.login-actual-form input[type="email"],
+.login-actual-form input[type="password"],
+.socialaccount-signup-form input[type="text"],
+.socialaccount-signup-form input[type="email"],
+.socialaccount-signup-form input[type="password"] {
+    display: block;
+    height: 2.85rem;
+    width: 100%;
+    border-radius: 0.375rem;
+    border: 1px solid var(--login-input-border, #4a4a4a);
+    background-color: var(--login-input-bg, #333333);
+    padding: 0 var(--spacing-md, 1rem);
+    font-size: 0.95rem;
+    color: var(--login-text-main, #e0e0e0);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.login-actual-form input[type="text"]::placeholder,
+.login-actual-form input[type="email"]::placeholder,
+.login-actual-form input[type="password"]::placeholder,
+.socialaccount-signup-form input[type="text"]::placeholder,
+.socialaccount-signup-form input[type="email"]::placeholder,
+.socialaccount-signup-form input[type="password"]::placeholder {
+    color: var(--login-text-placeholder, #888888);
+    opacity: 1;
+}
+
+.login-actual-form input[type="text"]:focus,
+.login-actual-form input[type="email"]:focus,
+.login-actual-form input[type="password"]:focus,
+.socialaccount-signup-form input[type="text"]:focus,
+.socialaccount-signup-form input[type="email"]:focus,
+.socialaccount-signup-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color, var(--accent-color));
+    box-shadow: 0 0 0 3px rgba(var(--input-focus-shadow-color-rgb, 0, 185, 130), 0.25);
+}
+
+.login-actual-form ul.errorlist,
+.socialaccount-signup-form ul.errorlist {
+    list-style-type: none;
+    padding: 0;
+    margin: var(--spacing-xs, 0.25rem) 0 0 0;
+    color: var(--danger-color, #ef4444);
+    font-size: 0.85rem;
+    text-align: left;
+}
+.login-actual-form ul.errorlist li,
+.socialaccount-signup-form ul.errorlist li {
+    margin-bottom: 0.15rem;
+}
+
+.form-errors.global-form-errors {
+    background-color: rgba(var(--danger-bg-color-rgb, 239, 68, 68), 0.15);
+    color: var(--danger-color, #ef4444);
+    padding: var(--spacing-sm, 0.5rem) var(--spacing-md, 1rem);
+    border-radius: 0.375rem;
+    margin-bottom: var(--spacing-md, 1rem);
+    border: 1px solid rgba(var(--danger-color-rgb, 239, 68, 68), 0.5);
+    font-size: 0.9rem;
+    text-align: left;
+}
+.form-errors.global-form-errors p { margin: 0 0 0.25rem 0; }
+.form-errors.global-form-errors p:last-child { margin-bottom: 0; }
+
+
+.login-form-options.simple-options {
+    margin-top: var(--spacing-md, 1rem);
+    margin-bottom: var(--spacing-lg, 1.5rem);
+}
+.login-remember-me {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm, 0.5rem);
+}
+.login-remember-me input[type="checkbox"] {
+    height: 1.1em;
+    width: 1.1em;
+    border-radius: 0.25rem;
+    border: 1px solid var(--input-border-color, #4a4a4a);
+    accent-color: var(--accent-color, #00B982);
+    cursor: pointer;
+    background-color: var(--input-bg-color, #2a2a2a);
+}
+.login-remember-me label {
+    font-weight: normal;
+    color: var(--login-text-secondary, #b0b0b0);
+    margin-bottom: 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.login-actions-group {
+    margin-top: var(--spacing-lg, 1.5rem);
+}
+.form-submit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2.85rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: var(--button-primary-bg, var(--accent-color));
+    color: var(--button-primary-text, white);
+    padding: 0 var(--spacing-md, 1rem);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+.form-submit-button:hover {
+    background-color: color-mix(in srgb, var(--button-primary-bg, var(--accent-color)) 85%, black);
+}
+.form-submit-button:active {
+    transform: scale(0.98);
+}
+
+/* --- ESTILOS PARA LOGIN SOCIAL --- */
+.social-login-container {
+    text-align: center;
+    /* margin-top: var(--spacing-xl, 2rem); -- Você tinha 25px, pode ajustar se este for muito */
+    margin-top: 25px; /* Mantendo seu valor original */
+    margin-bottom: 15px; /* Mantendo seu valor original */
+}
+
+.social-login-prompt {
+    color: var(--login-text-secondary, #b0b0b0);
+    margin-bottom: 12px; /* Mantendo seu valor original */
+    font-size: 0.9em;
+}
+
+.social-login-button { /* Classe base para botões sociais, se precisar de mais de um */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2.85rem;
+    border-radius: 0.375rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0 var(--spacing-md, 1rem);
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    cursor: pointer;
+    gap: var(--spacing-sm, 0.5rem); /* Espaço entre ícone e texto */
+    border: 1px solid var(--button-secondary-border, #555555); /* Borda padrão para botões sociais */
+    background-color: var(--button-secondary-bg, #333333);   /* Fundo padrão para botões sociais */
+    color: var(--button-secondary-text, #dddddd);            /* Texto padrão para botões sociais */
+}
+.social-login-button:active {
+    transform: scale(0.98);
+}
+
+.social-login-button:hover { /* Hover padrão para botões sociais */
+    background-color: color-mix(in srgb, var(--button-secondary-bg, #333333) 85%, black);
+    border-color: color-mix(in srgb, var(--button-secondary-border, #555555) 85%, #777777);
+}
+
+/* Botão específico para Discord, seguindo o exemplo visual */
+.button-discord-custom {
+    background-color: #5865F2; /* Cor oficial do Discord */
+    color: white;
+    border-color: #5865F2; /* Borda da mesma cor para preenchimento sólido */
+}
+.button-discord-custom:hover {
+    background-color: #4a55d1; /* Um tom mais escuro de azul Discord para hover */
+    border-color: #4a55d1;
+    color: white; /* Garante que o texto permaneça branco */
+}
+.button-discord-custom i.fab.fa-discord {
+    font-size: 1.2em; /* Ícone um pouco maior, como na sua imagem */
+    vertical-align: middle; /* Garante alinhamento */
+}
+/* --- FIM DOS ESTILOS PARA LOGIN SOCIAL --- */
+
+
+.login-divider-alt {
+    height: 1px;
+    background-color: var(--border-color, #2f2f2f);
+    margin: var(--spacing-lg, 1.5rem) 0;
+}
+
+.login-footer-text,
+.login-forgot-password-footer {
+    font-size: 0.9rem;
+    color: var(--login-text-secondary, #b0b0b0);
+    margin-top: var(--spacing-md, 1rem);
+    text-align: center;
+}
+.login-footer-text {
+    margin-bottom: var(--spacing-sm, 0.5rem);
+}
+.login-footer-text a.footer-link,
+.login-forgot-password-footer a.form-button-link-style {
+    color: var(--login-link-color, var(--accent-color));
+    font-weight: 500;
+    text-decoration: none;
+}
+.login-footer-text a.footer-link:hover,
+.login-forgot-password-footer a.form-button-link-style:hover {
+    text-decoration: underline;
+}
+
+/* Botão específico para Discord, sobrescrevendo o .social-login-button */
+.social-login-button.button-discord-custom { /* AUMENTADA A ESPECIFICIDADE AQUI */
+    background-color: #5865F2 !important; /* Cor oficial do Discord */
+    color: white !important;
+    border-color: #5865F2 !important; /* Borda da mesma cor para preenchimento sólido */
+}
+.social-login-button.button-discord-custom:hover {
+    background-color: #4a55d1 !important; /* Um tom mais escuro de azul Discord para hover */
+    border-color: #4a55d1 !important;
+    color: white !important; /* Garante que o texto permaneça branco */
+}
+.social-login-button.button-discord-custom i.fab.fa-discord {
+    font-size: 1.2em;
+    vertical-align: middle;
+}
+
+/* Adicione ao seu main.css (ou profile_page.css) */
+
+/* Estilos da PÃ¡gina de Perfil */
+.profile-page-wrapper {
+    min-height: calc(100vh - var(--navbar-height) - var(--footer-height, 60px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem; 
+}
+
+.profile-card {
+    background-color: #171717; /* COR DO CARD PRINCIPAL (como bg-gray-800 da Tailwind, similar à referência) */
+    padding: 2rem 1.5rem; 
+    border-radius: 0.75rem; 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #374151; /* Borda do card (como border-gray-700) */
+    display: flex; 
+    flex-direction: column;
+    gap: 1.5rem; 
+}
+
+/* Certificando que os filhos diretos do .profile-card (as seções) tenham texto alinhado à esquerda */
+.profile-card > div, 
+.profile-card > form > div { /* Para as divs dentro dos forms que são seções */
+    text-align: left;
+}
+
+
+.profile-avatar {
+    width: 96px; /* w-24 */
+    height: 96px; /* h-24 */
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--accent, #2803ca); /* Ajuste para a cor roxa do seu --accent e espessura da borda */
+}
+
+.profile-username {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--main-text-color, #e0e0e0);
+    margin-bottom: 0.1rem; 
+    line-height: 1.2;
+    text-align: left; /* Garante alinhamento à esquerda se o pai ainda tiver text-align:center */
+}
+
+.profile-handle {
+    font-size: 0.875rem;
+    color: var(--light-text-color, #a0a0a0);
+    margin-top: -0.25rem; 
+    text-align: left; /* Garante alinhamento à esquerda */
+}
+
+.beta-feature-notice {
+    color: var(--light-text-color, #a0a0a0);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    border: 1px solid #374151; /* Borda sutil */
+    text-align: left;
+}
+
+.social-connections-section {
+    padding-top: 1rem; 
+    border-top: 1px solid #374151; /* Borda consistente */
+    text-align: left; 
+}
+.social-connections-section h4 { 
+    font-size: 1rem; 
+    font-weight: 600;
+    color: var(--main-text-color);
+    margin-bottom: 1rem; 
+}
+.social-connection-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; 
+}
+.social-connect-button { 
+    width: 100%;
+    justify-content: center; 
+}
+.social-connect-button i.fab {
+    font-size: 1.1em; 
+}
+
+.social-account-connected { 
+    display: flex;
+    align-items: center;
+    gap: 0.5em; 
+    background-color: #111827; /* Fundo mais escuro */
+    padding: 0.65rem 1rem; 
+    border-radius: 0.375rem; 
+    border: 1px solid #374151;
+    color: var(--light-text-color);
+    font-size: 0.9rem;
+}
+.social-account-connected i.fab {
+    font-size: 1.2em;
+}
+.social-account-connected .disconnect-link {
+    font-size: 0.8em;
+    color: var(--light-text-color);
+    margin-left: auto; 
+}
+.social-account-connected .disconnect-link:hover {
+    color: var(--danger-color);
+}
+
+
+.password-change-info {
+    padding-top: 1rem; 
+    border-top: 1px solid #374151; /* Borda consistente */
+    font-size: 0.875rem;
+    color: var(--light-text-color, #a0a0a0);
+    line-height: 1.5;
+    text-align: left;
+}
+.password-change-info a {
+    color: var(--accent-color, #00B982); 
+    text-decoration: underline;
+}
+.password-change-info a:hover {
+    color: color-mix(in srgb, var(--accent-color, #00B982) 80%, white);
+}
+
+.profile-actions {
+    display: flex; 
+    flex-direction: column;
+    gap: 0.75rem; 
+    width: 100%; 
+}
+.profile-actions .button { 
+    display: block;
+    width: 100%;
+}
+
+/* --- ESTILOS DE FORMULÁRIO ATUALIZADOS --- */
+.django-form-input,
+input[type="text"].django-form-input,
+input[type="email"].django-form-input,
+input[type="password"].django-form-input,
+textarea.django-form-input,
+input[readonly].django-form-input,
+input[type="text"].w-full.bg-gray-800.border.border-gray-700.rounded-md,
+input[type="email"].w-full.bg-gray-800.border.border-gray-700.rounded-md,
+input[type="password"].w-full.bg-gray-800.border.border-gray-700.rounded-md,
+textarea.w-full.bg-gray-800.border.border-gray-700.rounded-md {
+    width: 100%;
+    background-color: #111827;
+    border: 1px solid #374151;
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-primary, #ffffff);
+    line-height: 1.5;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.django-form-input:focus,
+input[type="text"].django-form-input:focus,
+input[type="email"].django-form-input:focus,
+input[type="password"].django-form-input:focus,
+textarea.django-form-input:focus,
+input[readonly].django-form-input:focus,
+input[type="text"].w-full.bg-gray-800.border.border-gray-700.rounded-md:focus,
+input[type="email"].w-full.bg-gray-800.border.border-gray-700.rounded-md:focus,
+input[type="password"].w-full.bg-gray-800.border.border-gray-700.rounded-md:focus,
+textarea.w-full.bg-gray-800.border.border-gray-700.rounded-md:focus {
+    outline: none;
+    border-color: var(--accent, #2803ca);
+    box-shadow: 0 0 0 2px rgba(var(--accent-color-rgb, 40, 3, 202), 0.3);
+}
+
+textarea.django-form-input,
+textarea.w-full.bg-gray-800.border.border-gray-700.rounded-md {
+    min-height: 96px;
+    resize: vertical;
+}
+
+input[readonly].django-form-input {
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+textarea.django-form-input {
+    min-height: 96px;
+    resize: vertical;
+}
+
+input[readonly].django-form-input {
+    background-color: #374151; 
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+input[readonly].django-form-input:focus {
+    box-shadow: none;
+    border-color: #374151; 
+}
+
+.form-label {
+    display: block;
+    color: var(--light-text-color, #111827); 
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    text-align: left; 
+}
+
+.form-section-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary, #ffffff); 
+    text-align: left; 
+}
+
+.form-field-description {
+    color: var(--light-text-color, #a0a0a0); 
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    text-align: left; 
+}
+
+.form-error-message p, .form-error-message {
+    color: var(--danger-color, #f87171); 
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    text-align: left; 
+}
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500;
+    border-radius: 0.375rem; border: 1px solid transparent; cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+}
+.btn-primary {
+    color: white; background-color: var(--accent, #2803ca);
+}
+.btn-primary:hover { filter: brightness(0.9); }
+.btn-secondary {
+    color: var(--text-primary, #ffffff); background-color: #374151; border-color: #4b5563;
+}
+.btn-secondary:hover { background-color: #4b5563; }
+
+hr.border-gray-700 { border-top-width: 1px; border-color: #374151; }
+.border-t.border-red-900 { border-top-width: 1px; border-color: #450a0a; }
+.text-red-500 { color: #ef4444; }
+.bg-red-900.bg-opacity-20 { background-color: rgba(70, 10, 10, 0.2); }
+.bg-red-700 { background-color: #b91c1c; }
+.bg-red-700:hover { background-color: #991b1b; }
+/* ==========================================================================
+   Navbar Styles
+   ========================================================================== */
+
+.site-navbar {
+    background-color: var(--navbar-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--main-text-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /* display: flex; justify-content: space-between; align-items: center; <- Movido para .navbar-container */
+    padding: 0; /* O padding será no .navbar-container para melhor controle */
+    height: 4.5rem; /* Altura total da navbar, sincronizada com main margin-top */
+    display: flex; /* Para centralizar o navbar-container verticalmente se necessário */
+    align-items: center; /* Para centralizar o navbar-container verticalmente */
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: var(--spacing-sm) var(--spacing-md); /* Padding interno do container */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%; /* Ocupa a altura do .site-navbar */
+}
+
+/* Margem no conteúdo principal para não ficar sob o navbar fixo */
+main {
+    flex-grow: 1;
+    margin-top: 4.5rem; /* DEVE CORRESPONDER À ALTURA TOTAL DO .site-navbar */
+}
+
+/* ==========================================================================
+   Itens da Navbar (Logo, Links Desktop, etc.)
+   ========================================================================== */
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    height: 100%; /* Para garantir alinhamento vertical dos filhos */
+}
+
+@media (min-width: 993px) { /* Breakpoint onde os links desktop são visíveis */
+    .nav-left {
+        gap: var(--spacing-sm); /* Reduzido um pouco o gap entre logo e links */
+    }
+    .nav-right {
+        gap: var(--spacing-md);
+    }
+}
+
+.desktop-nav-links { /* Container para os links principais do desktop */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs); /* Espaço entre os nav-items */
+}
+
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    margin-right: var(--spacing-md); /* Espaço depois do logo/nome do site */
+    color: var(--main-text-color);
+    text-decoration: none;
+}
+
+.navbar-logo {
+    height: 45px; /* Ajuste a altura do logo para caber no navbar de 4.5rem */
+    max-height: calc(4.5rem - (2 * var(--spacing-sm))); /* Altura máxima do logo */
+    width: auto;
+    display: block;
+}
+
+.site-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--main-text-color);
+}
+
+.nav-item {
+    color: var(--main-text-color);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    height: fit-content; /* Para se ajustar melhor à altura do conteúdo */
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+    color: var(--accent-color);
+}
+
+.nav-item i {
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+.nav-item.button-apoiar {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text) !important;
+    border-color: var(--button-primary-bg);
+    font-weight: 600;
+}
+.nav-item.button-apoiar:hover {
+    background-color: color-mix(in srgb, var(--button-primary-bg) 85%, black);
+    border-color: color-mix(in srgb, var(--button-primary-bg) 85%, black);
+    color: var(--button-primary-text) !important;
+}
+
+/* ==========================================================================
+   Barra de Pesquisa no Navbar (Desktop)
+   ========================================================================== */
+.navbar-search-form {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-search-form .search-input {
+    background-color: var(--input-bg-color);
+    color: var(--main-text-color);
+    border: 1px solid var(--input-border-color);
+    border-right: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 5px 0 0 5px;
+    font-size: 0.85rem;
+    height: 2.25rem;
+    line-height: 1.25rem;
+    min-width: 150px;
+    width: 200px;
+    transition: width 0.3s ease-in-out, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+.navbar-search-form .search-input::placeholder {
+    color: var(--light-text-color);
+    opacity: 0.7;
+}
+
+.navbar-search-form .search-input:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 2.5px rgba(var(--input-focus-shadow-color-rgb), 0.2);
+}
+
+.navbar-search-form .search-button {
+    background-color: var(--input-bg-color);
+    color: var(--light-text-color);
+    border: 1px solid var(--input-border-color);
+    border-left: none;
+    padding: 0 0.75rem;
+    height: 2.25rem;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.navbar-search-form .search-button:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+
+.navbar-search-form .search-button i.fa-search {
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   Dropdown de Perfil (Desktop)
+   ========================================================================== */
+.profile-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-trigger.nav-item {
+    background: none;
+    cursor: pointer;
+    padding-right: 0.5rem; /* Para o caret */
+}
+
+.user-avatar-nav {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: var(--spacing-xs);
+}
+
+.profile-trigger .fa-user-circle {
+    font-size: 1.75rem;
+    margin-right: var(--spacing-xs);
+}
+
+.dropdown-caret {
+    font-size: 0.65rem;
+    margin-left: 0.4rem;
+    transition: transform 0.2s ease-in-out;
+    vertical-align: middle;
+}
+
+.profile-trigger[aria-expanded="true"] .dropdown-caret,
+[aria-expanded="true"] > .dropdown-caret { /* Para casos onde o caret é irmão */
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem); /* Abaixo do botão, com espaço */
+    right: 0;
+    background-color: var(--dropdown-bg-color);
+    border: 1px solid var(--dropdown-border-color);
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    min-width: 180px;
+    z-index: 1050;
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.dropdown-menu.active { /* Seu JS usa a classe 'active' */
+    display: block;
+    /* Se quiser animação de fade/slide para o dropdown: */
+    /* opacity: 1; visibility: visible; transform: translateY(0); */
+    /* E no .dropdown-menu: opacity:0; visibility:hidden; transform:translateY(10px); transition: ... */
+}
+
+.dropdown-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu .dropdown-item,
+.dropdown-menu .dropdown-item-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    padding: 0.65rem 1rem;
+    color: var(--dropdown-text-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item-button:hover {
+    background-color: var(--dropdown-hover-bg-color);
+    color: var(--dropdown-hover-text-color);
+}
+
+.dropdown-menu .dropdown-item i,
+.dropdown-menu .dropdown-item-button i {
+    width: 1.2em;
+    text-align: center;
+    /* margin-right: 0.5rem; -- gap já cuida disso */
+}
+
+.dropdown-divider {
+    height: 1px; /* Mais visualmente claro que height:0 com border-top */
+    margin: 0.5rem 0;
+    background-color: var(--border-color);
+    border: none;
+}
+
+/* ==========================================================================
+   Mobile Menu Toggle Button
+   ========================================================================== */
+.mobile-menu-toggle {
+    display: none; /* Escondido por padrão em telas maiores */
+    background: none;
+    border: none;
+    color: var(--main-text-color);
+    font-size: 1.75rem; /* Tamanho do ícone hambúrguer */
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1005; /* Acima do conteúdo, abaixo do menu mobile se aberto */
+    line-height: 1; /* Para evitar altura extra */
+}
+.mobile-menu-toggle .icon-close {
+    display: none; /* Ícone de fechar escondido inicialmente */
+}
+
+/* ==========================================================================
+   Mobile Menu Panel
+   ========================================================================== */
+.mobile-menu {
+    display: block; /* Será controlado por visibility/opacity/transform */
+    position: fixed;
+    top: 4.5rem; /* Abaixo do navbar (altura do .site-navbar) */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 4.5rem); /* Ocupa o resto da tela verticalmente */
+    background-color: var(--body-bg-color); /* Ou --navbar-bg-color */
+    z-index: 1001; /* Acima da navbar se sobrepor, mas abaixo do toggle se precisar */
+    overflow-y: auto; /* Permite scroll se tiver muitos itens */
+    padding: var(--spacing-md) 0;
+
+    transform: translateX(-100%); /* Começa fora da tela à esquerda */
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0.3s;
+}
+
+.mobile-menu.is-open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out, visibility 0s 0s;
+}
+
+.mobile-nav-links {
+    list-style: none !important; /* Força remoção dos marcadores */
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-nav-links li {
+    border-bottom: 1px solid var(--border-color);
+}
+.mobile-nav-links li:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav-links a,
+.mobile-nav-links .mobile-logout-button { /* .mobile-logout-button é do seu HTML anterior */
+    display: flex; /* Para alinhar ícones */
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg); /* Mais padding no mobile */
+    color: var(--main-text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+.mobile-nav-links a:hover,
+.mobile-nav-links .mobile-logout-button:hover {
+    background-color: var(--card-bg-color); /* Ou uma cor de hover sutil */
+}
+
+.mobile-nav-links .mobile-logout-button {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mobile-nav-links i {
+    width: 1.3em; /* Para alinhar ícones */
+    text-align: center;
+    color: var(--accent-color); /* Ícones no mobile com cor de destaque */
+}
+
+.mobile-search-form { /* Adaptação da barra de pesquisa para o menu mobile */
+    display: flex;
+    padding: var(--spacing-sm) var(--spacing-lg) var(--spacing-md);
+}
+.mobile-search-form .search-input {
+    flex-grow: 1;
+    background-color: var(--input-bg-color);
+    color: var(--main-text-color);
+    border: 1px solid var(--input-border-color);
+    padding: 0.6rem 0.8rem;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+    height: 2.5rem;
+}
+.mobile-search-form .search-input::placeholder { color: var(--light-text-color); }
+.mobile-search-form .search-button {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border: 1px solid var(--accent-color);
+    padding: 0 0.8rem;
+    height: 2.5rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.mobile-search-form .search-button i {
+    color: var(--button-primary-text); /* Garante que o ícone da lupa seja visível */
+}
+
+.mobile-menu-divider hr { /* Se usar <hr> no menu mobile */
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-sm) 0;
+}
+
+
+/* ==========================================================================
+   Media Queries para Responsividade (Navbar)
+   ========================================================================== */
+/* Ponto de quebra: <= 992px (Tablet e Mobile) */
+@media (max-width: 992px) {
+    .desktop-nav-links, /* Esconde os links de navegação do desktop */
+    .desktop-nav-right { /* Esconde toda a seção direita do desktop (pesquisa, perfil) */
+        display: none !important; /* Usar !important se necessário para sobrescrever */
+    }
+
+    .mobile-menu-toggle {
+        display: inline-flex; /* Ou block. inline-flex para alinhar ícones internos se houver */
+        align-items: center;
+        justify-content: center;
+        margin-left: auto; /* Empurra o botão hambúrguer para a direita se o .nav-right sumir */
+    }
+
+    .navbar-container {
+        /* Ajuste o padding se necessário para telas menores */
+        /* padding: var(--spacing-sm) var(--spacing-sm); */
+    }
+
+    /* Opcional: Esconder apenas o texto dos ícones no nav-left em telas um pouco maiores que mobile,
+       mas menores que desktop completo. Ex: entre 768px e 992px.
+       Você pode criar uma classe .desktop-only-text no HTML para isso.
+    */
+}
+
+/* static/css/main.css - CONTINUAÇÃO */
+
+/* ==========================================================================
+   Footer Styles
+   ========================================================================== */
+
+.site-footer {
+    background-color: var(--navbar-bg-color); /* Reutilizando a cor do navbar para o footer */
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    width: 100%;
+    flex-shrink: 0; /* Impede que o footer encolha se o conteúdo da página for pequeno */
+    color: var(--light-text-color);
+    margin-top: auto; /* Ajuda a empurrar o footer para baixo se o conteúdo for menor que a altura da tela */
+}
+
+.footer-content {
+    /* Esta classe já é .container no seu HTML, então herda max-width, margin auto, padding lateral */
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar em telas menores */
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md); /* Espaço entre os blocos do footer */
+}
+
+.footer-info {
+    /* Ocupa mais espaço, permitindo que os links fiquem à direita */
+    flex-grow: 1;
+    text-align: left; /* Padrão, mas para garantir */
+}
+.footer-info p {
+    margin-bottom: var(--spacing-xs);
+}
+.footer-info p:last-child {
+    margin-bottom: 0;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os links quebrem em telas menores */
+    gap: var(--spacing-sm) var(--spacing-md); /* Espaço vertical e horizontal entre os links */
+    justify-content: flex-start; /* Alinha à esquerda em telas menores quando quebrar */
+}
+
+@media (min-width: 768px) { /* Em telas maiores, alinha os links à direita */
+    .footer-info {
+        text-align: left;
+    }
+    .footer-links {
+        justify-content: flex-end;
+    }
+}
+
+.footer-links a {
+    color: var(--light-text-color);
+    text-decoration: none; /* Já definido globalmente, mas para reforçar */
+}
+.footer-links a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   Botões Globais (Reutilizáveis)
+   ========================================================================== */
+.button, button, input[type="submit"], input[type="button"] { /* Estilo base para botões */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    gap: var(--spacing-sm);
+    font-family: var(--font-primary); /* Garante a fonte */
+    font-size: 0.9rem; /* Tamanho base do texto do botão */
+    line-height: 1.5; /* Para melhor espaçamento vertical do texto */
+    white-space: nowrap; /* Impede que o texto do botão quebre linha */
+}
+.button:active, button:active, input[type="submit"]:active, input[type="button"]:active {
+    transform: translateY(1px); /* Efeito de clique */
+}
+
+.button i, button i, input[type="submit"] i, input[type="button"] i { /* Ícones dentro de botões */
+    font-size: 0.9em; /* Ícone um pouco menor que o texto */
+    line-height: 1;
+}
+
+.button-primary { /* Seu botão de destaque principal */
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    border-color: var(--button-primary-bg); /* Borda da mesma cor */
+}
+.button-primary:hover {
+    background-color: color-mix(in srgb, var(--button-primary-bg) 85%, black);
+    border-color: color-mix(in srgb, var(--button-primary-bg) 85%, black);
+    color: var(--button-primary-text);
+    text-decoration: none;
+}
+
+.button-secondary {
+    background-color: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+    border-color: var(--button-secondary-border);
+}
+.button-secondary:hover {
+    background-color: color-mix(in srgb, var(--button-secondary-bg) 85%, black);
+    border-color: var(--accent-color); /* Muda a borda para a cor de destaque no hover */
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.button-outline {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+}
+.button-outline:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text); /* Texto branco/claro no hover */
+    text-decoration: none;
+}
+
+.button-small { /* Modificador para botões menores */
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+}
+
+.button-donate { /* Estilo específico que você tinha */
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    min-width: 180px; /* Largura mínima se necessário */
+}
+.button-donate.paypal {
+    background-color: var(--paypal-button-bg-color, #0070ba); /* Usando variável */
+}
+.button-donate.paypal:hover {
+    background-color: var(--paypal-button-hover-bg-color, #005ea6); /* Usando variável */
+}
+.button-donate i.fa-pix { /* Ícone específico do Pix */
+    color: #00a259; /* Cor verde do Pix */
+    background-color: white;
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 0.8em;
+}
+
+/* ==========================================================================
+   Títulos de Seção Globais
+   ========================================================================== */
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+    color: var(--main-text-color);
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.section-header {
+    margin-bottom: var(--spacing-lg);
+}
+.section-header.text-center .section-title {
+    display: inline-block;
+}
+.section-header.text-center .section-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+}
+.section-view-all-link {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+.section-view-all-link:hover {
+    color: var(--link-hover-color, var(--main-text-color));
+}
+
+/* ==========================================================================
+   Hero Slider Styles
+   ========================================================================== */
+.hero-slider-section {
+    background-color: var(--section-bg-color, var(--body-bg-color));
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+.slider-container {}
+.slider-main-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+    color: var(--main-text-color);
+    text-align: center;
+}
+.slider-main-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent-color);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.slider-relative-wrapper {
+    position: relative;
+}
+.slider-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    scrollbar-width: none;
+}
+.slider-wrapper::-webkit-scrollbar {
+    display: none;
+}
+.slider-item {
+    flex: 0 0 90%;
+    scroll-snap-align: center;
+    min-width: 280px;
+}
+@media (min-width: 640px) {
+    .slider-item {
+        flex-basis: calc(50% - (var(--spacing-md) / 2));
+    }
+}
+@media (min-width: 1024px) {
+    .slider-item {
+        flex-basis: calc(33.333% - (var(--spacing-md) * 2 / 3));
+    }
+}
+@media (min-width: 1280px) {
+     .slider-item {}
+}
+.slide-link {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--card-bg-color);
+}
+.slide-link:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    text-decoration: none;
+}
+.slide-content {
+    position: relative;
+}
+.slide-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+.slide-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-md);
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+    color: #fff;
+    border-radius: 0 0 8px 8px;
+}
+.slide-title-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.3;
+}
+.slide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-sm);
+}
+.slide-meta {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+.slide-button .button-small {
+    padding: 0.3rem 0.7rem;
+}
+.slider-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(23, 23, 23, 0.6);
+    color: var(--main-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.slider-control:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+}
+.slider-prev {
+    left: var(--spacing-sm);
+}
+.slider-next {
+    right: var(--spacing-sm);
+}
+
+/* ==========================================================================
+   LivePix Widget Section
+   ========================================================================== */
+.livepix-widget-section {
+    background-color: var(--section-bg-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-xl) 0;
+    margin: var(--spacing-xl) 0;
+}
+.livepix-widget-section .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.livepix-widget-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--main-text-color);
+}
+.livepix-widget-description {
+    margin-bottom: var(--spacing-lg);
+    color: var(--light-text-color);
+    max-width: 650px;
+    line-height: 1.7;
+}
+.livepix-widget-container {
+    margin-top: var(--spacing-sm);
+}
+.livepix-widget-container iframe {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: none;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   Manga Cards (Ex: Latest Releases) - COM CORREÇÕES
+   ========================================================================== */
+.latest-releases-section {
+    padding-top: var(--spacing-xl, 2rem);
+    padding-bottom: var(--spacing-xl, 2rem);
+}
+.manga-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); 
+    gap: var(--spacing-lg, 1.5rem) var(--spacing-md, 1rem);
+}
+.manga-card-simple {
+    background-color: transparent;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-out;
+    text-decoration: none;
+    height: 100%;
+}
+.manga-card-simple:hover {
+    transform: translateY(-4px);
+}
+.manga-card-simple-image-wrapper {
+    display: block;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-sm, 0.5rem);
+    aspect-ratio: 280 / 400;
+    background-color: var(--input-bg-color);
+}
+.manga-card-simple-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+.manga-card-simple:hover .manga-card-simple-image {
+    transform: scale(1.05);
+}
+.manga-card-simple-image.placeholder,
+.manga-card-simple-image-wrapper .fa-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--light-text-color);
+    opacity: 0.3;
+    height: 100%;
+}
+
+/* CORREÇÃO AQUI: Garante que o conteúdo ocupe toda a altura */
+.manga-card-simple-content {
+    padding: 0 var(--spacing-xs, 0.25rem);
+    text-align: left;
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+.manga-card-simple-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--main-text-color);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.6em; /* 1.3 (line-height) * 2 (linhas) */
+    margin-bottom: auto; /* CORREÇÃO PRINCIPAL: Faz o título empurrar os capítulos para baixo */
+}
+.manga-card-simple-title a {
+    color: inherit;
+    text-decoration: none;
+}
+.manga-card-simple:hover .manga-card-simple-title a,
+.manga-card-simple-title a:hover {
+    color: var(--accent-color);
+}
+.manga-card-simple-chapter {
+    font-size: 0.8rem;
+    color: var(--light-text-color);
+    /* margin-top: auto; - Removido daqui, pois o título já empurra */
+}
+.manga-card-simple-chapter .text-xs {
+    font-size: 0.75rem;
+}
+.latest-chapters-list-on-card {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-top: var(--spacing-xs, 0.25rem); /* Adiciona um pequeno respiro acima da lista */
+    /* margin-top: auto; - Removido daqui, pois o título já empurra */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs, 0.25rem);
+}
+.latest-chapters-list-on-card li {
+    margin-bottom: 0;
+}
+.latest-chapters-list-on-card li a,
+.chapter-link-disabled {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    color: var(--light-text-color);
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    gap: var(--spacing-xs, 0.25rem);
+}
+.latest-chapters-list-on-card li a:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text, white);
+    border-color: var(--accent-color);
+}
+.chapter-link-disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.latest-chapters-list-on-card li a span.chapter-text {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.new-chapter-badge {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text, white);
+    font-size: 0.6rem;
+    font-weight: bold;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    white-space: nowrap;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+}
+.new-chapter-badge-image {
+    max-height: 12px;
+    max-width: 40px;
+    display: block;
+}
+
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2.5rem;
+    padding-bottom: 1rem;
+    gap: 0.75rem;
+}
+.pagination-container a, .pagination-container .page-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    background-color: var(--card-bg-color, #1e1e1e);
+    border: 1px solid var(--border-color, #2f2f2f);
+    color: var(--light-text-color, #a0a0a0);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+}
+.pagination-container a:hover {
+    background-color: var(--accent-color, #2803ca);
+    color: var(--button-primary-text, #fff);
+    border-color: var(--accent-color, #2803ca);
+}
+.pagination-container .page-info {
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    padding: 8px 12px;
+}
+
+/* ==========================================================================
+   Premium Banner Section (Home Page)
+   ========================================================================== */
+
+.premium-banner-section {
+    background-color: var(--section-bg-color, var(--body-bg-color));
+    /* Adicionado um espaçamento maior para dar mais destaque ao banner */
+    padding: var(--spacing-xxl, 4rem) 0;
+}
+
+.premium-banner-container {
+    /* Ajustado para corresponder à referência: gradiente, borda azul e sombra de brilho */
+    background: linear-gradient(135deg, #1e1b4b, #111827);
+    border-radius: 24px; /* Bordas mais arredondadas */
+    padding: 3rem; /* Mais espaçamento interno */
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 50px rgba(59, 130, 246, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+/* O GIF foi substituído pela animação de partículas, então podemos remover esta classe */
+/*
+.banner-background-gif { ... }
+*/
+
+.banner-content {
+    position: relative;
+    z-index: 2;
+    /* Alterado de flex para grid para um layout de duas colunas mais robusto */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+}
+
+.banner-info {
+    /* Não precisa mais de flex e min-width com o layout de grid */
+}
+
+.banner-info .premium-badge {
+    /* Estilo do badge da referência */
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 999px; /* Totalmente arredondado */
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    text-transform: none; /* Removido o uppercase */
+    letter-spacing: normal;
+}
+
+.banner-info h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: none; /* Removido o text-shadow para um visual mais limpo */
+}
+
+/* Adicionado o ícone de brilho antes do título */
+.banner-info h2::before {
+    content: '✨';
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.banner-info .price {
+    /* Estilo do preço da referência */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #ffffff; /* Cor do texto mais clara */
+    text-shadow: none;
+}
+
+.banner-info .subscribe-button {
+    /* Estilo do botão da referência */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: none;
+}
+
+.banner-info .subscribe-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-3px);
+}
+
+.banner-benefits {
+    /* Ajustado para o efeito de "vidro fosco" da referência */
+    background-color: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Removido o flex-basis para funcionar com o grid layout */
+}
+
+/* Adicionado um badge para o título dos benefícios */
+.banner-benefits .benefits-badge {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.banner-benefits h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    border-bottom: none; /* Removida a borda inferior */
+    padding-bottom: 0;
+}
+
+.banner-benefits ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.banner-benefits li {
+    color: var(--text-color, #e0e0e0);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.banner-benefits li i {
+    color: #3b82f6;
+    font-size: 1.1rem;
+}
+
+/* ---- NOVA SEÇÃO: ANIMAÇÃO DAS PARTÍCULAS ---- */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Ficará atrás do .banner-content */
+}
+
+.particle {
+    position: absolute;
+    background-color: rgba(59, 130, 246, 0.5);
+    border-radius: 50%;
+    animation: float 25s infinite ease-in-out;
+    opacity: 0;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100vh) translateX(calc(100vw * (var(--vx) - 0.5) * 2)); opacity: 0; }
+}
+/* ---- FIM DA SEÇÃO DAS PARTÍCULAS ---- */
+
+
+@media (max-width: 992px) { /* Ajustado o breakpoint para melhor adaptação */
+    .premium-banner-container {
+        padding: 2rem;
+    }
+    .banner-content {
+        grid-template-columns: 1fr; /* Muda para uma única coluna */
+        text-align: center;
+        gap: 2.5rem;
+    }
+    .banner-benefits {
+        width: 100%;
+        text-align: left; /* Mantém o texto dos benefícios alinhado à esquerda */
+    }
+    .banner-info h2 {
+        font-size: 2rem;
+    }
+}
+/* ==========================================================================
+   Ranking Section (Most Viewed)
+   ========================================================================== */
+.most-viewed-section { 
+    background-color: var(--section-bg-color, var(--body-bg-color));
+    padding: var(--spacing-xl) 0;
+}
+.manga-list-detailed { 
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md); 
+}
+.manga-list-item-ranked {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.ranking-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--light-text-color);
+    font-style: italic;
+    min-width: 50px;
+    text-align: center;
+    opacity: 0.6;
+}
+.manga-list-item-detailed { 
+    background-color: var(--card-bg-color);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    overflow: hidden; 
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    display: block; 
+    flex-grow: 1;
+}
+.manga-list-item-detailed:hover {
+    border-color: var(--accent-color);
+    transform: translateX(4px); 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    text-decoration: none; 
+}
+.manga-list-item-detailed > a { 
+    display: flex; 
+    padding: var(--spacing-md); 
+    gap: var(--spacing-md); 
+    align-items: flex-start; 
+    text-decoration: none; 
+    color: inherit; 
+}
+.manga-list-item-detailed > a:hover {
+    text-decoration: none; 
+}
+.manga-list-item-image-wrapper {
+    width: 70px;
+    height: 100px;
+    flex-shrink: 0; 
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--input-bg-color); 
+}
+.manga-list-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.manga-list-item-content {
+    flex-grow: 1; 
+    min-width: 0; 
+    display: flex;
+    flex-direction: column; 
+}
+@media (min-width: 768px) { 
+    .manga-list-item-image-wrapper {
+        width: 80px;
+        height: 115px;
+    }
+}
+.manga-list-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--spacing-xs);
+}
+.manga-list-item-title {
+    font-size: 1rem; 
+    font-weight: 600;
+    color: var(--main-text-color);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.manga-list-item-detailed > a:hover .manga-list-item-title {
+    color: var(--accent-color);
+}
+.manga-list-item-genres { 
+    margin-bottom: var(--spacing-sm) !important;
+    line-height: 1.5;
+}
+.genre-tag { 
+    display: inline-block;
+    background-color: var(--tag-bg-color, var(--input-bg-color));
+    color: var(--tag-text-color, var(--light-text-color));
+    border: 1px solid var(--tag-border-color, var(--border-color));
+    font-size: 0.65rem !important;
+    padding: 0.15rem 0.45rem !important;
+    border-radius: 4px;
+    margin-right: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.genre-tag:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+    text-decoration: none;
+}
+.manga-list-item-footer {
+    margin-top: auto;
+    padding-top: var(--spacing-sm) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem !important;
+    color: var(--light-text-color);
+}
+.manga-list-item-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.manga-list-item-views i { 
+    font-size: 0.9em;
+}
+.manga-list-item-footer .button { 
+    padding: 0.25rem 0.65rem !important;
+    font-size: 0.75rem !important;
+}
+
+
+/* ==========================================================================
+   Donation Section (Final)
+   ========================================================================== */
+.donation-section {
+    background-color: var(--section-bg-color, var(--body-bg-color));
+    padding: var(--spacing-xl) 0 var(--spacing-xxl) 0;
+    text-align: center;
+}
+.donation-container {}
+.donation-icon {
+    font-size: 2.8rem;
+    color: var(--accent-color);
+    margin-bottom: var(--spacing-md);
+}
+.donation-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--main-text-color);
+    margin-bottom: var(--spacing-sm);
+}
+.donation-message {
+    color: var(--light-text-color);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.7;
+}
+.donation-message p {
+    margin-bottom: var(--spacing-sm);
+}
+.donation-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+@media (min-width: 640px) {
+    .donation-buttons {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+.donation-buttons .button {
+    min-width: 200px;
+    font-size: 1rem;
+}
+.donation-note {
+    font-size: 0.8rem;
+    color: var(--light-text-color);
+    margin-top: var(--spacing-lg);
+    font-style: italic;
+}
+/* ==========================================================================
+   Empty / Loading Messages
+   ========================================================================== */
+.empty-list-message, .loading-message {
+    color: var(--light-text-color);
+    padding: var(--spacing-xxl) var(--spacing-md); /* Mais padding */
+    text-align: center;
+    font-style: italic;
+    font-size: 1.1rem; /* Um pouco maior */
+    /* Se usado dentro de um grid, pode precisar ocupar todas as colunas:
+       grid-column: 1 / -1;
+    */
+}
+
+/* ==========================================================================
+   Responsividade Adicional Navbar (Exemplo do seu CSS original)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* ... (outros estilos que você possa ter aqui) ... */
+
+    .navbar-container {
+        /* flex-wrap: wrap; */ 
+    }
+
+    /* Esconde a barra de pesquisa em telas menores por padrão (se desejar) */
+    /* Se você tiver um botão para MOSTRAR a busca, precisará de JS para alternar uma classe aqui */
+    .nav-right .navbar-search-form { 
+        /* display: none; */ /* Mantenha comentado se você QUER que a busca apareça */
+    }
+
+    /* GARANTE QUE OS ITENS DE LOGIN/REGISTRO APAREÇAM EM TELAS MENORES */
+    /* Seletor para os links de login e registro (quando o usuário não está logado) */
+    /* No seu HTML, eles são <a class="nav-item">...</a> dentro de .nav-right */
+    .nav-right > a.nav-item[href*="login"],
+    .nav-right > a.nav-item[href*="signup"] {
+        display: inline-flex !important; /* Usa !important para tentar sobrescrever outras regras */
+        /* Você pode precisar ajustar o padding ou margem aqui para mobile se necessário */
+        padding: 0.4rem 0.6rem;
+        margin-left: var(--spacing-sm); /* Ajuste de margem se necessário */
+    }
+    
+    /* Se o dropdown de perfil (quando logado) também estiver sumindo, adicione: */
+    /*
+    .nav-right .profile-dropdown-container {
+        display: inline-block !important; // ou flex, dependendo do seu layout
+    }
+    */
+
+    /* Se outros itens do nav-left também somem, você pode precisar de uma regra para eles */
+    /* Exemplo:
+    .nav-left .nav-item {
+        display: inline-flex !important; // ou o display original deles
+    }
+    */
+
+
+    /* Ajustes de espaçamento que você já tinha */
+    .manga-grid { 
+        gap: var(--spacing-md) var(--spacing-sm);
+    }
+    .manga-card-simple-title {
+        font-size: 0.9rem;
+    }
+    .section-title, .slider-main-title, .livepix-widget-title, .donation-title {
+        font-size: 1.5rem;
+    }
+}
+/* static/css/main.css - CONTINUAÇÃO */
+
+/* ==========================================================================
+   PÁGINA DE DETALHES DO MANGÁ (MangaDetailPage / MangaPage no Wagtail)
+   ========================================================================== */
+
+.manga-detail-page {
+    /* Container geral da página, se necessário.
+       O conteúdo principal geralmente estará dentro de .manga-detail-main-section
+       que usa a classe .container global.
+    */
+}
+
+.manga-detail-header { /* O banner no topo da página de detalhes */
+    height: 250px; /* Altura do banner, ajuste conforme necessário */
+    position: relative;
+    /* margin-bottom: -100px; */ /* Removido, pois o posicionamento do conteúdo principal cuidará disso */
+    z-index: 1; /* Para o fundo ficar atrás do conteúdo principal */
+    background-color: var(--card-bg-color); /* Cor de fallback se a imagem não carregar */
+    overflow: hidden; /* Garante que a imagem de fundo não vaze */
+}
+@media (min-width: 768px) {
+    .manga-detail-header {
+        height: 300px; /* Banner um pouco maior em telas maiores */
+    }
+}
+@media (min-width: 1024px) {
+    .manga-detail-header {
+        height: 350px;
+    }
+}
+
+
+.header-background-image { /* A imagem de fundo do banner */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 35%; /* Tenta focar um pouco mais para cima na imagem */
+    filter: blur(3px) brightness(0.6); /* Efeito de desfoque e escurecimento */
+    transform: scale(1.1); /* Leve zoom para evitar bordas do blur */
+}
+.header-background-image::after { /* Overlay escuro sobre a imagem de fundo */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(var(--body-bg-color-rgb, 13,13,13), 0.8) 0%, rgba(var(--body-bg-color-rgb, 13,13,13), 0.4) 60%, transparent 100%);
+    /* Assumindo que --body-bg-color-rgb é a versão RGB da sua cor de fundo do body */
+    /* Se não tiver, defina: --body-bg-color-rgb: 13, 13, 13; (para #0d0d0d) */
+}
+
+
+.manga-detail-main-section { /* Seção principal abaixo do header, contém a capa e infos */
+    position: relative;
+    z-index: 2; /* Para ficar sobre o .manga-detail-header */
+    /* padding-top: var(--spacing-xl); */ /* O espaçamento virá do grid e do margin-top negativo da capa */
+    padding-bottom: var(--spacing-xxl);
+    margin-top: -120px; /* Puxa esta seção para cima, sobrepondo o header. AJUSTE conforme altura da capa. */
+}
+@media (min-width: 768px) {
+    .manga-detail-main-section {
+        margin-top: -150px; /* Ajuste para capas maiores */
+    }
+}
+
+
+.manga-detail-grid { /* Layout de grid para capa/sidebar e conteúdo principal */
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile-first: tudo em uma coluna */
+    gap: var(--spacing-lg); /* Espaço entre sidebar e conteúdo quando em colunas */
+}
+
+@media (min-width: 768px) { /* Tablets e telas maiores */
+    .manga-detail-grid {
+        /* grid-template-columns: minmax(0, 250px) minmax(0, 1fr); */ /* Sidebar à esquerda */
+        /* Ou sidebar à direita (como no Omega Scans): */
+        grid-template-columns: minmax(0, 1fr) minmax(0, 280px); /* Conteúdo à esquerda, sidebar à direita */
+                                                              /* Ajuste 280px para a largura da sua sidebar */
+        gap: var(--spacing-xl);
+    }
+}
+@media (min-width: 1024px) {
+     .manga-detail-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 320px); /* Sidebar um pouco mais larga */
+        gap: var(--spacing-xxl);
+    }
+}
+
+
+.manga-detail-content { /* Coluna do conteúdo principal (sinopse, capítulos, etc.) */
+    background-color: var(--card-bg-color);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+}
+@media (min-width: 768px) {
+    .manga-detail-content {
+        padding: var(--spacing-xl); /* Mais padding em telas maiores */
+    }
+}
+
+.manga-detail-sidebar { /* Coluna da sidebar (capa, ações, detalhes) */
+    /* No layout de grid, esta coluna pode precisar de 'order' se você quiser que ela
+       apareça antes do conteúdo no HTML, mas à direita visualmente em telas grandes.
+       Ex: (se a sidebar vem DEPOIS do content no HTML, mas quer à esquerda no grid)
+       grid-column: 1; grid-row: 1;
+       Se a sidebar vem ANTES do content no HTML e quer à direita no grid:
+       order: 2; (e o .manga-detail-content teria order: 1;)
+       Com a estrutura de grid-template-columns acima, a ordem no HTML dita a ordem visual.
+    */
+}
+
+.sidebar-sticky-content { /* Para fazer o conteúdo da sidebar "grudar" ao rolar */
+    position: sticky;
+    top: calc(var(--navbar-height, 60px) + 1.5rem); /* Altura do Navbar Fixo + Espaço */
+                                                    /* Defina --navbar-height ou substitua pelo valor real */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+@media (max-width: 767px) { /* Em telas menores, remove o sticky */
+    .sidebar-sticky-content {
+        position: static;
+        /* A capa pode ficar centralizada ou no topo da seção de detalhes em mobile */
+    }
+    .manga-detail-sidebar { /* Em mobile, a sidebar fica acima do conteúdo */
+        order: -1; /* Coloca a sidebar ANTES do .manga-detail-content no fluxo flex/grid do pai se o pai for flex/grid */
+                   /* Se .manga-detail-grid só tem .manga-detail-content e .manga-detail-sidebar como filhos,
+                      e o grid é 1fr, eles empilham.
+                      Se .manga-detail-grid tem sidebar + content como colunas,
+                      este order: -1 faria a sidebar ir para a primeira coluna.
+                      Mas como o grid é 1fr em mobile, eles já empilham. */
+    }
+}
+
+
+.manga-info-block { /* Bloco de título, autor, etc., dentro do conteúdo principal */
+    margin-bottom: var(--spacing-lg);
+}
+
+.manga-title-area {
+    display: flex;
+    flex-wrap: wrap; /* Permite que o rating quebre linha se não couber */
+    align-items: baseline; /* Alinha título e rating pela base do texto */
+    gap: var(--spacing-sm) var(--spacing-md); /* Espaço vertical e horizontal */
+    margin-bottom: var(--spacing-xs);
+}
+
+.manga-title { /* Título principal da obra */
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--main-text-color);
+    line-height: 1.2;
+    margin-right: var(--spacing-sm); /* Espaço antes do rating */
+    /* flex-grow: 1; */ /* Para ocupar espaço se o rating quebrar linha */
+}
+@media (min-width: 768px) {
+    .manga-title {
+        font-size: 2.2rem;
+    }
+}
+
+.manga-rating {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--rating-star-color, #ffc107); /* Usando variável (adicione ao GlobalSettings) */
+    display: inline-flex; /* Para alinhar estrela e número */
+    align-items: center;
+    flex-shrink: 0; /* Para não encolher */
+}
+.manga-rating .fa-star { /* Se usar FontAwesome para a estrela */
+    margin-right: var(--spacing-xs);
+    font-size: 0.9em; /* Estrela um pouco menor que o texto */
+}
+
+.manga-alternative-titles {
+    font-size: 0.85rem; /* Um pouco menor */
+    color: var(--light-text-color);
+    margin-bottom: var(--spacing-lg); /* Mais espaço abaixo */
+    font-style: italic;
+}
+
+.manga-tags { /* Container para status, tipo, e gêneros */
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    align-items: center; /* Alinha verticalmente as tags se tiverem alturas diferentes */
+}
+
+.tag { /* Estilo base para todas as tags */
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem; /* Ajustado padding */
+    border-radius: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    line-height: 1.2; /* Para melhor aparência do texto */
+}
+/* Tags de Status e Tipo (usando as novas variáveis CSS) */
+.status-tag.status-og { background-color: rgba(var(--status-ongoing-bg-rgb), 0.2); color: var(--status-ongoing-text); border-color: rgba(var(--status-ongoing-bg-rgb),0.4); }
+.status-tag.status-cp { background-color: rgba(var(--status-completed-bg-rgb), 0.2); color: var(--status-completed-text); border-color: rgba(var(--status-completed-bg-rgb),0.4); }
+.status-tag.status-ht { background-color: rgba(var(--status-hiatus-bg-rgb), 0.2); color: var(--status-hiatus-text); border-color: rgba(var(--status-hiatus-bg-rgb),0.4); }
+.status-tag.status-cl { background-color: rgba(var(--status-cancelled-bg-rgb), 0.2); color: var(--status-cancelled-text); border-color: rgba(var(--status-cancelled-bg-rgb),0.4); }
+
+.type-tag { /* Exemplo de cores, adicione variáveis para elas */
+    background-color: var(--type-tag-bg-color, #2803ca);
+    color: var(--type-tag-text-color, #e0e7ff);
+    border-color: var(--type-tag-border-color, #2803ca);
+}
+
+.genre-tag { /* Reutilizando a classe dos filtros, mas pode ter variações */
+    background-color: var(--tag-bg-color);
+    color: var(--tag-text-color);
+    border-color: var(--tag-border-color);
+    font-size: 0.7rem; /* Consistente com outras tags */
+    padding: 0.25rem 0.6rem;
+}
+.genre-tag:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+    text-decoration: none;
+}
+
+.manga-description {
+    font-size: 0.95rem;
+    color: var(--main-text-color);
+    line-height: 1.75; /* Aumentado para melhor legibilidade */
+}
+.manga-description p {
+    margin-bottom: var(--spacing-md); /* Espaço entre parágrafos da descrição */
+}
+.manga-description p:last-child {
+    margin-bottom: 0;
+}
+.chapter-link { /* Ajustes no link existente para acomodar a thumbnail */
+    display: flex;
+    align-items: center; /* Alinha verticalmente a thumbnail e as informações */
+    gap: var(--spacing-md, 1rem); /* Espaço entre thumbnail e o resto (.chapter-info, .chapter-meta) */
+    /* padding: var(--spacing-sm) var(--spacing-md); já deve estar definido */
+    /* ... outros estilos existentes para .chapter-link ... */
+}
+
+.chapter-thumbnail-wrapper {
+    flex-shrink: 0; /* Impede que o wrapper da thumbnail encolha */
+    width: 100px;   /* Largura da thumbnail (AJUSTE CONFORME NECESSÁRIO) */
+    height: 60px;  /* Altura da thumbnail (AJUSTE PARA MANTER PROPORÇÃO) */
+                     /* Ex: Se fill-140x80, use width: 140px; height: 80px; ou ajuste o fill */
+    background-color: var(--input-bg-color, #2a2a2a); /* Fundo do placeholder */
+    border-radius: 4px; /* Bordas arredondadas */
+    overflow: hidden;   /* Garante que a imagem não ultrapasse as bordas arredondadas */
+    display: flex;      /* Para centralizar o placeholder, se usado */
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color, #2f2f2f); /* Borda sutil, opcional */
+}
+
+.chapter-thumbnail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+
+.chapter-thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-text-color, #a0a0a0);
+    font-size: 1.5rem; /* Tamanho do ícone/texto do placeholder */
+}
+.chapter-thumbnail-placeholder i {
+    opacity: 0.5;
+}
+
+
+.chapter-info {
+    flex-grow: 1; /* Ocupa o espaço disponível */
+    min-width: 0; /* Para text-overflow funcionar */
+    display: flex;
+    flex-direction: column; /* Empilha número e título do capítulo */
+    justify-content: center; /* Alinha verticalmente se houver espaço */
+    align-items: flex-start; /* Alinha à esquerda */
+    gap: 0; /* Removido o gap anterior, pois o título pode vir abaixo */
+}
+
+.chapter-number {
+    font-weight: 600;
+    color: var(--main-text-color);
+    font-size: 0.9rem; /* Ajustado */
+    line-height: 1.3;
+    /* flex-shrink: 0; não mais necessário aqui se for em coluna */
+}
+
+.chapter-title-separator {
+    display: none; /* Geralmente não é mais necessário se o título estiver abaixo */
+}
+
+.chapter-title {
+    font-size: 0.8rem; /* Ajustado */
+    color: var(--light-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* flex-grow: 1; não mais necessário aqui */
+    width: 100%; /* Para ellipsis funcionar corretamente */
+    line-height: 1.3;
+    margin-top: 2px; /* Pequeno espaço entre número e título */
+}
+
+.chapter-link:hover .chapter-title,
+.chapter-link:hover .chapter-number {
+    color: var(--accent-color);
+}
+.chapter-meta {
+    font-size: 0.75rem; /* Ajustado */
+    color: var(--light-text-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm, 0.5rem);
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-left: auto; /* Empurra a data para a direita */
+}
+.chapter-meta .fa-clock {
+    font-size: 0.85em; /* Um pouco menor que o texto da data */
+    margin-right: 0.2rem; /* Espaço antes do texto da data */
+}
+
+.separator { /* Linha divisória */
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: var(--spacing-xl) 0;
+}
+
+/* static/css/novel_page_detailed.css - REVISITADO */
+
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS PARA A PÁGINA DE DETALHES DA NOVEL
+   ========================================================================== */
+
+/* --- HEADER (BANNER SUPERIOR) --- */
+.novel-detail-header {
+    height: 250px; /* Altura do banner, ajuste conforme necessário */
+    position: relative;
+    /* z-index: 1; (Só se necessário para sobreposição com outros elementos globais) */
+    background-color: #1e1e1e; /* Cor de fallback se a imagem não carregar (escuro) */
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .novel-detail-header {
+        height: 300px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .novel-detail-header {
+        height: 350px;
+    }
+}
+
+.header-background-image { /* A imagem de fundo do banner */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 35%; /* Tenta focar um pouco mais para cima na imagem */
+    filter: blur(3px) brightness(0.5); /* Desfoque e escurecimento mais forte */
+    transform: scale(1.1); /* Leve zoom para evitar bordas do blur */
+}
+
+.header-background-image::after { /* Overlay escuro sobre a imagem de fundo */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Ajuste a cor para ser a mesma do seu body/fundo principal */
+    background: linear-gradient(to top,
+        rgba(18, 18, 18, 0.95) 0%,  /* Ex: #121212 (cor do seu body), quase opaco */
+        rgba(18, 18, 18, 0.7) 30%,
+        rgba(18, 18, 18, 0.3) 60%,
+        transparent 100%);
+}
+
+
+/* --- SEÇÃO PRINCIPAL E GRID --- */
+.novel-detail-main-section { /* Container da grade */
+    position: relative; /* Para o z-index e margin-top negativo funcionarem */
+    z-index: 2; /* Para ficar sobre o .novel-detail-header */
+    margin-top: -120px; /* Puxa esta seção para cima. AJUSTE conforme altura da capa ou preferências. */
+    padding-bottom: 3rem; /* Espaçamento inferior */
+}
+
+@media (min-width: 768px) {
+    .novel-detail-main-section {
+        margin-top: -150px; /* Ajuste para telas maiores se a capa for maior */
+    }
+}
+
+.novel-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile-first: tudo em uma coluna */
+    gap: 1.5rem; /* Espaço entre sidebar e conteúdo */
+}
+
+@media (min-width: 768px) { /* Tablets e telas maiores */
+    .novel-detail-grid {
+        grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+     .novel-detail-grid {
+        grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+
+/* --- SIDEBAR (CAPA, AUTOR) --- */
+.novel-detail-sidebar {
+    /* Em mobile, a capa e sidebar vêm primeiro naturalmente devido ao grid 1fr */
+}
+
+@media (max-width: 767px) {
+    .novel-detail-sidebar {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centraliza a capa em mobile */
+    }
+    .novel-cover-art-main {
+        max-width: 200px; /* Limita a largura da capa em mobile */
+        margin-bottom: 1rem;
+    }
+    .sidebar-sticky-content {
+      position: static; /* Remove o sticky em mobile */
+    }
+}
+
+.sidebar-sticky-content {
+    position: sticky;
+    top: calc(60px + 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espaço entre a capa e o bloco de autor */
+}
+
+.novel-cover-art-main img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 2px solid #2f2f2f; /* Borda sutil escura */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.sidebar-info-block {
+    background-color: #1e1e1e; /* Fundo escuro do card */
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #2f2f2f;
+    color: #e0e0e0; /* Texto claro */
+}
+.sidebar-info-block h4 {
+    font-size: 0.9rem;
+    color: #a0a0a0; /* Cinza para o título "Autor" */
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.sidebar-info-block p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+
+/* --- CONTEÚDO PRINCIPAL (TÍTULO, TAGS, SINOPSE, CAPÍTULOS) --- */
+.novel-detail-content {
+    background-color: #1e1e1e; /* Fundo escuro do card */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border: 1px solid #2f2f2f; /* Borda sutil escura */
+}
+
+@media (min-width: 768px) {
+    .novel-detail-content {
+        padding: 2rem; /* Mais padding em telas maiores */
+    }
+}
+
+.novel-info-block {
+    margin-bottom: 1.5rem;
+}
+
+.novel-title-area {
+    display: flex;
+    flex-wrap: wrap; /* Permite que o rating quebre linha */
+    align-items: baseline; /* Alinha título e rating pela base do texto */
+    gap: 0.5rem 1rem; /* Espaço vertical e horizontal */
+    margin-bottom: 0.25rem;
+}
+
+.novel-title-area h1 { /* page.title */
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff; /* Branco */
+    line-height: 1.2;
+    margin: 0; /* Remove margem padrão do h1 */
+}
+
+@media (min-width: 768px) {
+    .novel-title-area h1 {
+        font-size: 2.2rem;
+    }
+}
+
+.novel-rating { /* ⭐ {{ page.rating|floatformat:1 }} / 10 */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffc107; /* Amarelo para estrela/rating */
+    background-color: rgba(0,0,0,0.3); /* Fundo escuro translúcido */
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.novel-alternative-titles { /* ({{ page.original_title }}) */
+    font-size: 0.85rem;
+    color: #a0a0a0; /* Cinza claro */
+    margin-bottom: 1rem; /* Espaço abaixo */
+    font-style: italic;
+}
+
+.novel-meta-tags-main { /* Container para status, tipo e gêneros */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+tag { /* Estilo base para todas as tags */
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.3rem 0.65rem;
+    border-radius: 12px; /* Mais arredondado */
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1.2;
+    color: #e0e0e0; /* Cor de texto padrão para tags */
+    transition: transform 0.2s ease;
+}
+.tag:hover {
+    transform: translateY(-2px);
+}
+
+/* --- EDIÇÃO AQUI: "ongoing" agora usa as cores de uma tag neutra --- */
+.status-tag.status-ongoing {
+    background-color: #333333; /* Fundo cinza escuro */
+    color: #cccccc;
+    border: 1px solid #444444;
+}
+
+/* As outras cores de status permanecem como estavam */
+.status-tag.status-completed {
+    background-color: rgba(0, 6, 10, 0.8);
+    color: #e3f2fd;
+}
+.status-tag.status-hiatus {
+    background-color: rgba(255, 152, 0, 0.8);
+    color: #fff3e0;
+}
+.status-tag.status-cancelled {
+    background-color: rgba(189, 189, 189, 0.8);
+    color: #121212;
+}
+
+/* A tag de tipo continua com a cor roxa que você definiu */
+.type-tag {
+    background-color: #2225ce;
+    color: #f3e8ff;
+}
+
+.genre-tag {
+    background-color: #333333;
+    color: #cccccc;
+    border: 1px solid #444444;
+}
+.genre-tag:hover {
+    background-color: #2225ce;
+    color: #f3e8ff;
+    border-color: #2225ce;
+}
+
+.novel-synopsis-section {
+    font-size: 0.95rem;
+    color: #e0e0e0; /* Texto principal claro */
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+}
+.novel-synopsis-section p {
+    margin-bottom: 1rem;
+}
+.novel-synopsis-section p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* --- ÁREA DE AÇÕES (FAVORITOS) --- */
+/* Esta seção deve vir DEPOIS das tags e ANTES da sinopse no HTML */
+.novel-actions-area {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre o botão e a contagem de seguidores */
+    margin-top: 1.5rem; /* Espaço acima */
+    margin-bottom: 1.5rem; /* Espaço abaixo */
+    padding-top: 1.5rem; /* Espaço interno */
+    border-top: 1px solid #2f2f2f; /* Linha separadora */
+}
+
+/* Estilo base para o botão e para o link de login */
+.favorite-button, .favorite-button-login {
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+    border: 2px solid transparent; /* Borda base transparente */
+}
+
+/* Botão para QUEM NÃO ESTÁ SEGUINDO */
+.favorite-button.not-following {
+    background-color: #2203AC; /* Vermelho, cor primária de ação */
+    color: white;
+}
+.favorite-button.not-following:hover {
+    background-color: #2203AC; /* Vermelho mais escuro no hover */
+}
+
+/* Botão para QUEM JÁ ESTÁ SEGUINDO */
+.favorite-button.following {
+    background-color: transparent;
+    border-color: #2203AC; /* Apenas a borda vermelha */
+    color: #2203AC; /* Texto vermelho */
+}
+.favorite-button.following:hover {
+    background-color: rgba(229, 57, 53, 0.1); /* Fundo vermelho bem sutil no hover */
+    color: #2203AC; /* Texto um pouco mais claro no hover */
+    border-color: #2203AC;
+}
+
+/* Link para usuários não logados */
+.favorite-button-login {
+    background-color: #444;
+    color: #ccc;
+    border-color: #555;
+}
+.favorite-button-login:hover {
+    background-color: #555;
+    color: #2203AC;
+}
+
+/* Contagem de seguidores */
+.followers-count {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* --- LISTA DE CAPÍTULOS --- */
+.novel-chapter-list-section-main {
+    margin-top: 2rem; /* Espaço acima da lista de capítulos */
+}
+
+.chapter-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #2f2f2f; /* Linha separadora */
+}
+.chapter-list-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff; /* Branco */
+    margin: 0;
+}
+
+.chapter-filter-controls {
+    margin-bottom: 1rem;
+}
+#chapterFilterInput {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background-color: #2a2a2a; /* Fundo escuro para input */
+    border: 1px solid #444444;
+    border-radius: 4px;
+    color: #e0e0e0; /* Texto claro */
+    font-size: 0.9rem;
+}
+#chapterFilterInput::placeholder {
+    color: #777777;
+}
+
+.chapter-list-detailed-main {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem; /* Espaço pequeno entre os itens da lista */
+}
+
+.chapter-item-detailed-main {
+    /* Nada específico aqui, o estilo vai no <a> */
+}
+
+.chapter-item-detailed-main a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: transparent;
+    border: 1px solid transparent; /* Para manter o layout no hover */
+    border-radius: 6px;
+    color: #a0a0a0; /* Cor padrão do texto do link do capítulo (cinza claro) */
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.chapter-item-detailed-main a:hover {
+    background-color: rgba(255,255,255,0.05); /* Leve destaque no hover */
+    border-color: #2f2f2f;
+    color: #7e22ce; /* Cor do texto do título do capítulo no hover (roxo) */
+}
+
+.chapter-item-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    flex-grow: 1; /* Para empurrar a data para a direita */
+    /* Se o título for muito longo, pode adicionar:
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 1rem; (espaço antes da data)
+    */
+}
+
+.chapter-item-date {
+    font-size: 0.8rem;
+    color: #777777; /* Cor da data (cinza mais escuro) */
+    white-space: nowrap; /* Evita quebra de linha na data */
+    flex-shrink: 0; /* Não deixa a data encolher */
+}
+.chapter-item-detailed-main a:hover .chapter-item-date {
+    color: #a0a0a0; /* Clareia um pouco a data no hover */
+}
+
+.no-chapters-message {
+    color: #a0a0a0;
+    padding: 1rem;
+    text-align: center;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   Abas (Tabs) para Capítulos, Comentários, etc. na Página de Detalhes
+   ========================================================================== */
+
+.tabs-container {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg); /* Adicionado espaço abaixo das abas também */
+}
+
+.tab-list { /* O contêiner para os botões/links das abas */
+    display: flex;
+    gap: var(--spacing-xs); /* Pequeno espaço entre os botões das abas */
+    border-bottom: 2px solid var(--border-color); /* Linha abaixo das abas */
+    margin-bottom: var(--spacing-lg); /* Espaço entre os botões das abas e o conteúdo da aba */
+}
+
+.tab-trigger { /* Cada botão/link de aba */
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.95rem; /* Ajuste */
+    font-weight: 600;
+    color: var(--light-text-color);
+    background: none; /* Sem fundo por padrão */
+    border: none; /* Sem borda por padrão */
+    border-bottom: 3px solid transparent; /* Borda inferior transparente para o efeito de ativação */
+    cursor: pointer;
+    margin-bottom: -2px; /* Para a borda inferior ativa sobrepor a borda do .tab-list */
+    transition: color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap; /* Impede que o texto da aba quebre */
+}
+.tab-trigger:hover {
+    color: var(--main-text-color);
+}
+.tab-trigger.active { /* Aba ativa */
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.tab-content { /* Conteúdo de uma aba individual */
+    padding-top: var(--spacing-xs); /* Pequeno espaço acima do conteúdo da aba */
+    /* display: none; por padrão, o JS controla qual está visível */
+    /* Se usar JS para adicionar .active ao .tab-content visível:
+    &.active { display: block; }
+    */
+    animation: fadeIn 0.3s ease-in-out; /* Efeito de fade ao trocar abas */
+}
+/* @keyframes fadeIn já definido anteriormente, mas pode ser repetido se este for um arquivo separado */
+/* @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } } */
+
+
+/* ==========================================================================
+   Lista de Capítulos (Dentro da Aba de Capítulos)
+   ========================================================================== */
+
+.chapter-list-controls { /* Controles acima da lista (filtro, ordenação) */
+    display: flex;
+    flex-wrap: wrap; /* Para quebrar em telas menores */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-md);
+}
+.chapter-filter-input { /* Input para filtrar capítulos por número/nome */
+    flex-grow: 1; /* Ocupa espaço disponível */
+    min-width: 200px; /* Largura mínima */
+    padding: 0.6rem 0.8rem;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--main-text-color);
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+.chapter-filter-input:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 2.5px rgba(var(--input-focus-shadow-color-rgb), 0.2);
+}
+
+.chapter-sort-buttons { /* Botões para mudar a ordem da lista de capítulos */
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0; /* Impede que encolha */
+}
+.sort-button { /* Botão individual de ordenação */
+    background-color: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+    border: 1px solid var(--button-secondary-border);
+    padding: 0.5rem 0.7rem; /* Ajustado */
+    border-radius: 6px;
+    line-height: 1;
+    cursor: pointer;
+    font-size: 0.8rem; /* Menor */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.sort-button:hover {
+    background-color: color-mix(in srgb, var(--button-secondary-bg) 85%, black);
+    border-color: var(--accent-color);
+}
+.sort-button.active {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+.sort-button i { /* Ícones dentro do botão de ordenação */
+    font-size: 1em;
+}
+
+
+.chapter-group { /* Se você agrupar capítulos por volume ou temporada */
+    margin-bottom: var(--spacing-xl);
+}
+.chapter-group-title {
+    font-size: 1.25rem; /* Ajustado */
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--main-text-color);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.chapter-item-list { /* A lista <ul> ou <ol> de capítulos */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm); /* Espaço entre itens da lista de capítulos */
+}
+
+.chapter-item { /* Cada <li> da lista */
+    /* Sem estilos diretos no <li>, o link <a> dentro dele terá os estilos */
+}
+
+.chapter-link { /* O link <a> para cada capítulo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md); /* Padding ajustado */
+    background-color: var(--section-bg-color); /* Um pouco diferente do card-bg para destaque */
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    flex-wrap: nowrap; /* Impede quebra de linha interna por padrão */
+    gap: var(--spacing-md); /* Espaço entre info e meta */
+}
+.chapter-link:hover {
+    background-color: var(--input-bg-color); /* Um pouco mais claro no hover */
+    border-color: var(--accent-color);
+    transform: translateX(3px); /* Leve deslocamento */
+    text-decoration: none;
+}
+.chapter-link.read, /* Se você tiver uma classe para capítulos lidos */
+.chapter-link.current-reading { /* Se você tiver uma classe para o capítulo atual */
+    border-left: 3px solid var(--accent-color);
+    padding-left: calc(var(--spacing-md) - 3px);
+}
+
+
+.chapter-info { /* Contém número e título do capítulo */
+    flex-grow: 1; /* Ocupa o espaço */
+    min-width: 0; /* Para text-overflow funcionar */
+    display: flex;
+    align-items: baseline; /* Alinha número e título pela base */
+    gap: var(--spacing-sm);
+    /* flex-wrap: wrap; */ /* Removido para manter na mesma linha se possível */
+}
+.chapter-number {
+    font-weight: 600;
+    color: var(--main-text-color);
+    font-size: 0.95rem;
+    flex-shrink: 0; /* Impede que o número do capítulo encolha */
+}
+.chapter-title-separator { /* Se você usar um separador textual como '-' ou ':' */
+    display: none; /* Geralmente não necessário se houver gap */
+    margin: 0 var(--spacing-xs);
+    color: var(--light-text-color);
+}
+.chapter-title { /* Título do capítulo (se houver, além do número) */
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Tenta ocupar espaço, mas permite ellipsis */
+}
+.chapter-link:hover .chapter-title,
+.chapter-link:hover .chapter-number {
+    color: var(--accent-color); /* Muda cor do texto no hover */
+}
+
+.chapter-meta { /* Data de lançamento, ícones, etc. */
+    font-size: 0.8rem;
+    color: var(--light-text-color);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm); /* Espaço entre data e ícones de VIP/scan */
+    flex-shrink: 0; /* Impede que encolha */
+    white-space: nowrap;
+}
+.chapter-meta .fa-clock {
+    font-size: 0.9em;
+    margin-right: var(--spacing-xs);
+}
+.chapter-meta .vip-badge, .chapter-meta .scan-badge { /* Badges para VIP ou nome da Scan */
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.chapter-meta .vip-badge {
+    background-color: var(--rating-star-color, #ffc107); /* Reutilizando cor de estrela para VIP (amarelo) */
+    color: var(--body-bg-color); /* Texto escuro sobre fundo amarelo */
+}
+
+
+/* ==========================================================================
+   Paginação (Reutilizada da página de Comics, mas pode precisar de ajustes)
+   ========================================================================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-xl); /* Espaço acima da paginação */
+    margin-bottom: var(--spacing-lg); /* Espaço abaixo da paginação */
+}
+.page-item .page-link {
+    color: var(--light-text-color);
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 0.8rem;
+    margin: 0 0.15rem;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    font-size: 0.85rem;
+}
+.page-item a.page-link:hover {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: var(--button-primary-text);
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    font-weight: bold;
+}
+.page-item.disabled .page-link {
+    color: var(--disabled-text-color, #6b7280); /* Usando variável */
+    pointer-events: none;
+    background-color: var(--disabled-bg-color, #374151); /* Usando variável */
+    border-color: var(--border-color);
+    opacity: 0.6;
+}
+.page-item.ellipsis .page-link {
+    border: none;
+    background: none;
+    color: var(--light-text-color);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    pointer-events: none;
+}
+/* static/css/main.css - CONTINUAÇÃO */
+
+/* ==========================================================================
+   Sidebar da Página de Detalhes do Mangá
+   ========================================================================== */
+
+/* .manga-detail-sidebar já está definido no layout grid principal.
+   Os estilos aqui são para os elementos DENTRO da sidebar.
+*/
+
+.sidebar-cover-image { /* Wrapper da imagem de capa na sidebar */
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--input-bg-color); /* Fundo para placeholder */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* Sombra mais pronunciada */
+    margin-bottom: var(--spacing-lg); /* Espaço abaixo da capa, antes das ações */
+    /* aspect-ratio: 300 / 450; */ /* Pode ser útil se a imagem não preencher */
+}
+.sidebar-cover-image img { /* A imagem da capa em si */
+    display: block;
+    width: 100%;
+    height: auto; /* Mantém proporção */
+    border-radius: 8px; /* Se a imagem não preencher perfeitamente o wrapper */
+}
+.cover-placeholder { /* Placeholder se não houver capa */
+    aspect-ratio: 300 / 450; /* Proporção da capa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-text-color);
+    font-style: italic;
+    font-size: 1.2rem; /* Texto do placeholder */
+    background-color: var(--input-bg-color); /* Mesmo fundo do wrapper */
+    border-radius: 8px;
+}
+/* Se usar FontAwesome para placeholder:
+.cover-placeholder i.fa-image {
+    font-size: 4rem;
+    opacity: 0.3;
+}
+*/
+
+.sidebar-actions { /* Container para botões como "Ler Primeiro", "Favoritar" */
+    display: flex;
+    flex-direction: column; /* Botões empilhados */
+    gap: var(--spacing-sm); /* Espaço entre os botões */
+    margin-bottom: var(--spacing-lg); /* Espaço abaixo dos botões de ação */
+}
+.sidebar-actions .button { /* Aplica a todos os botões dentro de .sidebar-actions */
+    width: 100%; /* Botões ocupam toda a largura da sidebar */
+    padding-top: 0.75rem; /* Botões um pouco maiores */
+    padding-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+/* Estilos específicos para o botão de favoritar (bookmark) */
+.button-bookmark i { /* Ícone de favorito */
+    /* font-size: 1.1em; */ /* Ícone um pouco maior */
+}
+.button-bookmark.bookmarked { /* Quando o mangá está favoritado */
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+.button-bookmark.bookmarked:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 85%, black);
+    border-color: color-mix(in srgb, var(--accent-color) 85%, black);
+}
+/* Botão NovelUpdates (se você o tiver) */
+.button-novelupdates {
+    background-color: var(--novelupdates-bg-color, #2c3e50); /* Nova variável, defina no :root */
+    color: white; /* Ou var(--button-primary-text) */
+}
+.button-novelupdates:hover {
+    background-color: var(--novelupdates-hover-bg-color, #34495e); /* Nova variável */
+}
+.button-novelupdates img { /* Se usar uma imagem/logo para NovelUpdates */
+    height: 1.2em; /* Altura da imagem */
+    /* margin-right: var(--spacing-sm); */ /* Já tratado pelo gap do .button */
+}
+
+
+.sidebar-release-schedule { /* Seção de dias de lançamento */
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    background-color: var(--section-bg-color); /* Fundo levemente diferente */
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+.schedule-title { /* "Lançamentos" ou similar */
+    display: block;
+    font-size: 0.8rem;
+    color: var(--light-text-color);
+    margin-bottom: var(--spacing-sm); /* Aumentado */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.schedule-days { /* Container para os dias da semana */
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+.schedule-days .day { /* Cada dia da semana */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; /* Aumentado */
+    height: 28px;
+    border-radius: 50%; /* Círculos */
+    background-color: var(--input-bg-color);
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    font-weight: bold;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.schedule-days .day.active { /* Dia ativo (dia de lançamento) */
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+
+
+.sidebar-details-box { /* Caixa para detalhes: Autor, Artista, Status, etc. */
+    background-color: var(--section-bg-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    border-radius: 6px;
+    margin-bottom: var(--spacing-lg); /* Espaço abaixo da caixa de detalhes */
+}
+.details-title { /* Título da caixa, ex: "Detalhes" */
+    font-size: 1.05rem; /* Ajustado */
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    color: var(--main-text-color);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+.details-list { /* A lista <dl> de detalhes */
+    /* Sem estilos diretos no dl, estilizamos dt e dd */
+}
+.details-list dt { /* Termo (ex: "Autor:") */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--light-text-color);
+    margin-bottom: var(--spacing-xs);
+    float: left; /* Layout antigo, mas funcional para dt/dd */
+    clear: left;
+    width: 40%; /* Largura do termo */
+    padding-right: var(--spacing-sm); /* Espaço entre termo e definição */
+    box-sizing: border-box;
+}
+.details-list dd { /* Definição (ex: "Nome do Autor") */
+    font-size: 0.85rem;
+    color: var(--main-text-color);
+    margin-left: 42%; /* Para alinhar com o fim do dt (40% + 2% de folga) */
+    margin-bottom: var(--spacing-sm);
+    text-align: right; /* Alinha o valor à direita */
+    word-break: break-word; /* Quebra palavras longas */
+}
+.details-list::after { /* Para limpar o float */
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+.sidebar-official-links-box { /* Caixa para links oficiais */
+    background-color: var(--section-bg-color);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    border-radius: 6px;
+    /* margin-top: var(--spacing-lg); */ /* Já tem gap do .sidebar-sticky-content */
+}
+/* .sidebar-official-links-box .details-title { ... } */ /* Reutiliza .details-title */
+
+.official-links-list { /* Lista <ul> de links */
+    margin-top: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    list-style: none; /* Remove marcadores de lista padrão */
+    padding-left: 0;  /* Remove padding padrão de lista */
+}
+
+.official-link-item { /* Cada <li> da lista de links */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.85rem;
+}
+.link-label { /* "KR:", "EN:", etc. */
+    color: var(--light-text-color);
+    font-weight: 600;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-width: 30px; /* Largura mínima para o label */
+}
+.link-label .fa-link { /* Ícone de link */
+    font-size: 0.9em;
+}
+.link-url { /* O link <a> em si */
+    color: var(--accent-color);
+    /* text-decoration: underline; */ /* Globalmente já tem, mas hover é no <a> geral */
+    word-break: break-all; /* Quebra URLs longas */
+    flex-grow: 1;
+    text-align: left; /* Alinha o link à esquerda */
+    transition: color 0.2s ease;
+}
+.link-url:hover {
+    color: var(--link-hover-color, var(--main-text-color));
+    text-decoration: underline;
+}
+/* static/css/main.css - CONTINUAÇÃO */
+
+/* ==========================================================================
+   Seção de Reviews/Comentários na Página de Detalhes
+   ========================================================================== */
+
+.manga-reviews-section { /* Ou .chapter-comments-section se for para capítulos */
+    margin-top: var(--spacing-xxl); /* Bastante espaço acima */
+    padding-top: var(--spacing-xl); /* Padding no topo da seção */
+    border-top: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-xl); /* Adicionado padding abaixo também */
+}
+
+.manga-reviews-section .section-title { /* Reutilizando .section-title */
+    /* Se precisar de alinhamento central para o título dos comentários: */
+    /* text-align: center; */
+}
+/* .manga-reviews-section .section-title::after { */
+    /* Para centralizar o ::after se o título estiver centralizado: */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+/* } */
+
+.comments-placeholder { /* Placeholder se o sistema de comentários não estiver pronto */
+    min-height: 150px; /* Altura mínima */
+    padding: var(--spacing-xl); /* Padding interno */
+    text-align: center;
+    color: var(--light-text-color);
+    border: 2px dashed var(--border-color); /* Borda tracejada */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem; /* Tamanho do texto do placeholder */
+}
+.comments-placeholder p {
+    margin: 0;
+}
+
+/* Se você implementar um sistema de comentários customizado, precisará de estilos para:
+   - Formulário de comentário (.comment-form, .form-input, .form-textarea, .submit-button)
+   - Lista de comentários (.comment-list, .comment-item)
+   - Avatar do comentador (.comment-avatar)
+   - Nome do comentador (.comment-author)
+   - Data do comentário (.comment-date)
+   - Corpo do comentário (.comment-text)
+   - Botões de ação (Responder, Editar, Spoiler) (.comment-actions .button)
+   - Respostas aninhadas (.comment-replies)
+*/
+
+
+/* ==========================================================================
+   PÁGINA DE LEITURA DE CAPÍTULOS (Chapter Reader)
+   ========================================================================== */
+
+.chapter-reading-page {
+    background-color: var(--reader-bg-color, var(--body-bg-color));
+    display: flex; /* Para permitir que .chapter-content-main cresça */
+    flex-direction: column;
+    min-height: 100vh; /* Garante que a página de leitura ocupe a tela */
+}
+
+.chapter-navigation {
+   background-color: var(--navbar-bg-color);
+    color: var(--main-text-color);
+    padding: var(--spacing-sm) 0;
+    /* min-height: 50px; */ /* Definir uma altura fixa pode ser melhor */
+    height: 50px; /* ALTURA FIXA PARA A BARRA DE NAVEGAÇÃO DO CAPÍTULO */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0; /* Impede que encolha */
+}
+
+/* Regra para a navegação superior (sticky) */
+.chapter-navigation.top-nav {
+    position: sticky;
+    top: 0; /* <<< MUDANÇA: Grudar no topo da viewport, já que não há navbar principal */
+    left: 0; 
+    right: 0; 
+    z-index: 950; 
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Regra para a navegação inferior */
+.chapter-navigation.bottom-nav {
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-xl); /* Espaço acima da navegação inferior */
+    /* margin-bottom: var(--spacing-lg); // Removido, pois o body já tem padding ou o flex fará ocupar espaço */
+}
+
+.chapter-navigation .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm, 0.5rem);
+    width: 100%;
+    max-width: 1200px; /* Ou seu .container max-width */
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm, 0.5rem);
+}
+
+/* ... (restante do seu .chapter-navigation .nav-left, .nav-center, .nav-right, .nav-button etc. permanecem iguais) ... */
+.chapter-navigation .nav-left,
+.chapter-navigation .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs, 0.25rem); 
+    flex-shrink: 0; 
+}
+
+.chapter-navigation .nav-left {
+    justify-content: flex-start;
+}
+.chapter-navigation .nav-right {
+    justify-content: flex-end;
+}
+
+.chapter-navigation .nav-center {
+    flex-grow: 1; 
+    flex-shrink: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0; 
+    text-align: center;
+    overflow: hidden; 
+    margin: 0 var(--spacing-xs); 
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem; 
+    padding: 0.4rem 0.6rem; 
+    background-color: var(--button-secondary-bg, #3a3a3a);
+    color: var(--button-secondary-text, #ccc);
+    border: 1px solid var(--button-secondary-border, #555);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem; 
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    line-height: 1.2;
+    flex-shrink: 0; 
+}
+.nav-button:hover:not(.disabled) {
+    background-color: var(--accent-color);
+    color: var(--button-primary-text);
+    border-color: var(--accent-color);
+}
+.nav-button.disabled {
+    opacity: 0.5; 
+    cursor: not-allowed;
+    background-color: var(--input-bg-color);
+    border-color: var(--input-border-color);
+    color: var(--light-text-color);
+}
+.nav-button i {
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .chapter-navigation .nav-button .button-text {
+        display: none; 
+    }
+    .chapter-navigation .nav-button {
+        padding: 0.5rem; 
+    }
+    .chapter-navigation .nav-center .series-title-nav {
+        /* display: none; */ 
+    }
+    .chapter-navigation .nav-center .chapter-title-nav {
+        font-size: 0.75rem; 
+    }
+    .chapter-navigation .nav-container {
+        gap: var(--spacing-xs); 
+        padding: 0 var(--spacing-xs); 
+    }
+}
+
+.series-link {
+    display: inline-flex; 
+    align-items: center;
+    gap: var(--spacing-xs, 0.25rem); 
+    text-decoration: none;
+    color: inherit;
+    max-width: 100%; 
+    overflow: hidden; 
+}
+.series-link:hover .series-title-nav,
+.series-link:hover .chapter-title-nav {
+    color: var(--accent-color);
+}
+
+.series-thumb {
+    height: 30px; 
+    width: auto;
+    max-width: 25px; 
+    border-radius: 3px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.series-chapter-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    text-align: left;
+    min-width: 0; 
+    overflow: hidden; 
+}
+
+.series-title-nav {
+    font-size: 0.85rem; 
+    font-weight: 600;
+    color: var(--main-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: block; 
+    width: 100%;    
+}
+
+.chapter-title-nav {
+    font-size: 0.7rem; 
+    color: var(--light-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+}
+
+/* Container das Imagens do Capítulo */
+.chapter-images-container {
+    max-width: 800px; /* Ou a largura que você preferir para as imagens */
+    margin-left: auto;
+    margin-right: auto;
+    /* margin-top: var(--spacing-lg); // Removido, será controlado pelo padding-top */
+    /* margin-bottom: var(--spacing-xl); // Removido */
+    padding-top: 50px; /* <<< ADICIONADO: Altura da .chapter-navigation.top-nav */
+    flex-grow: 1; /* Para ocupar o espaço de rolagem */
+}
+
+.chapter-image-wrapper {
+    /* margin-bottom: 2px; */ 
+}
+
+.chapter-image {
+    display: block;
+    width: 100%;
+    max-width: 100%; /* Garante que não ultrapasse o .chapter-images-container */
+    height: auto;
+    margin-left: auto; /* Centraliza se a imagem for menor que max-width do container */
+    margin-right: auto;
+    padding: 0;
+    background-color: #000; /* Fundo preto atrás das imagens */
+}
+
+/* ==========================================================================
+   Sidebar/Drawer da Lista de Capítulos (Dentro da Página de Leitura)
+   ========================================================================== */
+
+/* Overlay para escurecer o fundo quando o drawer está aberto */
+.chapter-list-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Mais escuro */
+    z-index: 1040; /* Abaixo do drawer, mas acima do conteúdo da página */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+.chapter-list-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s; /* Remove delay para aparecer */
+}
+
+/* O Drawer/Sidebar em si */
+.chapter-list-sidebar-drawer {
+    position: fixed;
+    top: 0;
+    right: -320px; /* Começa fora da tela à direita (largura + um pouco mais) */
+                   /* Ajuste 320px se a largura do drawer for diferente */
+    width: 300px;  /* Largura do drawer (ajuste conforme seu design) */
+    max-width: calc(100% - 40px); /* Máximo de (largura da tela - pequeno espaço) */
+    height: 100%;
+    background-color: var(--card-bg-color, #1e1e1e); /* Fundo do drawer */
+    color: var(--main-text-color, #e0e0e0);
+    box-shadow: -3px 0 15px rgba(0,0,0,0.3); /* Sombra à esquerda */
+    z-index: 1050; /* Acima do overlay */
+    transition: right 0.35s cubic-bezier(0.25, 0.1, 0.25, 1); /* Animação de deslize mais suave */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Para o .sidebar-scroll-content funcionar */
+}
+.chapter-list-sidebar-drawer.active {
+    right: 0; /* Desliza para a posição visível */
+}
+
+.sidebar-header { /* Cabeçalho da sidebar (Título "Capítulos" e botão Fechar) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem; /* Padding ajustado */
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Impede que o header encolha */
+}
+.sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--main-text-color);
+}
+.close-sidebar-button { /* Botão 'X' para fechar */
+    background: none;
+    border: none;
+    color: var(--light-text-color);
+    font-size: 1.6rem; /* Tamanho do 'X' */
+    line-height: 1;
+    padding: 0.25rem 0.5rem; /* Área de clique */
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.close-sidebar-button:hover {
+    color: var(--accent-color);
+}
+
+.sidebar-scroll-content { /* Área rolável da lista de capítulos */
+    flex-grow: 1; /* Ocupa o espaço restante */
+    overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    padding: 0.5rem 0; /* Padding vertical interno */
+}
+/* Estilizando a barra de rolagem (opcional, mas melhora a aparência em temas escuros) */
+.sidebar-scroll-content::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar-scroll-content::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.1);
+    border-radius: 4px;
+}
+.sidebar-scroll-content::-webkit-scrollbar-thumb {
+    background-color: var(--input-border-color, #4a4a4a);
+    border-radius: 4px;
+    border: 2px solid transparent; /* Cria um efeito de padding na thumb */
+    background-clip: content-box;
+}
+.sidebar-scroll-content::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-text-color, #a0a0a0);
+}
+
+
+.sidebar-chapter-list { /* A lista <ul> */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar-chapter-list li {
+    /* Pode não precisar de estilos diretos, o link <a> cuidará disso */
+}
+
+.sidebar-chapter-link { /* Cada link <a> de capítulo na sidebar */
+    display: flex;
+    align-items: center; /* Alinha thumb e info verticalmente */
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: var(--light-text-color);
+    border-bottom: 1px solid var(--border-color); /* Divisor sutil entre itens */
+    gap: 0.85rem; /* Espaço entre thumb e info */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sidebar-chapter-list li:last-child .sidebar-chapter-link {
+    border-bottom: none; /* Remove a borda do último item */
+}
+
+.sidebar-chapter-link:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+    color: var(--accent-color);
+}
+.sidebar-chapter-link.active { /* Capítulo atual na lista */
+    background-color: rgba(var(--accent-color-rgb), 0.15);
+    color: var(--accent-color);
+    font-weight: 600; /* Destaca o texto do capítulo ativo */
+    border-left: 3px solid var(--accent-color); /* Borda lateral de destaque */
+    padding-left: calc(1rem - 3px); /* Compensa a borda esquerda */
+}
+.sidebar-chapter-link.disabled_link { /* Para links inválidos (debug) */
+    opacity: 0.5;
+    pointer-events: none;
+    color: var(--danger-color);
+}
+
+
+.sidebar-chapter-thumb-container { /* Wrapper da thumbnail do capítulo */
+    flex-shrink: 0; /* Impede que encolha */
+    width: 50px;  /* Largura da thumbnail (ajuste) */
+    height: 70px; /* Altura da thumbnail (ajuste para proporção) */
+    background-color: var(--input-bg-color); /* Fundo do placeholder */
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color); /* Borda sutil */
+}
+.sidebar-chapter-thumb { /* A imagem <img> da thumbnail */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sidebar-chapter-thumb-placeholder { /* Placeholder '?' */
+    font-size: 1.5rem;
+    color: var(--light-text-color);
+    opacity: 0.5;
+}
+
+.sidebar-chapter-info { /* Container para título e data do capítulo */
+    flex-grow: 1; /* Ocupa o espaço restante */
+    min-width: 0; /* Para text-overflow: ellipsis funcionar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinha verticalmente o texto se houver altura extra */
+}
+.sidebar-chapter-title-text {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.15rem; /* Pequeno espaço abaixo do título */
+    line-height: 1.3;
+    color: var(--main-text-color); /* Cor do título na sidebar */
+}
+.sidebar-chapter-link.active .sidebar-chapter-title-text {
+    color: var(--accent-color); /* Cor de destaque para o título ativo */
+}
+
+.sidebar-chapter-date {
+    font-size: 0.7rem; /* Data menor */
+    color: var(--light-text-color); /* Cor mais suave para a data */
+    opacity: 0.8;
+}
+
+/* ==========================================================================
+   PÁGINA DE LEITURA DE CAPÍTULOS DE NOVEL
+   ========================================================================== */
+
+/* --- Configurações Globais da Página de Leitura --- */
+.novel-reading-page { /* Renomeado de .chapter-reading-page */
+    background-color: var(--reader-bg-color, var(--body-bg-color, #121212)); /* Cor de fundo escura */
+    color: var(--main-text-color, #e0e0e0); /* Cor de texto principal clara */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- Navegação Superior e Inferior --- */
+.chapter-navigation { /* Mantido o nome, pois é genérico para navegação de capítulo */
+    background-color: var(--navbar-bg-color, #1f1f1f);
+    color: var(--main-text-color, #e0e0e0);
+    padding: var(--spacing-sm, 0.5rem) 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.chapter-navigation.top-nav {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 950;
+    border-bottom: 1px solid var(--border-color, #2f2f2f);
+}
+
+.chapter-navigation.bottom-nav {
+    border-top: 1px solid var(--border-color, #2f2f2f);
+    margin-top: var(--spacing-xl, 2rem);
+}
+
+.chapter-navigation .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-sm, 0.5rem);
+    width: 100%;
+    max-width: 1200px; /* Ou seu .container max-width */
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm, 0.5rem);
+}
+
+.chapter-navigation .nav-left,
+.chapter-navigation .nav-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs, 0.25rem);
+    flex-shrink: 0;
+}
+
+.chapter-navigation .nav-left {
+    justify-content: flex-start;
+}
+.chapter-navigation .nav-right {
+    justify-content: flex-end;
+}
+
+.chapter-navigation .nav-center {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+    overflow: hidden;
+    margin: 0 var(--spacing-xs, 0.25rem);
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.6rem;
+    background-color: var(--button-secondary-bg, #3a3a3a);
+    color: var(--button-secondary-text, #ccc);
+    border: 1px solid var(--button-secondary-border, #555);
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+.nav-button:hover:not(.disabled) {
+    background-color: var(--accent-color, #7e22ce); /* Roxo de exemplo */
+    color: var(--button-primary-text, #fff);
+    border-color: var(--accent-color, #7e22ce);
+}
+.nav-button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--input-bg-color, #2a2a2a);
+    border-color: var(--input-border-color, #444);
+    color: var(--light-text-color, #aaa);
+}
+.nav-button i { /* Para ícones Font Awesome */
+    font-size: 0.9em;
+    line-height: 1;
+}
+
+/* Ajustes responsivos para botões de navegação */
+@media (max-width: 768px) {
+    .chapter-navigation .nav-button .button-text {
+        display: none;
+    }
+    .chapter-navigation .nav-button {
+        padding: 0.5rem;
+    }
+    .chapter-navigation .nav-center .chapter-title-nav {
+        font-size: 0.75rem;
+    }
+    .chapter-navigation .nav-container {
+        gap: var(--spacing-xs, 0.25rem);
+        padding: 0 var(--spacing-xs, 0.25rem);
+    }
+}
+
+/* Estilos para o link da série/novel na navegação */
+.series-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs, 0.25rem);
+    text-decoration: none;
+    color: inherit;
+    max-width: 100%;
+    overflow: hidden;
+}
+.series-link:hover .series-title-nav,
+.series-link:hover .chapter-title-nav {
+    color: var(--accent-color, #7e22ce);
+}
+
+.series-thumb { /* Thumbnail da capa da novel na navegação */
+    height: 30px;
+    width: auto;
+    max-width: 25px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    object-fit: cover;
+}
+
+.series-chapter-info { /* Container para título da novel e do capítulo na navegação */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.series-title-nav { /* Título da novel na navegação */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--main-text-color, #e0e0e0);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+}
+
+.chapter-title-nav { /* Título do capítulo na navegação */
+    font-size: 0.7rem;
+    color: var(--light-text-color, #aaa);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+}
+
+
+/* --- Área de Conteúdo Principal da Leitura da Novel --- */
+.novel-reading-main-content-wrapper { /* Wrapper principal do conteúdo, abaixo da nav superior */
+    padding-top: 50px; /* Altura da .chapter-navigation.top-nav para evitar sobreposição */
+    flex-grow: 1; /* Para ocupar o espaço vertical disponível */
+    width: 100%;
+}
+
+.novel-content-main { /* Container interno para o texto */
+    max-width: 800px; /* Largura máxima para o texto da novel para melhor legibilidade */
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--spacing-lg, 1.5rem) var(--spacing-md, 1rem); /* Padding interno */
+}
+
+.novel-text-container { /* O <article> que contém o RichTextField */
+    font-size: 1.1rem; /* Tamanho de fonte base para o texto da novel */
+    line-height: 1.8; /* Espaçamento entre linhas para leitura confortável */
+    color: var(--novel-text-color, var(--main-text-color, #e0e0e0)); /* Cor do texto da novel */
+}
+
+/* Estilos para elementos comuns dentro do RichTextField da novel */
+.novel-text-container p {
+    margin-bottom: 1.2em; /* Espaçamento entre parágrafos */
+}
+.novel-text-container h1,
+.novel-text-container h2,
+.novel-text-container h3,
+.novel-text-container h4,
+.novel-text-container h5,
+.novel-text-container h6 {
+    color: var(--novel-heading-color, var(--main-text-color, #e0e0e0)); /* Cor para cabeçalhos */
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    line-height: 1.3;
+}
+.novel-text-container a {
+    color: var(--novel-link-color, var(--accent-color, #7e22ce));
+    text-decoration: underline;
+}
+.novel-text-container a:hover {
+    text-decoration: none;
+}
+.novel-text-container blockquote {
+    border-left: 3px solid var(--novel-blockquote-border-color, var(--accent-color, #7e22ce));
+    padding-left: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    color: var(--novel-blockquote-text-color, var(--light-text-color, #aaa));
+}
+.novel-text-container hr {
+    border: 0;
+    border-top: 1px solid var(--novel-hr-color, var(--border-color, #2f2f2f));
+    margin: 2em 0;
+}
+/* Adicione mais estilos conforme as features do seu RichTextField (ol, ul, etc.) */
+
+
+/* --- Seção de Comentários --- */
+.chapter-comments-section { /* Mantido o nome, pois é genérico */
+    padding: var(--spacing-xl, 2rem) 0;
+    border-top: 1px solid var(--border-color, #2f2f2f);
+    margin-top: var(--spacing-xl, 2rem); /* Espaço antes dos comentários */
+}
+.chapter-comments-section .section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg, 1.5rem);
+    text-align: center; /* Ou left, conforme preferir */
+    color: var(--main-text-color, #e0e0e0);
+}
+/* Estilos para #disqus_thread ou .comments-placeholder podem ser necessários */
+
+
+/* --- Sidebar/Drawer da Lista de Capítulos (Mantido do seu CSS original) --- */
+/* Se você não for usar uma sidebar de capítulos, pode remover esta seção inteira */
+.chapter-list-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+.chapter-list-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.chapter-list-sidebar-drawer { /* Pode renomear para .item-list-sidebar-drawer se for genérico */
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    max-width: calc(100% - 40px);
+    height: 100%;
+    background-color: var(--card-bg-color, #1e1e1e);
+    color: var(--main-text-color, #e0e0e0);
+    box-shadow: -3px 0 15px rgba(0,0,0,0.3);
+    z-index: 1050;
+    transition: right 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.chapter-list-sidebar-drawer.active {
+    right: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border-color, #2f2f2f);
+    flex-shrink: 0;
+}
+.sidebar-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--main-text-color, #e0e0e0);
+}
+.close-sidebar-button {
+    background: none;
+    border: none;
+    color: var(--light-text-color, #aaa);
+    font-size: 1.6rem;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+.close-sidebar-button:hover {
+    color: var(--accent-color, #7e22ce);
+}
+
+.sidebar-scroll-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+}
+.sidebar-scroll-content::-webkit-scrollbar { width: 8px; }
+.sidebar-scroll-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+.sidebar-scroll-content::-webkit-scrollbar-thumb { background-color: var(--input-border-color, #4a4a4a); border-radius: 4px; border: 2px solid transparent; background-clip: content-box; }
+.sidebar-scroll-content::-webkit-scrollbar-thumb:hover { background-color: var(--light-text-color, #a0a0a0); }
+
+.sidebar-chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-chapter-link {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    color: var(--light-text-color, #aaa);
+    border-bottom: 1px solid var(--border-color, #2f2f2f);
+    gap: 0.85rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sidebar-chapter-list li:last-child .sidebar-chapter-link { border-bottom: none; }
+.sidebar-chapter-link:hover { background-color: rgba(var(--accent-color-rgb, 126, 34, 206), 0.1); color: var(--accent-color, #7e22ce); } /* Defina --accent-color-rgb se usar */
+.sidebar-chapter-link.active { background-color: rgba(var(--accent-color-rgb, 126, 34, 206), 0.15); color: var(--accent-color, #7e22ce); font-weight: 600; border-left: 3px solid var(--accent-color, #7e22ce); padding-left: calc(1rem - 3px); }
+
+/* Thumbnails na sidebar podem ser removidas ou adaptadas se não forem usadas para novels */
+.sidebar-chapter-thumb-container {
+    flex-shrink: 0;
+    width: 50px;
+    height: 70px;
+    background-color: var(--input-bg-color, #2a2a2a);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color, #2f2f2f);
+}
+.sidebar-chapter-thumb { width: 100%; height: 100%; object-fit: cover; }
+.sidebar-chapter-thumb-placeholder { font-size: 1.5rem; color: var(--light-text-color, #aaa); opacity: 0.5; }
+
+.sidebar-chapter-info {
+    flex-grow: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.sidebar-chapter-title-text {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.15rem;
+    line-height: 1.3;
+    color: var(--main-text-color, #e0e0e0);
+}
+.sidebar-chapter-link.active .sidebar-chapter-title-text { color: var(--accent-color, #7e22ce); }
+.sidebar-chapter-date { font-size: 0.7rem; color: var(--light-text-color, #aaa); opacity: 0.8; }
+
+/* ==========================================================================
+   ESTILOS PARA A PÁGINA DE LISTAGEM DE COMICS (comics.html)
+   ========================================================================== */
+
+/* Container principal da página de comics.
+   A classe .container e .my-4 (se usadas no HTML do comics.html) devem vir do seu CSS global/base.
+*/
+.comics-page-wrapper .page-header { /* Se você usa esta classe no comics.html */
+    text-align: center;
+    margin-bottom: 2rem; /* Espaço abaixo do título "Todos os Comics" */
+}
+
+.comics-page-wrapper .page-main-title { /* Se você usa esta classe no comics.html */
+    font-size: 1.8rem;   /* Tamanho do título principal */
+    font-weight: 700;
+    color: var(--main-text-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0; /* Para o ::after ficar colado */
+    display: inline-block; /* Para o ::after não ocupar largura total */
+    position: relative;
+}
+
+.comics-page-wrapper .page-main-title::after {
+    content: '';
+    display: block;
+    width: 60px; /* Largura da linha de destaque */
+    height: 3px;
+    background-color: var(--accent-color);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Container para o layout de filtros e grade */
+.comics-content-layout {
+    display: flex;
+    flex-direction: column; /* Mobile-first: filtros acima da grade */
+    gap: 1.5rem; /* Espaçamento entre filtros e grade quando em coluna */
+    margin-top: 1rem; /* Espaço acima do layout de filtros/grade */
+}
+
+.filters-area {
+    background-color: var(--card-bg-color);
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+.filters-title {
+    font-size: 1.15rem; 
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    color: var(--main-text-color);
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-form .filter-group {
+    margin-bottom: 1rem; 
+}
+
+.filter-form .filter-label {
+    display: block;
+    font-size: 0.875rem; 
+    font-weight: 500;
+    margin-bottom: 0.4rem; 
+    color: var(--light-text-color);
+}
+
+.filter-form .form-input,
+.filter-form .form-select {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--main-text-color);
+    border-radius: 5px; 
+    font-size: 0.9rem; 
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.filter-form .form-input:focus,
+.filter-form .form-select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2.5px rgba(var(--accent-color-rgb), 0.3); 
+}
+
+.genre-checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+    gap: 0.4rem 0.6rem;
+    margin-top: 0.4rem;
+}
+.genre-checkbox-group .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.825rem;
+    color: var(--light-text-color);
+    cursor: pointer;
+    font-weight: normal;
+}
+.genre-checkbox-group .checkbox-label input[type="checkbox"] {
+    margin-right: 0.5rem; 
+    accent-color: var(--accent-color);
+    width: 1em; 
+    height: 1em;
+}
+
+.filter-form .filter-submit-button {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    margin-top: 1.25rem; 
+    font-size: 0.95rem;
+}
+.filter-form .filter-submit-button:hover {
+    background-color: color-mix(in srgb, var(--button-primary-bg) 85%, black);
+}
+
+.comics-grid-area {
+    width: 100%; 
+}
+
+/* Estilos para a grade de cards de comics */
+.comics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); /* Ajuste o minmax para o tamanho base do card */
+    gap: 1.25rem; /* Espaçamento */
+}
+/* Breakpoints para a grade de comics */
+@media (min-width: 480px) {
+    .comics-grid { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); }
+}
+@media (min-width: 768px) {
+    .comics-grid { grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); }
+}
+
+/* Layout de duas colunas para telas maiores (filtros à esquerda, grade à direita) */
+@media (min-width: 992px) { /* Ponto de quebra (ex: large) */
+    .comics-content-layout {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .filters-area {
+        width: 280px;  /* Largura fixa para a sidebar de filtros */
+        flex-shrink: 0; /* Impede que a sidebar encolha */
+        margin-bottom: 0; /* Remove a margem inferior, pois agora está ao lado */
+        /* Se quiser sticky:
+        position: sticky;
+        top: calc(var(--navbar-height, 60px) + 1.5rem); (Ajuste --navbar-height)
+        */
+    }
+
+    .comics-grid-area {
+        flex-grow: 1; /* Faz a área da grade ocupar o espaço restante */
+        width: auto;
+    }
+    /* Ajuste para a grade de comics quando a sidebar estiver presente */
+    .comics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+}
+@media (min-width: 1200px) { /* Telas mais largas */
+    .filters-area {
+        width: 300px;
+    }
+    .comics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    }
+}
+
+
+/* Estilos para os cards dos comics (baseados no que você já tinha) */
+.comic-card {
+    background-color: var(--card-bg-color);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    overflow: hidden;
+}
+.comic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+.comic-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.comic-card-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 280 / 400;
+    background-color: #282828;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+}
+.comic-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+}
+.comic-card-link:hover .comic-card-image {
+    transform: scale(1.07);
+}
+.comic-card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-text-color);
+    font-size: 2.5rem;
+}
+.comic-card-image-placeholder i {
+    opacity: 0.3;
+}
+.comic-card-content {
+    padding: 0.8rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.comic-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--main-text-color);
+    margin-bottom: 0.35rem;
+    line-height: 1.3;
+    height: 2.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+.comic-card-link:hover .comic-card-title {
+    color: var(--accent-color);
+}
+.comic-card-meta {
+    font-size: 0.7rem;
+    color: var(--light-text-color);
+    margin-bottom: 0.35rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.comic-card-meta .comic-type-tag,
+.comic-card-meta .comic-status-tag {
+    background-color: var(--input-bg-color);
+    padding: 0.2rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1.2;
+    border: 1px solid var(--border-color);
+}
+.comic-card-meta .comic-status-tag.status-og { background-color: rgba(var(--accent-color-rgb), 0.2); color: var(--accent-color); border-color: rgba(var(--accent-color-rgb), 0.4); }
+.comic-card-meta .comic-status-tag.status-cp { background-color: rgba(70, 130, 180, 0.2); color: #6caddc; border-color: rgba(70, 130, 180, 0.4); }
+.comic-card-meta .comic-status-tag.status-ht { background-color: rgba(255, 165, 0, 0.2); color: #ffa500; border-color: rgba(255, 165, 0, 0.4); }
+.comic-card-meta .comic-status-tag.status-cl { background-color: rgba(var(--danger-color-rgb), 0.2); color: var(--danger-color); border-color: rgba(var(--danger-color-rgb), 0.4); }
+
+.comic-card-chapters {
+    font-size: 0.75rem;
+    color: var(--light-text-color);
+    margin-top: auto;
+    padding-top: 0.3rem;
+}
+
+
+.empty-results-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--light-text-color);
+    font-style: italic;
+    font-size: 1.1rem;
+}
+/* subscriptions/static/css/subscriptions.css ou seu main.css */
+
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem; /* Espaçamento do rodapé */
+}
+
+.plan-card {
+    background-color: var(--card-bg-color, #1e1e1e);
+    border: 1px solid var(--border-color, #2f2f2f);
+    border-radius: 8px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.plan-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.plan-price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-color, #00B982);
+    margin-bottom: 1rem;
+}
+
+.plan-price .currency {
+    font-size: 1.25rem;
+    font-weight: 500;
+    vertical-align: super;
+}
+
+.plan-description {
+    color: var(--light-text-color, #a0a0a0);
+    margin-bottom: 2rem;
+    flex-grow: 1; /* Empurra o botão para baixo */
+}
+
+.btn-subscribe {
+    width: 100%;
+}
+
+/* Modal para o QR Code */
+.pix-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(5px);
+    display: none; /* Começa escondido */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pix-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.pix-modal-content {
+    background-color: var(--card-bg-color, #1e1e1e);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.pix-modal-overlay.active .pix-modal-content {
+    transform: scale(1);
+}
+
+.pix-modal-title { 
+    font-size: 1.25rem; 
+    margin-bottom: 1rem; 
+}
+
+#pix-qrcode-container img {
+    width: 100%;
+    max-width: 256px;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+    border: 4px solid white;
+    border-radius: 4px;
+}
+
+#pix-brcode-input {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: var(--input-bg-color);
+    color: var(--main-text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 0.9rem;
+    cursor: copy;
+}
+
+.pix-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--light-text-color);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.pix-modal-close:hover {
+    color: white;
+}

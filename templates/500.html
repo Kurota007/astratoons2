@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Erro no Servidor" %}{% endblock %}
+
+{% block content %}
+<div class="container text-center my-5 py-5">
+    <div style="font-size: 6rem; font-weight: bold; color: #4F46E5;">500</div>
+    <h1 class="mb-3">{% trans "Erro Interno no Servidor" %}</h1>
+    <p class="lead mb-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+        {% trans "Desculpe, algo deu errado do nosso lado. Nossa equipe técnica já foi notificada sobre o problema." %}
+    </p>
+    <a href="/" class="button button-secondary">
+        <i class="fas fa-home"></i> {% trans "Voltar para a Página Inicial" %}
+    </a>
+</div>
+
+<style>
+    .main-content-area {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock content %}

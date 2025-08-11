@@ -1,0 +1,94 @@
+{% extends "base.html" %} {# Seu base.html está em templates/base/base.html #}
+{% load static i18n wagtailcore_tags wagtailsettings_tags wagtailimages_tags socialaccount %} {# ADICIONADO socialaccount #}
+
+{% block title %}{% trans "Login" %} - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }} {# Boa prática para herdar CSS do base, se houver #}
+{% endblock %}
+
+{% block content %}
+<div class="login-page-container">
+    <div class="login-form-card">
+
+        {% if request.site.root_page %}
+            <a href="{% pageurl request.site.root_page %}" class="login-close-button" aria-label="{% trans 'Fechar' %}">
+                <i class="fas fa-times"></i> {# Certifique-se que Font Awesome está carregado se usar este ícone #}
+            </a>
+        {% endif %}
+
+        <div class="login-header">
+            {% get_settings use_default_site=True %} {# Garante que settings esteja disponível #}
+            {% if settings.core.GlobalSettings.logo %}
+                {% image settings.core.GlobalSettings.logo width-48 as login_page_logo %}
+                <img class="login-page-logo" src="{{ login_page_logo.url }}" alt="{{ settings.core.GlobalSettings.site_name_text|default:'AstraToons' }} Logo">
+            {% else %}
+                <span class="site-name-login-page">{{ settings.core.GlobalSettings.site_name_text|default:request.site.site_name|default:'AstraToons' }}</span>
+            {% endif %}
+
+            <h2 class="login-main-title">{% trans "Faça login na sua conta" %}</h2>
+            <span class="login-subtitle-text">{% trans "Acesse para salvar seus mangás favoritos e receber recomendações." %}</span>
+        </div>
+
+        <div class="login-form-body">
+            <form class="login-actual-form" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="form-errors global-form-errors">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+
+                <div class="form-field-group">
+                    <label for="{{ form.login.id_for_label }}" class="form-label">{% trans "Usuário ou E-mail" %}:</label>
+                    {{ form.login }}
+                    {% if form.login.errors %}<ul class="errorlist">{% for error in form.login.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+
+                <div class="form-field-group">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">{% trans "Senha" %}:</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}<ul class="errorlist">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>{% endif %}
+                </div>
+
+                {% if form.remember %}
+                <div class="login-form-options simple-options">
+                    <div class="login-remember-me">
+                        {{ form.remember }}
+                        <label for="{{ form.remember.id_for_label }}">{% trans "Lembrar de mim" %}</label>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="login-actions-group">
+                    <button class="form-submit-button" type="submit">{% trans "Entrar" %}</button>
+                </div>
+
+            </form> {# <<< FIM DO ELEMENTO FORM #}
+
+            {# --- INÍCIO DO BLOCO DE LOGIN COM DISCORD --- #}
+            <div class="social-login-container" style="text-align: center; margin-top: 25px; margin-bottom: 15px;">
+                <p style="color: #b9bbbe; margin-bottom: 12px; font-size: 0.9em;">{% trans "Ou conecte-se com" %}:</p>
+                <a href="{% provider_login_url 'discord' process='login' %}" class="social-login-button discord-login-button">
+                    <i class="fab fa-discord" aria-hidden="true" style="margin-right: 10px; vertical-align: middle; font-size: 1.2em;"></i>
+                    <span>{% trans "Login com Discord" %}</span>
+                </a>
+            </div>
+            {# --- FIM DO BLOCO DE LOGIN COM DISCORD --- #}
+
+            <div class="login-divider-alt"></div>
+
+            <p class="login-footer-text">
+                {% trans "Não tem conta?" %} <a href="{% url 'account_signup' %}" class="footer-link">{% trans "Cadastre-se" %}</a>
+            </p>
+        </div> {# <<< FIM DO .login-form-body #}
+    </div> {# <<< FIM DO .login-form-card #}
+</div> {# <<< FIM DO .login-page-container #}
+{% endblock content %}

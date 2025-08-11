@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailsettings_tags wagtailimages_tags %} {# Adicionado socialaccount se for usar provider_login_url em outro lugar, mas não aqui #}
+
+{% block title %}
+    {% if process == "connect" %}
+        {% blocktranslate with provider_name=provider.name %}Conectar {{ provider_name }}{% endblocktranslate %}
+    {% else %}
+        {% blocktranslate with provider_name=provider.name %}Confirmar Login com {{ provider_name }}{% endblocktranslate %} {# Título mais específico #}
+    {% endif %}
+    - {{ block.super }}
+{% endblock title %}
+
+{% block extra_css %}
+    {{ block.super }}
+    {# REMOVA o link para accounts.css ou social_confirmation.css מכאן #}
+    {# Os estilos estarão no main.css #}
+{% endblock extra_css %}
+
+{% block content %}
+<div class="login-page-container"> {# Reutilize a classe externa para centralização geral, se aplicável #}
+    <div class="social-confirmation-container login-form-card"> {# Adicione login-form-card para herdar o estilo do card #}
+
+        <div class="login-header social-confirmation-header"> {# Reutilize e adicione classe específica #}
+            {% get_settings use_default_site=True %}
+            {% if settings.core.GlobalSettings.logo %}
+                {% image settings.core.GlobalSettings.logo original as page_logo %}
+                <img src="{{ page_logo.url }}" alt="{{ settings.core.GlobalSettings.site_name_text|default:'AstraToons' }} Logo" class="login-page-logo"> {# Reutilize classe do logo #}
+            {% else %}
+                <span class="site-name-login-page">{{ settings.core.GlobalSettings.site_name_text|default:'AstraToons' }}</span>
+            {% endif %}
+
+            {% if process == "connect" %}
+                <h2 class="login-main-title">{% blocktranslate with provider_name=provider.name %}Conectar conta {{ provider_name }}{% endblocktranslate %}</h2>
+            {% else %}
+                <h2 class="login-main-title">{% blocktranslate with provider_name=provider.name %}Continuar com {{ provider_name }}{% endblocktranslate %}</h2>
+            {% endif %}
+        </div>
+
+        <p class="login-subtitle-text social-confirmation-text"> {# Reutilize e adicione classe específica #}
+        {% if process == "connect" %}
+            {% blocktranslate with provider_name=provider.name %}Você está prestes a conectar sua conta {{ provider_name }} à sua conta AstraToons existente.{% endblocktranslate %}
+        {% else %}
+            {% blocktranslate with provider_name=provider.name %}Confirme para usar sua conta {{ provider_name }} para acessar o AstraToons.{% endblocktranslate %}
+        {% endif %}
+        </p>
+
+        <form method="post" class="social-confirmation-form login-actions-group"> {# Reutilize login-actions-group se fizer sentido para o botão #}
+            {% csrf_token %}
+            <button class="form-submit-button" type="submit"> {# Reutilize a classe do botão principal #}
+                {# <i class="fab fa-discord"></i> -- Opcional, se quiser o ícone aqui também #}
+                {% translate "Continuar" %}
+            </button>
+            {# Opcional: Botão de cancelar que volta para a página de login principal #}
+            <a href="{% url 'account_login' %}" class="button button-text" style="margin-top: 0.75rem; display: inline-block;">{% translate "Cancelar" %}</a>
+        </form>
+
+        {# Se o formulário do allauth (form) precisar ser renderizado aqui para algum caso #}
+        {% if form %}
+            <form method="post" action="" class="login-actual-form" style="margin-top: 1.5rem;">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field-group">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+                        {% if field.errors %}
+                            <ul class="errorlist">{% for error in field.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="login-actions-group">
+                    <button type="submit" class="form-submit-button">{% translate "Salvar e Continuar" %}</button>
+                </div>
+            </form>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock content %}

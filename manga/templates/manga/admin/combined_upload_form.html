@@ -1,0 +1,99 @@
+{# manga/templates/manga/admin/combined_upload_form.html #}
+
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{{ header_title|default:_("Upload de Capítulos (ZIP)") }}{% endblock %}
+
+{% block content %}
+    {# Inclui o cabeçalho padrão do admin Wagtail #}
+    {% include "wagtailadmin/shared/header.html" with title=header_title icon=header_icon|default:"doc-full-inverse" %}
+
+    <div class="nice-padding">
+        {# Exibe mensagens de sucesso, erro, aviso #}
+        {% include "wagtailadmin/shared/messages.html" %}
+
+        {# Instruções para o usuário #}
+        <p class="help-block help-info">
+            {% blocktrans %}
+            Selecione a obra (mangá) na lista abaixo. Em seguida, escolha o arquivo <code>.zip</code> que contém as pastas dos capítulos.
+            Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será tratada como um capítulo separado. As imagens dentro de cada pasta serão adicionadas ao capítulo correspondente.
+            {% endblocktrans %}
+        </p>
+
+        {# O formulário de upload #}
+        <form method="POST" action="{% url 'manga_upload_admin:combined_upload' %}" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            <ul class="fields">
+
+                {# --- Campo Manga Selection (Manual) --- #}
+                {# Usa as classes CSS que o Wagtail normalmente adicionaria para consistência básica #}
+                <li class="field char_field {% if form.manga_selection.field.required %}required{% endif %} {% if form.manga_selection.errors %}error{% endif %}">
+                    {# Renderiza o label manualmente #}
+                    {{ form.manga_selection.label_tag }}
+                    
+                    <div class="field-content">
+                        {# Renderiza o widget (select) manualmente #}
+                        {{ form.manga_selection }}
+
+                        {# Renderiza os erros do campo, se houver #}
+                        {% if form.manga_selection.errors %}
+                            <p class="error-message">
+                                {% for error in form.manga_selection.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                        {# Renderiza o help_text, se houver #}
+                        {% if form.manga_selection.help_text %}
+                            <p class="help">{{ form.manga_selection.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                </li>
+
+                {# --- Campo ZIP File (Manual) --- #}
+                <li class="field file_field {% if form.zip_file.field.required %}required{% endif %} {% if form.zip_file.errors %}error{% endif %}">
+                    {# Renderiza o label manualmente #}
+                    {{ form.zip_file.label_tag }}
+
+                     <div class="field-content">
+                        {# Renderiza o widget (input file) manualmente #}
+                        {{ form.zip_file }}
+
+                         {# Renderiza os erros do campo, se houver #}
+                        {% if form.zip_file.errors %}
+                            <p class="error-message">
+                                {% for error in form.zip_file.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                         {# Renderiza o help_text, se houver #}
+                        {% if form.zip_file.help_text %}
+                            <p class="help">{{ form.zip_file.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                </li>
+
+
+                {# Renderiza erros não associados a campos específicos (non_field_errors) #}
+                {% if form.non_field_errors %}
+                    <li class="error">
+                         {% for error in form.non_field_errors %}
+                             <p class="error-message"><span>{{ error }}</span></p>
+                         {% endfor %}
+                    </li>
+                {% endif %}
+
+                {# Botão de Envio #}
+                <li>
+                    <button type="submit" class="button button-longrunning" data-controller="w-progress" data-action="w-progress#activate" data-w-progress-active-value="{% trans 'Processando…' %}">
+                        <span class="icon icon-upload" aria-hidden="true"></span> {% trans 'Enviar e Processar ZIP' %}
+                    </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

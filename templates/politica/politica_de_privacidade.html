@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailsettings_tags %}
+{% get_settings %} {# Essencial para carregar as configurações globais #}
+
+{% block title %}Política de Privacidade - {{ settings.core.GlobalSettings.site_name|default:"Astratoons" }}{% endblock %}
+
+{% block content %}
+<div class="main-content-area py-8 md:py-12">
+    <div class="container generic-page-container">
+        <article class="prose prose-invert lg:prose-xl mx-auto">
+            
+            <h1 class="page-title">Política de Privacidade</h1>
+            
+            <div class="page-body">
+                {# A mágica acontece aqui: puxamos o texto do painel admin #}
+                {% if settings.core.GlobalSettings.privacy_policy_text %}
+                    {{ settings.core.GlobalSettings.privacy_policy_text|richtext }}
+                {% else %}
+                    <p>O texto da Política de Privacidade ainda não foi configurado no painel de administração.</p>
+                {% endif %}
+            </div>
+            
+        </article>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,1311 @@
+/* ======================================== */
+/* ===        ASTRAVERSE THEME CSS      === */
+/* ======================================== */
+
+/* ======================================== */
+/* === 1. VARIÁVEIS GLOBAIS (:root)     === */
+/* ======================================== */
+:root {
+    /* Cores Base */
+    --navbar-bg-color: #171717;
+    --body-bg-color: #000000;
+    --section-bg-color: #0a0a0a;
+    --card-bg-color: #171717;
+    --border-color: #333333;
+
+    /* Cores de Texto */
+    --body-text-color: #ffffff;
+    --card-text-color: #e0e0e0;
+    --light-text-color: #a0a0a0;
+
+    /* Cores de Destaque (Accent) */
+    --accent-color: #00B982;
+    --accent-hover-color: #00e0a0;
+    /* --- Adicionado para consistência com o novo design --- */
+    --accent-bg-transparent: rgba(0, 185, 130, 0.1);
+    --accent-bg-light: rgba(0, 185, 130, 0.2);
+
+    /* Cores de Estado */
+    --success-color: #22c55e;
+    --success-bg-color: rgba(34, 197, 94, 0.1);
+    --warning-color: #facc15;
+    --warning-bg-color: rgba(250, 204, 21, 0.1); /* Adicionado para consistência */
+    --warning-text-color: #713f12;
+    --danger-color: #ef4444;
+    --danger-bg-color: rgba(239, 68, 68, 0.1);
+    --info-color: #60a5fa;
+    --info-bg-color: rgba(96, 165, 250, 0.2); /* Adicionado para consistência */
+
+    /* Componentes - Botões */
+    --button-secondary-bg: #333333;
+    --button-secondary-text: #dddddd;
+    --button-secondary-border: #555555;
+    --button-secondary-hover-bg: #444444;
+    --button-secondary-hover-border: #666666;
+    /* --- Adicionado --- */
+    --button-disabled-opacity: 0.6;
+
+
+    /* Componentes - Inputs */
+    --input-bg-color: var(--card-bg-color);
+    --input-border-color: var(--border-color);
+    --input-focus-border-color: var(--accent-color);
+    --input-focus-shadow-color: rgba(0, 185, 130, 0.2);
+    /* --- Adicionado --- */
+    --input-placeholder-color: #666;
+
+
+    /* Componentes - Placeholder */
+    --placeholder-bg: #000000;
+    --placeholder-text: #777777;
+
+    /* Leitor de Capítulo */
+    --reader-controls-bg: rgba(23, 23, 23, 0.9);
+    --reader-zoom-controls-bg: rgba(23, 23, 23, 0.8);
+    --reader-page-shadow: rgba(0, 0, 0, 0.5);
+    --reader-loading-bg: rgba(0, 0, 0, 0.7);
+    --reader-controls-height: 3.5rem; /* Altura dos controles fixos inferiores do leitor */
+
+
+    /* Tipografia */
+    --font-family-main: 'Poppins', sans-serif;
+
+    /* === ADICIONADO: Alturas dos Headers Fixos === */
+    --navbar-main-height: 4rem;
+    --chapter-reader-header-height: 3.5rem;
+}
+
+/* ======================================== */
+/* === 2. IMPORTS                       === */
+/* ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ======================================== */
+/* === 3. ESTILOS BASE                  === */
+/* ======================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-family-main);
+  background-color: var(--body-bg-color);
+  color: var(--body-text-color);
+  margin: 0;
+  /* padding: 0; /* MODIFICADO: O padding-top será tratado pela classe .reader-active-page ou globalmente se sempre houver navbar fixa */
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative; /* ADICIONADO: Para referência de elementos posicionados absolutamente, se necessário, e para evitar problemas com `fixed` em alguns casos */
+  padding-top: var(--navbar-main-height); /* ADICIONADO: Compensação GLOBAL para o navbar principal se ele for SEMPRE fixo */
+}
+
+main {
+    flex-grow: 1;
+    width: 100%;
+}
+
+
+/* --- Tipografia Base --- */
+h1, h2, h3, h4, h5, h6 { margin: 0 0 0.75rem 0; font-weight: 700; line-height: 1.3; color: inherit;}
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.25rem; }
+p { margin: 0 0 1rem 0; }
+
+/* --- Links Base --- */
+a { color: var(--accent-color); text-decoration: none; transition: color 0.2s ease; }
+a:hover { color: var(--accent-hover-color); text-decoration: none; }
+
+/* --- Imagens Base --- */
+img { max-width: 100%; height: auto; display: block; vertical-align: middle; }
+
+/* ======================================== */
+/* === 4. SCROLLBAR CUSTOMIZADA         === */
+/* ======================================== */
+/* Webkit */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--section-bg-color, #0a0a0a); }
+::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; border: 2px solid var(--section-bg-color, #0a0a0a); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-hover-color); }
+/* Firefox (Opcional, mas recomendado) */
+/* html { scrollbar-width: thin; scrollbar-color: var(--accent-color) var(--section-bg-color); } */
+
+/* ======================================== */
+/* === 5. LAYOUT & UTILITÁRIOS          === */
+/* ======================================== */
+.container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 1024px) { .container { padding: 0 1.5rem; } }
+
+.section-title {
+  font-size: 1.75rem; font-weight: 700; margin-bottom: 2rem;
+  color: var(--body-text-color); position: relative; display: inline-block;
+  padding-bottom: 0.75rem;
+}
+.section-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 60px; height: 3px; background-color: var(--accent-color); }
+
+/* Mensagens e Placeholders Genéricos */
+.empty-list-message, .loading-message, .empty-message { text-align: center; padding: 2rem 1rem; color: var(--light-text-color); font-style: italic; }
+.empty-message.small { padding: 0.5rem 0; font-size: 0.875rem; } /* Adicionado */
+.placeholder { display: flex; align-items: center; justify-content: center; background-color: var(--placeholder-bg); color: var(--placeholder-text); font-size: 0.8rem; text-align: center; border: 1px dashed var(--border-color); }
+
+/* Wrapper principal (ajusta padding se navbar for fixa) */
+.main-content-area {
+    /* padding-top aqui é redundante se body já tem padding-top para o navbar */
+}
+/* --- Adicionado: Card Background Geral --- */
+.card-bg {
+    background-color: var(--card-bg-color);
+    border-radius: 0.5rem; /* 8px */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden; /* Importante para bordas arredondadas */
+    border: 1px solid var(--border-color); /* Adicionado para consistência */
+}
+
+/* --- Adicionado: Paddings e Margens comuns --- */
+.p-6 { padding: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mr-1 { margin-right: 0.25rem; }
+
+
+/* ======================================== */
+/* === 6. COMPONENTES PRINCIPAIS        === */
+/* ======================================== */
+
+/* --- Navbar --- */
+/* MODIFICADO: Adicionado position:fixed e propriedades relacionadas */
+.navbar {
+    background-color: var(--navbar-bg-color);
+    padding: 0; /* Mantido */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* Mantido */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-main-height); /* Usa a variável global de altura */
+    z-index: 1000; /* Alto z-index para ficar no topo */
+
+    /* Para ajudar com possíveis problemas de renderização com fixed */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+.navbar .container {
+    display: flex;
+    align-items: center;
+    height: 100%; /* MODIFICADO: Ocupa a altura do .navbar pai */
+}
+.navbar-brand { color: #fff; font-weight: 800; font-size: 1.6rem; text-decoration: none; flex-shrink: 0; display: flex; align-items: center; margin-right: 2.5rem; }
+.navbar-brand span { color: var(--accent-color); }
+.navbar-brand:hover { color: #eee; }
+.navbar-logo { max-height: 35px; width: auto; margin-right: 0.5rem; }
+.navbar-links { display: flex; align-items: center; gap: 0.5rem; margin-left: 0; }
+@media (min-width: 768px) { .navbar-links { gap: 1rem; } }
+.nav-link { color: #d1d5db; padding: 0.5rem 0.75rem; border-radius: 0.375rem; font-size: 0.9rem; font-weight: 500; white-space: nowrap; position: relative; transition: color 0.3s ease, background-color 0.2s; }
+.nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background-color: var(--accent-color); transition: width 0.3s ease; }
+.nav-link:hover, .nav-link.active-nav { color: #fff; }
+.nav-link:hover::after, .nav-link.active-nav::after { width: 100%; }
+.nav-donate-link { background-color: var(--accent-color); color: #fff !important; font-weight: bold; border-radius: 99px; padding: 0.4rem 1rem !important; transition: all 0.3s ease;}
+.nav-donate-link:hover { background-color: var(--accent-hover-color) !important; color: #fff !important; transform: translateY(-2px); box-shadow: 0 2px 5px rgba(0,185,130,0.3);}
+.navbar-right-elements { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+.navbar-search { position: relative; }
+.navbar-search input { background-color: var(--input-bg-color); color: var(--body-text-color); padding: 0.5rem 1rem 0.5rem 2.5rem; border-radius: 99px; border: 1px solid var(--border-color); font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s, width 0.3s ease; width: 180px; }
+.navbar-search input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--input-focus-shadow-color); width: 240px; }
+.navbar-search button { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--light-text-color); cursor: pointer; font-size: 0.9rem;}
+.navbar-profile { position: relative; }
+.navbar-profile-trigger { display: flex; align-items: center; cursor: pointer; padding: 0.25rem; border-radius: 0.25rem; transition: background-color 0.2s; }
+.navbar-profile-trigger:hover { background-color: rgba(255, 255, 255, 0.05); }
+.navbar-profile img { height: 32px; width: 32px; border-radius: 50%; margin-right: 0.5rem; border: 1px solid var(--border-color); }
+.navbar-profile span { color: var(--body-text-color); font-size: 0.875rem; margin-right: 0.25rem; }
+.navbar-profile i { font-size: 0.7rem; color: var(--light-text-color); transition: transform 0.2s ease; }
+.navbar-profile-trigger:hover i { transform: translateY(1px); }
+
+/* --- Footer (Seu código original) --- */
+.site-footer { background-color: var(--navbar-bg-color); color: var(--light-text-color); padding: 2.5rem 0; margin-top: auto; font-size: 0.875rem; border-top: 1px solid var(--border-color); }
+.site-footer .footer-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 2rem; }
+@media (min-width: 768px) { .site-footer .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .site-footer .footer-grid { grid-template-columns: repeat(4, 1fr); } }
+.footer-column {}
+.footer-column h4 { color: #fff; font-weight: 600; margin-bottom: 1rem; font-size: 1rem;}
+.footer-column ul { list-style: none; padding: 0; margin: 0; }
+.footer-column ul li { margin-bottom: 0.5rem; }
+.footer-column ul a { color: var(--light-text-color); font-size: 0.9rem; }
+.footer-column ul a:hover { color: var(--accent-color); }
+.footer-social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+.footer-social-links a { color: var(--light-text-color); font-size: 1.25rem; }
+.footer-social-links a:hover { color: var(--accent-color); }
+.footer-newsletter-form { display: flex; margin-top: 0.5rem;}
+.footer-newsletter-form input { background-color: #0a0a0a; color: white; padding: 0.6rem 0.8rem; border-radius: 0.25rem 0 0 0.25rem; border: 1px solid var(--border-color); font-size: 0.9rem; flex-grow: 1; }
+.footer-newsletter-form input:focus { outline: none; border-color: var(--accent-color); }
+.footer-newsletter-form button { background-color: var(--accent-color); color: white; padding: 0.6rem 0.8rem; border: none; border-radius: 0 0.25rem 0.25rem 0; cursor: pointer; transition: background-color 0.2s; }
+.footer-newsletter-form button:hover { background-color: var(--accent-hover-color); }
+.footer-bottom { border-top: 1px solid var(--border-color); margin-top: 2rem; padding-top: 1.5rem; text-align: center; color: var(--light-text-color); font-size: 0.8rem; }
+
+/* ======================================== */
+/* === 7. COMPONENTES DE UI REUTILIZÁVEIS === */
+/* ======================================== */
+
+/* --- Botões (Seu código original) --- */
+.button { display: inline-block; padding: 0.6rem 1.5rem; border-radius: 0.5rem; font-weight: 600; text-align: center; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; font-size: 0.9rem; line-height: 1.3; }
+.button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+.button-primary { background-color: var(--accent-color); color: white; border-color: var(--accent-color); }
+.button-primary:hover { background-color: var(--accent-hover-color); border-color: var(--accent-hover-color); color: white; }
+.button-secondary { background-color: var(--button-secondary-bg); color: var(--button-secondary-text); border: 1px solid var(--button-secondary-border); }
+.button-secondary:hover { background-color: var(--button-secondary-hover-bg); border-color: var(--button-secondary-hover-border); }
+.button-success { background-color: var(--success-color); color: white; border-color: var(--success-color); }
+.button-success:hover { background-color: color-mix(in srgb, var(--success-color) 85%, black); border-color: color-mix(in srgb, var(--success-color) 85%, black); }
+.button-small { padding: 0.35rem 1rem; font-size: 0.8rem; }
+.button:disabled { opacity: var(--button-disabled-opacity); cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* --- Badges & Tags (Seu código original) --- */
+.badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; line-height: 1; text-transform: uppercase; letter-spacing: 0.5px;}
+.new-badge { background-color: var(--accent-color); color: white; z-index: 5; box-shadow: 0 1px 3px rgba(0,0,0,0.2); padding: 0.15rem 0.6rem; border-radius: 99px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;}
+.badge-on-image.new-badge { position: absolute; top: 0.4rem; left: 0.4rem;} /* Posicionamento específico para imagem */
+.genre-tag { background-color: var(--accent-bg-light); color: var(--accent-color); border: 1px solid transparent; font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 99px; font-weight: 500; text-decoration: none; display: inline-block; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+.genre-tag:hover { background-color: var(--accent-color); color: var(--body-text-color); border-color: var(--accent-color); }
+.status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; text-transform: uppercase; line-height: 1.4; vertical-align: middle; }
+/* As classes status-* precisam corresponder aos slugs gerados no template */
+.status-ongoing, .status-em-andamento, .status-og { background-color: var(--accent-bg-light); color: var(--accent-color); }
+.status-completed, .status-completo, .status-cp { background-color: var(--info-bg-color); color: var(--info-color); }
+.status-hiatus, .status-ht { background-color: var(--warning-bg-color); color: var(--warning-color); }
+.status-canceled, .status-cancelado, .status-cl { background-color: var(--danger-bg-color); color: var(--danger-color); }
+
+/* --- Cards (Seu código original) --- */
+/* Card Simples */
+.manga-card-simple { background-color: var(--card-bg-color); border-radius: 0.5rem; overflow: hidden; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); transition: transform 0.2s ease, box-shadow 0.2s ease; position: relative; border: 1px solid var(--border-color); }
+.manga-card-simple a { display: block; color: inherit; text-decoration: none; height: 100%; display: flex; flex-direction: column; }
+.manga-card-simple:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0, 185, 130, 0.1); }
+.manga-card-simple-image-wrapper { position: relative; padding-top: 140%; overflow: hidden; background-color: var(--placeholder-bg); }
+.manga-card-simple-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.manga-card-simple-content { padding: 0.75rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;}
+.manga-card-simple-title { font-weight: 500; font-size: 0.9rem; color: var(--card-text-color); transition: color 0.2s ease; margin-bottom: 0.2rem; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.manga-card-simple:hover .manga-card-simple-title { color: var(--accent-color); }
+.manga-card-simple-chapter { color: var(--light-text-color); font-size: 0.75rem; margin-top: 0.25rem; }
+.reading-progress { position: absolute; bottom: 0; left: 0; height: 4px; background-color: var(--accent-color); z-index: 2; border-radius: 0 1px 1px 0; transition: width 0.3s ease; }
+/* Card Detalhado (Lista) */
+.manga-list-item-detailed { background-color: var(--card-bg-color); border-radius: 0.5rem; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); overflow: hidden; display: flex; border: 1px solid var(--border-color); transition: box-shadow 0.3s ease, border-color 0.3s; }
+.manga-list-item-detailed:hover { box-shadow: 0 6px 12px rgba(0, 185, 130, 0.1); border-color: var(--accent-color); }
+.manga-list-item-detailed a { color: inherit; text-decoration: none; display: flex; width: 100%; }
+.manga-list-item-image-wrapper { flex-shrink: 0; width: 100px; position: relative; background-color: var(--placeholder-bg); }
+.manga-list-item-image { width: 100%; height: 100%; object-fit: cover; }
+.manga-list-item-image.placeholder { height: 150px; }
+.manga-list-item-content { flex-grow: 1; padding: 1rem; display: flex; flex-direction: column; }
+.manga-list-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 0.5rem; }
+.manga-list-item-title { font-weight: 600; font-size: 1.1rem; color: var(--card-text-color); flex-grow: 1; transition: color 0.2s; }
+.manga-list-item-detailed:hover .manga-list-item-title { color: var(--accent-color); }
+.manga-list-item-rank { background-color: var(--accent-color); color: #fff; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.5rem; border-radius: 0.25rem; flex-shrink: 0; }
+.manga-list-item-author { color: var(--light-text-color); font-size: 0.875rem; margin-top: 0.25rem; }
+.manga-list-item-genres { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.75rem; }
+.manga-list-item-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 1rem; }
+.manga-list-item-views { color: var(--light-text-color); font-size: 0.875rem; display: flex; align-items: center; gap: 0.3rem; }
+.manga-list-item-footer .button-primary { padding: 0.3rem 0.8rem; font-size: 0.875rem; }
+
+/* --- Listas (Seu código original) --- */
+/* Lista de Capítulos (Flexbox) */
+.chapter-list-wrapper { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden; }
+.chapter-list-header { display: flex; gap: 0.75rem; background-color: var(--section-bg-color); padding: 0.75rem 1rem; font-size: 0.8rem; font-weight: 600; color: var(--light-text-color); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); }
+.chapter-list-header .ch-thumb { width: 45px; flex-shrink: 0; }
+.chapter-list-header .ch-title { flex-grow: 1; margin-right: auto; }
+.chapter-list-header .ch-date { width: 100px; flex-shrink: 0; text-align: right; }
+.chapter-list-header .ch-actions { width: 80px; flex-shrink: 0; text-align: right; }
+.chapter-list { list-style: none; padding: 0; margin: 0; }
+.chapter-list-item {}
+.chapter-item-link-flex { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; text-decoration: none; color: inherit; transition: background-color 0.2s; border-bottom: 1px solid var(--border-color); }
+.chapter-list-item:last-child .chapter-item-link-flex { border-bottom: none; }
+.chapter-list-item:hover .chapter-item-link-flex { background-color: rgba(0, 185, 130, 0.05); }
+.chapter-item-thumb-flex { flex-shrink: 0; width: 45px; height: 45px; background-color: var(--placeholder-bg); border-radius: 0.25rem; }
+.chapter-thumbnail-flex { width: 100%; height: 100%; object-fit: cover; border-radius: 0.25rem; border: 1px solid var(--border-color); display: block; }
+.chapter-thumbnail-flex.placeholder { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--placeholder-text); font-weight: bold; border: 1px dashed var(--border-color); background-color: var(--placeholder-bg); }
+.chapter-thumbnail { transition: transform 0.3s ease; } /* Efeito de hover na thumb */
+.chapter-item-link-flex:hover .chapter-thumbnail { transform: scale(1.1); }
+.chapter-item-info-flex { flex-grow: 1; margin-right: auto; overflow: hidden; }
+.chapter-item-title-flex { font-weight: 500; color: var(--card-text-color); transition: color 0.2s; line-height: 1.4; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chapter-list-item:hover .chapter-item-title-flex { color: var(--accent-color); }
+.chapter-item-date-flex { flex-shrink: 0; width: 100px; text-align: right; font-size: 0.8rem; color: var(--light-text-color); }
+.chapter-item-actions-flex { flex-shrink: 0; width: 80px; text-align: right; }
+.chapter-read-button { font-size: 0.8rem; color: var(--accent-color); font-weight: 600; display: inline-block; transition: color 0.2s; }
+.chapter-read-button:hover { color: var(--accent-hover-color); }
+
+/* --- Formulários e Inputs (Seu código original) --- */
+.input-field, .auth-form input[type="text"], .auth-form input[type="email"], .auth-form input[type="password"], textarea {
+  background-color: var(--input-bg-color); border: 1px solid var(--input-border-color); color: var(--body-text-color);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; width: 100%; padding: 0.8rem 1rem; border-radius: 0.5rem; font-size: 0.95rem;
+}
+textarea { min-height: 80px; line-height: 1.5; }
+.input-wrapper { position: relative; }
+.input-wrapper .input-field, .input-wrapper input { padding-left: 2.75rem; } /* Espaço para ícone esquerdo */
+.input-wrapper .input-icon-wrapper + input, .input-wrapper input[type="password"] { padding-right: 2.75rem; } /* Espaço para ícone direito */
+.input-icon-left { position: absolute; inset-y: 0; left: 0; display: flex; align-items: center; padding-left: 0.75rem; pointer-events: none; color: var(--light-text-color); font-size: 0.9rem; }
+.input-icon-wrapper { position: absolute; inset-y: 0; right: 0; display: flex; align-items: center; padding-right: 0.75rem; }
+.input-icon { color: var(--light-text-color); font-size: 0.9rem; }
+.input-field:focus, .auth-form input:focus, textarea:focus { outline: none; border-color: var(--input-focus-border-color); box-shadow: 0 0 0 2px var(--input-focus-shadow-color); }
+.input-field::placeholder, textarea::placeholder { color: var(--input-placeholder-color); }
+.password-toggle-btn { background: none; border: none; padding: 0; margin: 0; cursor: pointer; color: var(--light-text-color); }
+.password-toggle-btn:hover .input-icon { color: var(--body-text-color); }
+.form-field-group label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--light-text-color); margin-bottom: 0.3rem; }
+.form-errors { margin-top: 0.25rem; padding: 0.5rem; background-color: var(--danger-bg-color); border: 1px solid var(--danger-color); border-radius: 0.375rem; }
+.form-errors p { color: #f87171; font-size: 0.8rem; margin: 0; line-height: 1.4; }
+.form-errors.non-field-errors { margin-bottom: 1rem; }
+.form-errors.field-errors p { margin-bottom: 0.2rem; }
+.form-errors.field-errors p:last-child { margin-bottom: 0; }
+.help-text { font-size: 0.75rem; color: var(--light-text-color); margin-top: 0.25rem; }
+.help-text ul { list-style: none; padding-left: 0; margin: 0.2rem 0 0 0;}
+.help-text li { margin-bottom: 0.1rem;}
+.sort-select { background-color: var(--input-bg-color); border: 1px solid var(--border-color); color: var(--card-text-color); padding: 0.4rem 0.8rem; padding-right: 2rem; border-radius: 0.375rem; font-size: 0.85rem; cursor: pointer; appearance: none; -webkit-appearance: none; -moz-appearance: none; transition: border-color 0.2s; }
+.sort-select:hover { border-color: var(--light-text-color); }
+.sort-select:focus { outline: none; border-color: var(--input-focus-border-color); box-shadow: 0 0 0 2px var(--input-focus-shadow-color); }
+/* --- Adicionado: Select Input com wrapper (para novo layout) --- */
+.select-input {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--card-text-color); /* MODIFICADO para usar card-text-color */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.5rem 2rem 0.5rem 1rem; /* py-2 pr-8 px-4 */
+    font-size: 0.875rem; /* text-sm */
+    cursor: pointer;
+    background-image: none; /* Remove setas padrão */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%; /* Ocupa espaço disponível no flex */
+}
+.select-input:focus { outline: none; border-color: var(--input-focus-border-color); box-shadow: 0 0 0 2px var(--input-focus-shadow-color); }
+.select-wrapper { position: relative; display: inline-block; } /* Usar no form */
+.select-arrow { position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; padding-right: 0.75rem; pointer-events: none; color: var(--light-text-color); font-size: 0.7rem; }
+
+
+/* --- Checkbox Customizado (Seu código original) --- */
+.checkbox-container label { position: relative; padding-left: 30px; cursor: pointer; display: inline-flex; align-items: center; color: var(--card-text-color); font-size: 0.9rem; transition: color 0.2s ease; user-select: none; }
+.checkbox-container label:hover { color: var(--body-text-color); }
+.checkbox-container input[type="checkbox"] { display: none; }
+.checkbox-container label:before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; border: 2px solid var(--border-color); background-color: var(--input-bg-color); border-radius: 4px; transition: border-color 0.2s ease, background-color 0.2s ease; }
+.checkbox-container label:hover:before { border-color: var(--light-text-color); }
+.checkbox-container input[type="checkbox"]:checked + label:before { background-color: var(--accent-color); border-color: var(--accent-color); }
+.checkbox-container label:after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 4px; top: 50%; transform: translateY(-50%) scale(0); font-size: 12px; color: var(--body-text-color); transition: transform 0.2s ease; }
+.checkbox-container input[type="checkbox"]:checked + label:after { transform: translateY(-50%) scale(1); }
+.checkbox-container.overflow-y-auto::-webkit-scrollbar { width: 6px; }
+.checkbox-container.overflow-y-auto::-webkit-scrollbar-track { background: var(--card-bg-color); border-radius: 3px; }
+.checkbox-container.overflow-y-auto::-webkit-scrollbar-thumb { background: var(--light-text-color); border-radius: 3px; border: none; }
+.checkbox-container.overflow-y-auto::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+/* --- Paginação (Seu código original) --- */
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 2rem; padding: 0; list-style: none;}
+.pagination li {}
+.pagination a, .pagination span { display: inline-block; padding: 0.5rem 1rem; margin: 0; border: 1px solid var(--border-color); background-color: var(--card-bg-color); color: var(--card-text-color); border-radius: 0.25rem; transition: background-color 0.2s, border-color 0.2s, color 0.2s; }
+.pagination a:hover { background-color: var(--button-secondary-hover-bg); border-color: var(--button-secondary-hover-border); color: var(--body-text-color); }
+.pagination .current, .pagination .active span, .pagination .active a { background-color: var(--accent-color); color: white; border-color: var(--accent-color); font-weight: bold; cursor: default; }
+.pagination .disabled span, .pagination .disabled a { color: #666; background-color: #222; border-color: #444; cursor: default; opacity: 0.7; }
+.pagination .disabled a:hover { background-color: #222; border-color: #444; color: #666;}
+
+/* --- Comentários (Estilos combinados/adaptados) --- */
+#comments-section, .comments-section { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+.comments-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--body-text-color); }
+.comment-login-prompt { background-color: var(--card-bg-color); border: 1px solid var(--border-color); padding: 1rem; text-align: center; border-radius: 0.375rem; margin-bottom: 1.5rem; color: var(--card-text-color); }
+.comment-login-prompt a { font-weight: 500; color: var(--accent-color); }
+.comment-form-wrapper {} /* Container do form */
+.comment-form-area textarea { /* Estilo unificado com outros textareas */
+    background-color: var(--input-bg-color); border: 1px solid var(--input-border-color); color: var(--body-text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; width: 100%; padding: 1rem; border-radius: 0.5rem; font-size: 0.95rem;
+    min-height: 80px; line-height: 1.5; margin-bottom: 0.75rem; /* Adicionado margin-bottom */
+}
+.comment-form-area textarea:focus { outline: none; border-color: var(--input-focus-border-color); box-shadow: 0 0 0 2px var(--input-focus-shadow-color); }
+.comment-form-actions { /* Container para botões abaixo da textarea */ margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+.comment-form-extra-buttons { display: flex; gap: 0.75rem; } /* Botões de emoji/imagem */
+.comment-form-extra-buttons button { background: none; border: none; color: var(--light-text-color); cursor: pointer; font-size: 1rem; padding: 0.25rem;}
+.comment-form-extra-buttons button:hover { color: var(--accent-color); }
+.comment-list {}
+.comment-box { background: var(--card-bg-color); /* MODIFICADO: Antes var(--card-hover-bg) */ border-left: 3px solid var(--accent-color); padding: 1rem; border-radius: 0 0.5rem 0.5rem 0; margin-bottom: 1rem; border: 1px solid var(--border-color); border-left-width: 3px; }
+.comment-box:hover { background: var(--section-bg-color); } /* MODIFICADO: Hover sutil, ex: var(--section-bg-color) */
+.avatar-placeholder { background-color: var(--accent-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 50%; flex-shrink: 0; width: 40px; height: 40px; font-size: 1rem; } /* h-10 w-10 */
+.comment-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+.comment-author { display: flex; align-items: center; gap: 0.5rem;}
+.comment-author-name { font-weight: 500; color: var(--body-text-color); } /* Renomeado de span */
+.comment-meta { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.1rem; }
+.comment-timestamp { font-size: 0.75rem; color: var(--light-text-color); flex-shrink: 0; }
+.comment-options button { background: none; border: none; color: var(--light-text-color); cursor: pointer; padding: 0.25rem; line-height: 1;} /* Botão de opções */
+.comment-options button:hover { color: var(--accent-color); }
+.comment-text { margin-top: 0.5rem; color: var(--card-text-color); font-size: 0.9rem; line-height: 1.6; word-wrap: break-word; }
+.comment-text p { margin-bottom: 0.5em; } /* Espaçamento entre parágrafos no comentário */
+.comment-actions { margin-top: 0.75rem; display: flex; align-items: center; gap: 1rem; /* space-x-4 */ }
+.comment-actions button { background: none; border: none; color: var(--light-text-color); cursor: pointer; font-size: 0.875rem; display: inline-flex; align-items: center; gap: 0.25rem; /* space-x-1 */ padding: 0.25rem; }
+.comment-actions button:hover { color: var(--accent-color); }
+.comment-actions button i { font-size: 1em; /* Ícone no tamanho do texto */ line-height: 1; }
+.comment-actions .like-count, .comment-actions .dislike-count { font-size: 0.75rem; min-width: 1em; text-align: left;}
+.replies-container { margin-top: 1rem; margin-left: calc(40px + 1rem); /* Indentação */ padding-left: 1rem; border-left: 2px solid var(--border-color); display: flex; flex-direction: column; gap: 1rem; }
+.replies-container .comment-box { background: var(--card-bg-color); padding: 0.75rem; margin-bottom: 0; border-left-width: 2px; border-radius: 0.5rem; } /* Respostas ligeiramente diferentes */
+.replies-container .avatar-placeholder { width: 32px; height: 32px; font-size: 0.8rem; } /* h-8 w-8 */
+.replies-container .comment-text { font-size: 0.875rem; }
+.replies-container .comment-actions button i { font-size: 0.8rem; }
+.spoiler-warning { font-weight: bold; color: var(--warning-color); cursor: pointer; }
+.spoiler-content.hidden { display: none; } /* JS controla isso */
+
+/* ================================================ */
+/* === 8. ESTILOS ESPECÍFICOS DE PÁGINAS/SEÇÕES === */
+/* ================================================ */
+
+/* --- Homepage Specific (Seu código original) --- */
+.hero-slider-section { background-color: #0a0a0a; border-top: 1px solid var(--border-color); }
+.latest-releases-section { background-color: var(--body-bg-color); }
+.most-viewed-section { background-color: var(--section-bg-color); }
+.donation-section { background: linear-gradient(135deg, rgba(0, 185, 130, 0.1) 0%, rgba(0, 0, 0, 0.9) 100%); border-top: 1px solid var(--accent-color); border-bottom: none; }
+.hero-slider-section .section-title, .latest-releases-section .section-title, .most-viewed-section .section-title { color: #fff; }
+/* Slider */
+.slider-relative-wrapper { position: relative; }
+.slider-wrapper { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1.5rem; padding: 1rem 0.5rem; margin: 0 -0.75rem; scrollbar-width: none; -ms-overflow-style: none; }
+.slider-wrapper::-webkit-scrollbar { display: none; }
+.slider-item { flex: 0 0 90%; scroll-snap-align: start; position: relative; padding: 0 0.75rem; }
+@media (min-width: 768px) { .slider-item { flex: 0 0 calc(50% - 0.75rem); } }
+@media (min-width: 1024px) { .slider-item { flex: 0 0 calc(33.333% - 1rem); } }
+.slide-content { background-color: var(--card-bg-color); border-radius: 0.75rem; overflow: hidden; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; height: 100%; transition: transform 0.3s, box-shadow 0.3s; }
+.slide-link:hover .slide-content { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 185, 130, 0.15); }
+.slide-image { width: 100%; height: 16rem; object-fit: cover; }
+.slide-text { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; }
+.slide-title-text { font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; line-height: 1.4; }
+.slide-footer { margin-top: auto; padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; }
+.slide-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.slide-meta .genre-tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; }
+.slide-button { display: inline-block; margin-left: auto; }
+.slider-control { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.7); color: white; border: none; padding: 0.75rem; border-radius: 50%; cursor: pointer; z-index: 10; opacity: 0.8; transition: opacity 0.2s ease, background-color 0.2s; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+.slider-control:hover { opacity: 1; background-color: var(--accent-color); }
+.slider-prev { left: 0.75rem; }
+.slider-next { right: 0.75rem; }
+/* DMCA Notice */
+.dmca-notice-section { background-color: var(--body-bg-color); padding: 2rem 0;}
+.dmca-box { background: linear-gradient(135deg, rgba(0, 185, 130, 0.05) 0%, rgba(23, 23, 23, 0.9) 100%); border-left: 4px solid var(--accent-color); border-radius: 0.5rem; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 1.5rem; }
+.dmca-content-wrapper { display: flex; align-items: flex-start; gap: 1rem; }
+.dmca-icon { font-size: 1.5rem; color: var(--accent-color); padding-top: 0.2rem; }
+.dmca-text-content {}
+.dmca-title { font-size: 1.2rem; font-weight: 600; color: var(--accent-color); margin-bottom: 0.75rem; }
+.dmca-text { font-size: 0.9rem; color: var(--card-text-color); }
+.dmca-text p { margin-bottom: 0.5em; }
+.dmca-text a { color: var(--accent-color); text-decoration: underline; }
+.dmca-read-more { margin-top: 1rem; text-align: left; }
+.dmca-read-more-link { font-weight: 500; color: var(--accent-color); }
+.dmca-read-more-link:hover { color: var(--accent-hover-color); }
+/* Donation Section */
+.donation-icon { display: inline-block; background-color: var(--card-bg-color); border-radius: 50%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid var(--border-color);}
+.donation-icon i { color: var(--accent-color); font-size: 1.75rem; display: block; }
+.donation-title { color: #fff; }
+.donation-message { max-width: 48rem; margin: 0 auto 2rem auto; color: #ccc; }
+.donation-message p { margin-bottom: 0.5em; }
+.donation-message a { color: var(--accent-color); }
+.donation-buttons { display: flex; flex-direction: column; justify-content: center; gap: 1rem; }
+@media (min-width: 640px) { .donation-buttons { flex-direction: row; } }
+.donation-buttons .button { font-weight: 700; padding: 0.75rem 2rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.donation-buttons .button i { margin-right: 0.5rem; }
+.donation-buttons .button-donate { background-color: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+.donation-buttons .button-donate:hover { background-color: var(--accent-hover-color); border-color: var(--accent-hover-color); }
+.donation-buttons .button-secondary { background-color: var(--button-secondary-bg); color: var(--button-secondary-text); border: 1px solid var(--button-secondary-border); }
+.donation-buttons .button-secondary:hover { background-color: var(--button-secondary-hover-bg); border-color: var(--button-secondary-hover-border); }
+.donation-note { margin-top: 1.5rem; font-size: 0.8rem; color: var(--light-text-color); }
+
+/* --- Comics List Page Specific (Seu código original) --- */
+.filter-section { background: linear-gradient(135deg, rgba(0, 185, 130, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%); border-top: 1px solid var(--accent-color); border-bottom: 1px solid var(--accent-color); }
+.filter-bar-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .filter-bar-grid { grid-template-columns: 2fr 1fr 1fr; } }
+@media (min-width: 1024px) { .filter-bar-grid { align-items: center; } }
+.input-field.\!p-2 { padding: 0.5rem 0.75rem !important; } /* Sobrescreve padding para inputs menores */
+.manga-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(2, 1fr); } /* Grid padrão */
+@media (min-width: 640px) { .manga-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) { .manga-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1024px) { .manga-grid { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1280px) { .manga-grid { grid-template-columns: repeat(6, 1fr); } }
+
+/* --- Favorites Page Specific (Seu código original) --- */
+.favorite-item { display: flex; gap: 1rem; background-color: var(--card-bg-color); border-radius: 0.5rem; overflow: hidden; border: 1px solid var(--border-color); transition: background-color 0.2s ease, box-shadow 0.2s ease; }
+.favorite-item:hover { background-color: var(--section-bg-color); box-shadow: 0 4px 10px rgba(0, 185, 130, 0.1); }
+.favorite-item-image { flex-shrink: 0; width: 100px; position: relative; background-color: var(--placeholder-bg); }
+.favorite-item-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.favorite-item-image .placeholder { border-radius: 0; }
+.favorite-item-content { flex-grow: 1; padding: 0.75rem 1rem 0.75rem 0; display: flex; flex-direction: column; }
+.favorite-toggle-btn { background: none; border: none; padding: 0.25rem; cursor: pointer; line-height: 1; margin-left: auto; flex-shrink: 0; }
+.favorite-toggle-btn i { display: block; }
+.favorite-item.last-read-chapter { background-color: rgba(0, 185, 130, 0.05); border-left: 3px solid var(--accent-color); }
+.progress-bar-wrapper { background-color: var(--border-color); border-radius: 99px; height: 6px; overflow: hidden; margin-top: 0.25rem; }
+.progress-bar-fill { height: 100%; background-color: var(--accent-color); border-radius: 99px; transition: width 0.5s ease-out; }
+.empty-state { background: radial-gradient(circle, var(--section-bg-color) 0%, var(--body-bg-color) 100%); border: 1px dashed var(--border-color); border-radius: 0.5rem; padding: 3rem; text-align: center;}
+
+/* --- Profile Page Specific (Seu código original) --- */
+.profile-header { background: linear-gradient(135deg, rgba(0, 185, 130, 0.15) 0%, rgba(0, 0, 0, 0.9) 100%); border-bottom: 2px solid var(--accent-color); padding: 2rem 0;}
+@media (min-width: 768px) { .profile-header { padding: 3rem 0; } }
+.profile-header-container { display: flex; flex-direction: column; align-items: center; text-align: center;}
+@media (min-width: 768px) { .profile-header-container { flex-direction: row; text-align: left; align-items: center; } }
+.profile-avatar-column { margin-bottom: 1.5rem; }
+@media (min-width: 768px) { .profile-avatar-column { margin-bottom: 0; margin-right: 2rem; flex-shrink: 0;} }
+.profile-avatar-wrapper { position: relative; }
+.profile-avatar { width: 128px; height: 128px; border-radius: 50%; border: 4px solid var(--accent-color); object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3); background-color: var(--placeholder-bg); }
+@media (min-width: 768px) { .profile-avatar { width: 160px; height: 160px;} }
+.edit-avatar-btn { position: absolute; bottom: 5px; right: 5px; background: rgba(0, 0, 0, 0.7); border: 1px solid var(--accent-color); color: var(--accent-color); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+.edit-avatar-btn:hover { background: var(--accent-color); color: white; }
+.edit-avatar-btn i { font-size: 0.8rem; }
+.profile-info-column { flex-grow: 1; }
+.profile-info-top { display: flex; flex-direction: column; align-items: center; gap: 0.5rem;}
+@media (min-width: 768px) { .profile-info-top { flex-direction: row; justify-content: space-between; align-items: flex-start; } }
+.profile-username { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 0.1rem; }
+@media (min-width: 768px) { .profile-username { font-size: 2.5rem; } }
+.profile-handle { color: var(--light-text-color); margin-bottom: 1rem; font-size: 1rem; }
+.profile-actions { margin-top: 0.5rem; flex-shrink: 0; }
+.profile-settings-btn i { margin-right: 0.5rem; }
+.profile-bio { margin-top: 1rem; color: var(--card-text-color); max-width: 600px; line-height: 1.7; font-size: 0.95rem; }
+@media (max-width: 767px) { .profile-bio { margin-left: auto; margin-right: auto; } }
+.profile-meta { margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 2rem; }
+@media (min-width: 768px) { .profile-meta { justify-content: flex-start; } }
+.profile-meta-item { display: flex; align-items: center; font-size: 0.9rem; color: var(--light-text-color); }
+.profile-meta-item i { margin-right: 0.5rem; color: var(--accent-color); width: 16px; text-align: center;}
+.profile-stats-section { padding: 2rem 0; background-color: var(--section-bg-color); }
+.stats-grid { display: grid; grid-template-columns: repeat(1, 1fr); gap: 1.5rem; }
+@media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+.stats-card { background: rgba(23, 23, 23, 0.7); border-left: 4px solid var(--accent-color); border-radius: 0.5rem; padding: 1.5rem; transition: background-color 0.3s; border: 1px solid var(--border-color);}
+.stats-card:hover { background-color: rgba(0, 185, 130, 0.1); }
+.stats-card-content { display: flex; align-items: center; }
+.stats-icon-wrapper { background-color: rgba(0, 185, 130, 0.15); color: var(--accent-color); border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-right: 1rem; flex-shrink: 0;}
+.stats-icon-wrapper i { font-size: 1.25rem; }
+.stats-label { color: var(--light-text-color); font-size: 0.8rem; margin-bottom: 0; text-transform: uppercase; letter-spacing: 0.5px;}
+.stats-value { font-size: 1.75rem; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 0;}
+.profile-content-section { padding: 2.5rem 0; }
+.profile-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+@media (min-width: 1024px) { .profile-grid { grid-template-columns: 2fr 1fr; } }
+.profile-main-content {}
+.profile-sidebar {}
+.profile-content-title { margin-bottom: 1.5rem; } /* Reusa .section-title */
+.activity-feed { display: flex; flex-direction: column; gap: 1rem; }
+.activity-item { background-color: var(--card-bg-color); border-radius: 0.5rem; padding: 1rem; display: flex; gap: 1rem; border: 1px solid var(--border-color); }
+.activity-item-icon { color: var(--accent-color); font-size: 1.2rem; flex-shrink: 0; width: 24px; text-align: center; margin-top: 0.1rem; }
+.activity-item-content { flex-grow: 1; }
+.activity-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem; flex-wrap: wrap; gap: 0.5rem;}
+.activity-action { font-weight: 500; color: var(--card-text-color); }
+.activity-timestamp { font-size: 0.8rem; color: var(--light-text-color); flex-shrink: 0;}
+.activity-details { font-size: 0.9rem; margin: 0.25rem 0; }
+.activity-details a { color: var(--accent-color); font-weight: 500; }
+.activity-details a:hover { text-decoration: underline; }
+.sidebar-widget { background-color: var(--card-bg-color); border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border-color); }
+.widget-title { font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+.currently-reading-list { display: flex; flex-direction: column; gap: 1rem; }
+.reading-item { display: flex; gap: 0.75rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+.reading-item:last-child { border-bottom: none; padding-bottom: 0; }
+.reading-item-thumb { width: 50px; height: 70px; object-fit: cover; border-radius: 0.25rem; flex-shrink: 0; background-color: var(--placeholder-bg);}
+.reading-item-info { flex-grow: 1; overflow: hidden; }
+.reading-item-title { font-weight: 500; color: var(--card-text-color); font-size: 0.9rem; line-height: 1.3; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;}
+.reading-item-chapter { font-size: 0.8rem; color: var(--light-text-color); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;}
+.reading-progress-bar { background-color: #444; border-radius: 99px; height: 6px; overflow: hidden; margin-top: 0.4rem; }
+.reading-progress-fill { height: 100%; background-color: var(--accent-color); border-radius: 99px; transition: width 0.3s ease; }
+.favorites-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.favorite-item { position: relative; display: block; } /* MODIFICADO: .favorite-item em vez de .manga-favorite-item */
+.favorite-item img { width: 100%; height: 100px; object-fit: cover; border-radius: 0.25rem; border: 1px solid var(--border-color); transition: border-color 0.2s; background-color: var(--placeholder-bg);}
+.favorite-item:hover img { border-color: var(--accent-color); }
+.view-all-btn { display: block; width: 100%; margin-top: 1rem; text-align: center; }
+
+
+/* --- Auth Pages Specific (Seu código original) --- */
+.auth-page-wrapper { /* padding-top: 6rem; /* Removido padding-top, body já compensa navbar */ padding-bottom: 4rem; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+.auth-container { max-width: 450px; width: 100%; padding: 0 1rem; }
+.auth-card { background: linear-gradient(135deg, rgba(23, 23, 23, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%); border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0, 185, 130, 0.1); border-radius: 0.75rem; overflow: hidden; }
+.auth-card-content { padding: 2rem; }
+@media (min-width: 640px) { .auth-card-content { padding: 2.5rem; } }
+.auth-header { text-align: center; margin-bottom: 2rem; }
+.auth-title { font-size: 1.75rem; font-weight: 700; color: var(--body-text-color); margin-bottom: 0.5rem; }
+.auth-subtitle { color: var(--light-text-color); font-size: 0.9rem; }
+.auth-form {}
+.form-fields-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+.form-submit-group { margin-top: 1.5rem; }
+.auth-button { width: 100%; padding: 0.8rem 1rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem;} /* Usa .button .button-primary */
+.auth-button i { font-size: 1em; }
+.remember-forgot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.remember-me { display: flex; align-items: center; }
+.remember-me input[type="checkbox"] { margin-right: 0.5rem; width: 1em; height: 1em; cursor: pointer;}
+.remember-me label { font-size: 0.875rem; color: var(--light-text-color); cursor: pointer; }
+.forgot-password a { color: var(--accent-color); text-decoration: none; font-size: 0.875rem; }
+.forgot-password a:hover { text-decoration: underline; }
+.terms-text { color: var(--light-text-color); font-size: 12px; line-height: 1.4; }
+.terms-text a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+.terms-text a:hover { text-decoration: underline; }
+.form-terms-group { display: flex; align-items: flex-start; gap: 0.5rem; margin: 1rem 0; }
+.form-terms-group .terms-checkbox { margin-top: 2px; flex-shrink: 0; width: 1em; height: 1em; cursor: pointer;}
+.form-terms-group label { flex-grow: 1; cursor: pointer; }
+.divider { display: flex; align-items: center; text-align: center; color: #666; margin: 1.5rem 0; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; }
+.divider::before, .divider::after { content: ""; flex: 1; border-bottom: 1px solid var(--border-color); }
+.divider::before { margin-right: 10px; }
+.divider::after { margin-left: 10px; }
+.social-login-buttons { display: flex; flex-direction: column; gap: 0.75rem; }
+.social-btn { background-color: var(--card-bg-color); border: 1px solid var(--border-color); color: var(--body-text-color); transition: background-color 0.3s ease, border-color 0.3s ease; display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.75rem 1rem; border-radius: 0.5rem; font-weight: 500; font-size: 0.9rem; text-decoration: none; }
+.social-btn:hover { background-color: rgba(0, 185, 130, 0.1); border-color: var(--accent-color); }
+.social-btn i { margin-right: 8px; font-size: 1.1em; }
+.auth-switch-link { text-align: center; margin-top: 1.5rem; }
+.auth-switch-link p { color: var(--light-text-color); font-size: 0.875rem; margin: 0; }
+.auth-switch-link a { color: var(--accent-color); font-weight: 500; text-decoration: none; }
+.auth-switch-link a:hover { text-decoration: underline; }
+.password-strength { height: 5px; background-color: #333; margin-top: 6px; border-radius: 3px; overflow: hidden; width: 100%; }
+.strength-bar { height: 100%; width: 0%; background-color: var(--danger-color); transition: width 0.3s ease, background-color 0.3s ease; border-radius: 3px; }
+.password-match-status { font-size: 0.75rem; margin-top: 0.25rem; font-weight: 500; height: 1em; }
+.password-match-status.match { color: var(--success-color); }
+.password-match-status.mismatch { color: var(--danger-color); }
+.template-password-reset-done .auth-header, .template-password-reset-complete .auth-header { text-align: center; }
+.success-icon { display: block; text-align: center; font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+.error-icon { display: block; text-align: center; font-size: 3rem; color: var(--danger-color); margin-bottom: 1rem; }
+
+
+/* ========================================================================= */
+/* ===          ↓↓↓ ESTILOS PARA O LEITOR DE CAPÍTULO (REVISADOS) ↓↓↓      === */
+/* ========================================================================= */
+
+/* --- Ajustes Globais para a Página do Leitor --- */
+body.reader-active-page {
+    /* COMPENSAÇÃO PELOS DOIS HEADERS FIXOS */
+    /* O padding-top base do body já compensa o navbar principal.
+       Aqui, adicionamos o padding para o SEGUNDO header (o do leitor). */
+    padding-top: calc(var(--navbar-main-height) + var(--chapter-reader-header-height)) !important; /* Força a compensação correta */
+}
+
+/* --- Cabeçalho Específico do Leitor (FIXO) --- */
+.chapter-reader-page-header {
+    background-color: var(--section-bg-color);
+    border-bottom: 1px solid var(--border-color);
+
+    position: fixed;
+    top: var(--navbar-main-height); /* Abaixo da navbar principal */
+    left: 0;
+    right: 0;
+    height: var(--chapter-reader-header-height);
+    z-index: 990;   /* Abaixo da navbar (1000), acima do conteúdo */
+
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    /* will-change: transform; /* Usar com cautela, apenas se houver problemas de performance notáveis */
+
+    display: flex;
+    align-items: center;
+}
+
+.chapter-reader-page-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+}
+
+.reader-header-nav-title-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden; /* Para o text-ellipsis funcionar */
+    flex-shrink: 1; /* Permite que encolha se necessário */
+    min-width: 0; /* Ajuda o flex-shrink a funcionar corretamente com overflow:hidden */
+}
+
+.reader-back-link a {
+    color: var(--light-text-color);
+    font-size: 1.25rem;
+    display: flex; /* Para alinhar ícone verticalmente se necessário */
+    align-items: center;
+    transition: color 0.2s ease;
+    flex-shrink: 0; /* Evita que o ícone encolha */
+}
+
+.reader-back-link a:hover {
+    color: var(--accent-color);
+}
+
+.reader-chapter-main-title-text {
+    font-size: 1rem; /* Ajustado para caber melhor */
+    font-weight: 500; /* Ajustado para caber melhor */
+    color: var(--body-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1; /* Permite que o título use o espaço disponível */
+    min-width: 0; /* Importante para text-ellipsis em flex item */
+}
+
+.reader-chapter-select-dropdown-top {
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--card-text-color);
+    padding: 0.3rem 0.8rem; /* Ajustado para alinhar melhor com altura */
+    border-radius: 0.375rem;
+    font-size: 0.8rem; /* Ajustado */
+    max-width: 180px; /* Ajustado */
+    min-width: 120px; /* Ajustado */
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center; /* Para centralizar o texto do placeholder/opção selecionada */
+    flex-shrink: 0; /* Evita que o select encolha demais */
+    line-height: 1.4; /* Para melhor alinhamento vertical do texto */
+    height: auto; /* Altura baseada no padding e line-height */
+}
+
+.reader-chapter-select-dropdown-top:focus {
+    outline: none;
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 0 2px var(--input-focus-shadow-color);
+}
+
+/* --- Controles inferiores do Leitor (Reader Controls) --- */
+.reader-controls {
+    background-color: var(--reader-controls-bg, rgba(23, 23, 23, 0.9));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+    padding: 0.75rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 500; /* Acima do conteúdo, abaixo do header do leitor se houver sobreposição */
+    border-top: 1px solid var(--border-color);
+    pointer-events: auto;
+    height: var(--reader-controls-height); /* Usa a variável */
+}
+
+.reader-controls .container { /* Adicionado para estilizar o container dos controles */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.reader-controls .button {
+    padding: 0.4rem 0.8rem; /* Ajustado para caber nos controles */
+    font-size: 0.9rem;
+}
+.reader-controls .button-small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+}
+
+.reader-chapter-select { /* Estilo para o select DENTRO dos controles inferiores */
+    background-color: var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
+    color: var(--card-text-color);
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.375rem;
+    font-size: 0.8rem;
+    max-width: 150px; /* Ajustado */
+    min-width: 100px; /* Ajustado */
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    flex-grow: 1; /* Para ocupar espaço no meio */
+    text-align: center;
+    line-height: 1.4;
+    margin: 0 0.5rem; /* Espaçamento dos botões laterais */
+}
+@media (min-width: 640px) { .reader-chapter-select { flex-grow: 0; max-width: 180px; } }
+
+
+.reader-controls .button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.zoom-controls {
+    position: fixed;
+    bottom: calc(var(--reader-controls-height) + 1rem); /* Acima dos controles inferiores */
+    right: 1rem;
+    z-index: 600;
+    background-color: var(--reader-zoom-controls-bg, rgba(23, 23, 23, 0.8));
+    border-radius: 99px;
+    padding: 6px;
+    display: flex;
+    flex-direction: row; /* Alterado para row */
+    gap: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    pointer-events: auto;
+}
+
+.zoom-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: var(--body-text-color);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.zoom-btn:hover {
+    background-color: var(--accent-hover-color);
+    transform: scale(1.1);
+}
+
+.zoom-btn:active {
+    transform: scale(0.95);
+}
+
+/* --- Wrapper Principal do Conteúdo do Leitor --- */
+.reader-content-area-wrapper {
+    background-color: var(--body-bg-color);
+}
+
+.reader-content-area-wrapper.with-fixed-controls {
+    padding-bottom: calc(var(--reader-controls-height) + 1rem); /* Espaço para controles inferiores fixos + margem */
+}
+
+/* --- Container e Paginação das Imagens do Mangá --- */
+.reader-image-items-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 0%; /* Sem padding-top, apenas laterais */
+}
+
+.reader-page-image-wrapper {
+    margin-bottom: 0; /* Imagens coladas umas nas outras */
+    background-color: var(--placeholder-bg); /* Fundo para imagens carregando */
+    min-height: 100px; /* Altura mínima enquanto carrega */
+    display: flex; /* Para centralizar a imagem se ela for menor que o wrapper (raro) */
+    align-items: center;
+    justify-content: center;
+}
+
+.reader-page-image-wrapper {
+    margin-bottom: 0.0rem; 
+    background-color: var(--placeholder-bg);
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Placeholder para imagem não carregada */
+.reader-img[src=""],
+.reader-img:not([src]) {
+    min-height: 300px;
+    border: 1px dashed var(--placeholder-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--placeholder-text);
+}
+
+.reader-page.placeholder p {
+    text-align: center;
+    color: var(--light-text-color);
+    padding: 2rem;
+}
+
+/* Navegação por clique na página (se usada) */
+.page-navigation {
+    position: absolute; /* Precisa de um pai com position: relative, ex: .reader-image-items-container */
+    width: 40%;
+    height: 100%;
+    top: 0;
+    z-index: 10;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+}
+.page-navigation.prev { left: 0; }
+.page-navigation.next { right: 0; }
+
+
+/* Indicador de Carregamento */
+.loading-indicator-wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column; /* Para texto abaixo do spinner */
+    align-items: center;
+    justify-content: center;
+    background-color: var(--reader-loading-bg, rgba(0, 0, 0, 0.7));
+    z-index: 1100; /* Muito alto para ficar sobre tudo */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Por padrão, não interativo */
+}
+.loading-indicator-wrapper.active { /* Adicionar esta classe via JS para mostrar */
+    pointer-events: auto;
+}
+.loading-indicator-wrapper.hidden {
+    opacity: 0;
+}
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--accent-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1rem;
+}
+.loading-text {
+    color: var(--body-text-color);
+    font-weight: 500;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* --- Botões de Navegação Abaixo das Imagens --- */
+.reader-chapter-navigation-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem auto; /* Espaço acima/abaixo e centralizado */
+    max-width: 900px; /* Consistente com o container das imagens */
+    padding: 0 1rem; /* Espaçamento lateral */
+}
+
+@media (min-width: 640px) {
+    .reader-chapter-navigation-buttons {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.reader-chapter-navigation-buttons .button {
+    width: 100%; /* Em mobile, ocupa toda a largura disponível no flex item */
+}
+
+@media (min-width: 640px) {
+    .reader-chapter-navigation-buttons .button {
+        width: auto; /* Em desktop, largura baseada no conteúdo */
+        min-width: 200px; /* Largura mínima para melhor aparência */
+        flex-basis: calc(33.333% - 0.66rem); /* Para 3 botões com gap */
+        max-width: 260px;
+    }
+    .reader-chapter-navigation-buttons .button:nth-child(2) { /* Botão do meio (Lista de Capítulos) */
+        /* Ajustes específicos se necessário */
+    }
+}
+
+
+/* --- Seção de Comentários --- */
+.reader-page-comments-section {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;  /* Consistente com .reader-chapter-navigation-buttons */
+    padding-right: 1rem; /* Consistente com .reader-chapter-navigation-buttons */
+    padding-bottom: calc(var(--reader-controls-height) + 2rem); /* Espaço para controles e margem extra */
+}
+/* Se .with-fixed-controls já adiciona padding-bottom ao wrapper, esta pode ser menor ou removida */
+.reader-active-page .reader-page-comments-section {
+    padding-bottom: 2rem; /* Reduzir se o wrapper já tiver padding */
+}
+
+
+/* ========================================================================= */
+/* ===   FIM DOS ESTILOS DO LEITOR (REVISADOS)                          === */
+/* ========================================================================= */
+
+
+/* ======================================================= */
+/* ===     ↓↓↓ NOVOS ESTILOS MANGA DETAIL PAGE ↓↓↓     === */
+/* ===        (Integrados com base existente)         === */
+/* ======================================================= */
+
+/* --- Header do Mangá (Novo Layout) --- */
+.manga-banner-container { position: relative; }
+.manga-banner-image { width: 100%; height: 16rem; /* h-64 */ object-fit: cover; display: block;}
+.manga-header-info { position: relative; z-index: 20; margin-top: -4rem; /* -mt-16 */ display: flex; flex-direction: column; padding: 1.5rem; /* p-6 */}
+@media (min-width: 768px) { .manga-header-info { flex-direction: row; margin-top: -5rem; /* -mt-20 */ } } /* Ajuste para sobrepor mais em telas maiores */
+.manga-header-info .manga-cover-column { /* Wrapper da capa */
+    margin-bottom: 1.5rem; /* mb-6 */
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+@media (min-width: 768px) { .manga-header-info .manga-cover-column { margin-bottom: 0; width: 33.33%; /* md:w-1/4 ? */ max-width: 200px; /* Ajuste conforme layout desejado */ padding-right: 2rem; /* md:pl-8 - mas é a coluna da esquerda */ justify-content: flex-start;}}
+.manga-header-info .manga-cover { /* A imagem da capa */
+    width: 10rem; /* w-40 */
+    height: 15rem; /* ~h-60 */
+    object-fit: cover;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1); /* Sombra mais forte */
+    border: 2px solid var(--accent-color); /* Borda primária */
+    transition: transform 0.3s ease;
+    display: block; /* Garante que não tenha espaço extra */
+    margin: 0 auto; /* Centraliza se for menor que a coluna */
+}
+@media (min-width: 768px) { .manga-header-info .manga-cover { width: 12rem; height: 18rem; } } /* w-48, ~h-72 */
+.manga-header-info .manga-cover:hover { transform: scale(1.03); }
+.manga-header-info .manga-cover-column .placeholder { /* Placeholder se não houver capa */
+    width: 10rem; height: 15rem; border-radius: 0.5rem; background-color: var(--placeholder-bg); display: flex; align-items: center; justify-content: center; color: var(--placeholder-text); border: 2px dashed var(--border-color);
+}
+@media (min-width: 768px) { .manga-header-info .manga-cover-column .placeholder { width: 12rem; height: 18rem; } }
+
+.manga-header-info .manga-details-column { /* Coluna da direita com textos */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinha conteúdo na base (útil com banner) */
+    padding-top: 1rem; /* Adicionado para dar espaço em mobile quando a capa está acima */
+}
+@media (min-width: 768px) { .manga-header-info .manga-details-column { padding-top: 0; } }
+
+.manga-header-info .page-title { /* Título principal (H1) */
+    font-size: 1.875rem; /* text-3xl */
+    line-height: 1.2;
+    font-weight: 800; /* Mais pesado */
+    color: var(--body-text-color);
+    margin-bottom: 0.25rem; /* mb-1 */
+}
+@media (min-width: 768px) { .manga-header-info .page-title { font-size: 2.25rem; /* text-4xl */ } }
+.manga-header-info .header-top-row { /* Wrapper para título e badges */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem; /* mb-4 */
+}
+@media (min-width: 768px) { .manga-header-info .header-top-row { flex-direction: row; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; /* mb-2 */} }
+.manga-header-info .header-badges { display: flex; gap: 0.5rem; flex-shrink: 0; margin-top: 0.5rem; /* Espaço abaixo do título em mobile */ }
+@media (min-width: 768px) { .manga-header-info .header-badges { margin-top: 0; } }
+/* .status-badge e .type-badge já definidos */
+
+.manga-header-info .genre-list { /* Lista de gêneros no header */
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; /* mb-4 */
+}
+/* .genre-tag já definido */
+
+.manga-header-info .info-grid { /* Grid de autor/artista/etc. no header */
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem 1rem; font-size: 0.875rem; margin-bottom: 1rem; /* mb-4 */
+}
+@media (min-width: 768px) { .manga-header-info .info-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; /* gap-4 */ margin-bottom: 1.5rem; /* md:mb-6 */ } }
+.manga-header-info .info-item {}
+.manga-header-info .info-label { display: block; color: var(--light-text-color); font-size: 0.8rem; margin-bottom: 0.1rem;}
+.manga-header-info .info-value { color: var(--body-text-color); font-weight: 500; }
+
+.manga-header-info .synopsis-short { /* Sinopse curta no header */
+    font-size: 0.9rem;
+    color: var(--light-text-color);
+    margin-bottom: 1.5rem; /* mb-6 */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limita a 3 linhas */
+    -webkit-box-orient: vertical;
+}
+
+.manga-header-info .action-buttons { /* Botões de ação no header */
+    display: flex; flex-wrap: wrap; gap: 0.75rem; /* gap-3 */
+}
+.manga-header-info .action-buttons .button { padding: 0.5rem 1rem; font-size: 0.875rem; } /* Botões um pouco menores */
+.manga-header-info .action-buttons .button i { margin-right: 0.4rem; } /* Ícone mais perto */
+
+/* --- Navegação por Abas (Tabs) --- */
+.tabs-navigation-wrapper { background-color: var(--card-bg-color); border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid var(--border-color); margin-bottom: 1.5rem; /* mb-6 */}
+/* Sticky (para fixar as abas) */
+/* MODIFICADO: A altura do top para sticky deve considerar ambos os headers fixos */
+.tabs-navigation-wrapper.sticky {
+    position: sticky;
+    top: calc(var(--navbar-main-height) + var(--chapter-reader-header-height)); /* Altura da navbar + header do leitor */
+    z-index: 400; /* Abaixo dos headers fixos, acima do conteúdo */
+    /* Se esta página de detalhes não tiver o .chapter-reader-page-header, então top: var(--navbar-main-height); */
+}
+.tabs-container { border-bottom: 1px solid var(--border-color); overflow-x: auto; }
+/* Scrollbar styles for tabs */
+.tabs-container { scrollbar-width: thin; scrollbar-color: var(--accent-color) var(--card-bg-color); }
+.tabs-container::-webkit-scrollbar { height: 6px; }
+.tabs-container::-webkit-scrollbar-track { background: var(--card-bg-color); border-radius: 10px; }
+.tabs-container::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 10px; }
+.tabs-list { display: flex; gap: 1.5rem; /* Ajuste o espaçamento */ padding-left: 1.5rem; padding-right: 1.5rem; } /* Padding interno */
+.tab-button { position: relative; padding: 0.75rem 0.25rem; /* py-3 */ font-weight: 500; color: var(--light-text-color); background: none; border: none; cursor: pointer; white-space: nowrap; transition: color 0.3s ease; text-decoration: none; font-size: 0.95rem; }
+.tab-button::after { content: ''; position: absolute; bottom: -1px; /* Alinha com a borda */ left: 0; width: 0; height: 3px; background-color: var(--accent-color); transition: width 0.3s ease; }
+.tab-button.active { color: var(--accent-color); font-weight: 600; } /* Aba ativa */
+.tab-button.active::after { width: 100%; }
+.tab-button:hover:not(.active) { color: var(--body-text-color); }
+.comment-count-badge { font-size: 0.75rem; color: var(--accent-color); margin-left: 0.25rem; font-weight: 400;}
+.tab-content { display: none; /* JS controla a exibição */ animation: fadeIn 0.4s ease-out; }
+.tab-content.active { display: block; } /* JS adiciona/remove esta classe (ou só remove hidden) */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } /* Animação opcional */
+
+/* --- Conteúdo da Tab: Capítulos (Cards) --- */
+.chapters-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1rem; padding: 1.5rem; /* Adicionado padding ao container das tabs */}
+@media (min-width: 640px) { .chapters-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .chapters-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .chapters-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+.chapter-card { background: var(--section-bg-color); /* MODIFICADO: var(--section-bg-color) ou var(--card-bg-color) */ transition: all 0.3s ease; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+.chapter-card:hover { background: var(--card-bg-color); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 185, 130, 0.1); border-color: var(--accent-color);}
+.chapter-card-link { display: block; color: inherit; text-decoration: none; }
+.chapter-thumbnail-wrapper { position: relative; overflow: hidden; background-color: var(--placeholder-bg); }
+.chapter-thumbnail-image { display: block; width: 100%; height: 8rem; /* h-32 */ object-fit: cover; transition: transform 0.3s ease; }
+@media (min-width: 640px) { .chapter-thumbnail-image { height: 10rem; } } /* h-40 */
+.chapter-card-link:hover .chapter-thumbnail-image { transform: scale(1.05); } /* Efeito zoom no hover - removido .group */
+.chapter-thumbnail-placeholder { width: 100%; height: 8rem; background-color: var(--placeholder-bg); display: flex; align-items: center; justify-content: center; color: var(--placeholder-text); }
+@media (min-width: 640px) { .chapter-thumbnail-placeholder { height: 10rem; } }
+.chapter-title-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 90%); padding: 1rem 0.5rem 0.5rem 0.5rem; }
+.chapter-title-text { color: var(--body-text-color); font-size: 0.875rem; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
+.chapter-card-info { padding: 0.75rem; /* p-3 */ }
+.chapter-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--light-text-color); }
+/* Paginação Wrapper (se usar botão simples) */
+.pagination-wrapper { margin-top: 2rem; text-align: center; }
+
+/* --- Conteúdo da Tab: Informações --- */
+.tab-content .p-6 { padding: 1.5rem; } /* Adiciona padding geral ao conteúdo das tabs */
+.subsection-title {
+  font-size: 1.125rem; /* text-lg */
+  line-height: 1.75rem;
+  font-weight: 600;
+  color: var(--accent-color); /* Cor de destaque */
+  margin-bottom: 0.75rem; /* mb-3 */
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.details-list { list-style: none; padding: 0; margin: 0 0 1.5rem 0; }
+.details-list li { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid rgba(51, 51, 51, 0.5); font-size: 0.9rem; }
+.details-list li:last-child { border-bottom: none; }
+.detail-label { color: var(--light-text-color); padding-right: 1rem; }
+.detail-value { color: var(--body-text-color); font-weight: 400; text-align: right; }
+.rating-value i { color: var(--warning-color); margin-right: 0.25rem; }
+.prose-styles { line-height: 1.7; color: var(--card-text-color); } /* Estilos para RichText */
+.prose-styles p { margin-bottom: 1em; font-size: 0.95rem;}
+.prose-styles a { color: var(--accent-color); text-decoration: underline; font-weight: 500;}
+.prose-styles a:hover { color: var(--accent-hover-color); }
+.prose-styles strong { font-weight: 600; color: var(--body-text-color); }
+
+/* --- Conteúdo da Tab: Comentários --- */
+/* Os estilos de comentários já estão definidos globalmente,
+   mas se precisar de ajustes específicos dentro de uma tab: */
+.tab-content .comments-section {
+    margin-top: 0; /* Remove margem superior se já estiver dentro de tab-content com padding */
+    padding-top: 0;
+    border-top: none; /* Remove borda superior se já estiver dentro de tab-content */
+}
+
+
+/* ======================================================= */
+/* === ↓↓↓ ESTILOS CABEÇALHO LAYOUT EXEMPLO 3 (One Piece) ↓↓↓ === */
+/* ===      (Manter este bloco se for usado)            === */
+/* ======================================================= */
+
+.manga-header-ex3 { /* Wrapper geral do cabeçalho */
+    background-color: var(--card-bg-color); /* ADICIONADO: Usa .card-bg */
+    border: 1px solid var(--border-color); /* ADICIONADO */
+    border-radius: 0.5rem; /* ADICIONADO */
+    margin-bottom: 2rem; /* mb-8 */
+    overflow: hidden;
+}
+.manga-header-ex3 .p-6 { padding: 1.5rem; }
+.manga-header-ex3 .flex { display: flex; }
+.manga-header-ex3 .flex-col { flex-direction: column; }
+@media (min-width: 768px) {
+    .manga-header-ex3 .md\:flex-row { flex-direction: row; }
+}
+
+/* Coluna da Capa (Esquerda) */
+.manga-cover-column-ex3 {
+    margin-bottom: 1.5rem; /* mb-6 */
+    display: flex;
+    flex-direction: column; /* Itens empilhados */
+    align-items: center; /* Centraliza capa em mobile */
+    flex-shrink: 0;
+}
+@media (min-width: 768px) {
+    .manga-cover-column-ex3 { width: 25%; /* md:w-1/4 */ margin-bottom: 0; align-items: stretch; /* Botões largura total */ }
+}
+@media (min-width: 1024px) {
+    .manga-cover-column-ex3 { width: 20%; /* lg:w-1/5 */ max-width: 240px; /* Limite */ }
+}
+
+.manga-cover.ex3 { /* Imagem da capa */
+    width: 12rem; /* w-48 */
+    height: 18rem; /* h-72 ? */
+    object-fit: cover;
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    transition: transform 0.3s ease;
+    display: block;
+    margin: 0 auto; /* Centraliza */
+}
+@media (min-width: 768px) { .manga-cover.ex3 { width: 100%; height: auto; aspect-ratio: 2/3; margin: 0; } } /* Ajusta em desktop */
+.manga-cover.ex3:hover { transform: scale(1.03); }
+.manga-cover.placeholder.ex3 { /* Placeholder */
+     width: 12rem; height: 18rem; border-radius: 0.5rem; border: 1px dashed var(--border-color);
+     display: flex; align-items: center; justify-content: center; background-color: var(--placeholder-bg); color: var(--placeholder-text);
+}
+@media (min-width: 768px) { .manga-cover.placeholder.ex3 { width: 100%; height: auto; aspect-ratio: 2/3; } }
+
+/* Botões abaixo da capa */
+.manga-actions-ex3 { margin-top: 1rem; width: 100%; display: flex; flex-direction: column; gap: 0.75rem; /* space-y-3 */}
+@media (min-width: 768px) { .manga-actions-ex3 { max-width: none; } }
+.manga-actions-ex3 .button { font-size: 0.9rem; padding: 0.6rem 1rem; justify-content: center; }
+.manga-actions-ex3 .button i { line-height: 1; }
+.original-links-wrapper-ex3 { border-top: 1px solid var(--border-color); padding-top: 0.75rem; margin-top: 0.75rem; text-align: center;}
+.original-links-wrapper-ex3 .info-label.simple { font-size: 0.7rem; text-transform: uppercase; color: var(--light-text-color); margin-bottom: 0.25rem;}
+.original-links-wrapper-ex3 .link-buttons { display:flex; justify-content: center; } /* MODIFICADO para centralizar */
+/* .button-link definido anteriormente */
+
+/* Avaliação abaixo da capa */
+.manga-rating-box.ex3 { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color); }
+.rating-label.ex3 { font-size: 0.7rem; color: var(--light-text-color); text-transform: uppercase; }
+.rating-value.ex3 { font-size: 1.25rem; font-weight: 700; color: var(--body-text-color); } /* ADICIONADO color */
+.rating-value.ex3 i { color: var(--warning-color); margin-right: 0.25rem; }
+
+/* Coluna de Detalhes (Direita) */
+.manga-details-column-ex3 { flex-grow: 1; } /* ADICIONADO */
+@media (min-width: 768px) { .manga-details-column-ex3 { width: 75%; padding-left: 2rem; /* md:pl-8 */ } }
+@media (min-width: 1024px) { .manga-details-column-ex3 { width: 80%; } }
+
+/* Título e Badges */
+.manga-details-column-ex3 .mb-3 { margin-bottom: 0.75rem; }
+.manga-details-column-ex3 .mb-4 { margin-bottom: 1rem; }
+.manga-details-column-ex3 .flex { display: flex; }
+.manga-details-column-ex3 .flex-col { flex-direction: column; }
+.manga-details-column-ex3 .md\:flex-row { @media (min-width: 768px) { flex-direction: row; } }
+.manga-details-column-ex3 .md\:items-start { @media (min-width: 768px) { align-items: flex-start; } }
+.manga-details-column-ex3 .md\:justify-between { @media (min-width: 768px) { justify-content: space-between; } }
+.manga-details-column-ex3 .page-title.ex3 { font-size: 1.875rem; line-height: 2.25rem; /* text-3xl */ font-weight: 700; color: var(--body-text-color); margin-bottom: 0.5rem; /* mb-2 */ }
+.manga-details-column-ex3 .space-x-2 > :not([hidden]) ~ :not([hidden]) { margin-left: 0.5rem; }
+.manga-details-column-ex3 .flex-shrink-0 { flex-shrink: 0; }
+.manga-details-column-ex3 .mt-1 { margin-top: 0.25rem; }
+.manga-details-column-ex3 .md\:mt-0 { @media (min-width: 768px) { margin-top: 0; } }
+/* .status-badge, .type-badge já definidos */
+
+/* Criadores */
+.manga-creators-list.ex3 { margin-bottom: 1rem; font-size: 0.9rem; }
+.creator-item.ex3 { margin-bottom: 0.25rem; }
+.creator-label.ex3 { color: var(--light-text-color); font-weight: 400; margin-right: 0.5rem; display: inline-block; min-width: 60px; }
+.creator-name { color: var(--body-text-color); font-weight: 500; } /* Nome mais destacado */
+
+/* Gêneros */
+.genre-list.ex3 { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.genre-tag.ex3 { /* Reutiliza .genre-tag ou define estilo específico */
+    background-color: var(--accent-bg-light); color: var(--accent-color); padding: 0.25rem 0.6rem; border-radius: 99px; font-size: 0.75rem;
+}
+.genre-tag.ex3:hover { background-color: var(--accent-color); color: var(--body-text-color); }
+
+/* Grid Info */
+.info-grid.ex3 {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem; /* mb-6 */
+}
+@media (min-width: 768px) { .info-grid.ex3 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.info-item.ex3 { }
+.info-label.ex3 { color: var(--light-text-color); font-size: 0.875rem; /* text-sm */ }
+.info-value.ex3 { color: var(--body-text-color); font-weight: 500; /* font-medium */ }
+
+/* Sinopse na coluna direita */
+.manga-synopsis-wrapper.ex3 { margin-top: 1rem; /* Espaço acima */ }
+.manga-synopsis.ex3 { background-color: transparent; border: none; padding: 0; }
+.synopsis-title.ex3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color); }
+.synopsis-content.ex3 { max-height: none; /* Mostra tudo por padrão */ overflow: visible; color: var(--card-text-color); } /* MODIFICADO: Remove limite de altura e adiciona cor */
+.synopsis-readmore.ex3 { display: none; } /* Esconde botão "Leia mais" */
+.synopsis-content.ex3::after { display: none; } /* Remove gradiente */
+/* .prose-styles já definido */
+
+/* Seções abaixo do Header */
+.chapters-section { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 0.0rem; margin-bottom: 2rem; }
+.news-section { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 0.0rem; margin-bottom: 2rem; }
+.comments-section { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 0.0rem; margin-bottom: 2rem; }
+
+/* ======================================================= */
+/* ===    ↑↑↑ FIM ESTILOS AJUSTADOS MANGA DETAIL ↑↑↑    === */
+/* ======================================================= */

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Loja de Badges" %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.badge-store-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.user-balance {
+    font-size: 1.1rem;
+    color: #a0a0a0;
+}
+.user-balance .coin-icon {
+    color: #ffd700;
+    margin-right: 0.25rem;
+}
+.badge-store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* ---- INÍCIO DA CORREÇÃO PRINCIPAL ---- */
+.badge-card {
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* A MÁGICA ACONTECE AQUI */
+    text-align: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+/* ---- FIM DA CORREÇÃO PRINCIPAL ---- */
+
+.badge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+.badge-preview {
+    margin: 0 auto 1rem auto;
+    padding: 0.25rem 0.75rem;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+}
+.badge-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+.badge-card .badge-description {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    min-height: 40px;
+}
+.badge-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #f3f4f6;
+    margin-bottom: 1.5rem;
+}
+.badge-price .coin-icon {
+    color: #ffd700;
+    margin-right: 0.25rem;
+}
+.badge-card .btn {
+    width: 100%;
+}
+.purchase-message {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 600;
+    min-height: 1.2em;
+    font-size: 0.9rem;
+}
+.purchase-message.success { color: #22c55e; }
+.purchase-message.error { color: #ef4444; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    {% csrf_token %}
+    <div class="badge-store-header">
+        <h2 class="text-3xl font-bold text-white mb-2">{% trans "Loja de Badges" %}</h2>
+        <p class="text-gray-400">Personalize seu perfil com badges exclusivos!</p>
+        <p id="user-balance" class="user-balance mt-4">
+            {% trans "Seu saldo:" %} <i class="fas fa-coins coin-icon"></i> <strong>{{ user.profile.moedas|default:0 }}</strong>
+        </p>
+    </div>
+
+    <div id="purchase-message-global" class="purchase-message mb-4"></div>
+
+    <div class="badge-store-grid">
+        {% for badge in all_badges %}
+            <div class="badge-card" id="badge-card-{{ badge.id }}">
+                
+                {% comment %} ---- Bloco de conteúdo do topo ---- {% endcomment %}
+                <div>
+                    <div class="badge-preview" style="background-color: {{ badge.color }}; color: {{ badge.text_color }};">
+                        {% if badge.icon_class %}<i class="{{ badge.icon_class }} mr-2"></i>{% endif %}{{ badge.name }}
+                    </div>
+                    <h3>{{ badge.name }}</h3>
+                    <p class="badge-description">{{ badge.description }}</p>
+                </div>
+
+                {% comment %} ---- Bloco de ações da parte de baixo ---- {% endcomment %}
+                <div class="badge-actions">
+                    <div class="badge-price">
+                        <i class="fas fa-coins coin-icon"></i> {{ badge.price }}
+                    </div>
+                    
+                    {% if badge.id in owned_badge_ids %}
+                        <button class="btn btn-secondary" disabled>{% trans "Adquirido" %}</button>
+                    {% else %}
+                        <button class="btn btn-primary buy-badge-btn" data-badge-id="{{ badge.id }}">{% trans "Comprar" %}</button>
+                    {% endif %}
+                </div>
+
+            </div>
+        {% empty %}
+            <p class="text-gray-400 col-span-full text-center">{% trans "Nenhum badge disponível na loja no momento." %}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+    const buyButtons = document.querySelectorAll('.buy-badge-btn');
+
+    buyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const badgeId = this.dataset.badgeId;
+            const messageDiv = document.getElementById('purchase-message-global');
+            
+            this.disabled = true;
+            this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> {% trans "Processando..." %}';
+            messageDiv.textContent = '';
+            
+            fetch("{% url 'accounts:badge_store' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({ 'badge_id': badgeId })
+            })
+            .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })))
+            .then(result => {
+                const data = result.data;
+                messageDiv.textContent = data.message;
+
+                if (result.ok) {
+                    messageDiv.className = 'purchase-message success';
+                    
+                    const balanceElement = document.getElementById('user-balance').querySelector('strong');
+                    balanceElement.textContent = data.new_balance;
+
+                    this.textContent = '{% trans "Adquirido" %}';
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-secondary');
+                } else {
+                    messageDiv.className = 'purchase-message error';
+                    this.disabled = false;
+                    this.innerHTML = '{% trans "Comprar" %}';
+                }
+            })
+            .catch(error => {
+                console.error('Erro na compra:', error);
+                messageDiv.textContent = '{% trans "Ocorreu um erro de conexão. Tente novamente." %}';
+                messageDiv.className = 'purchase-message error';
+                this.disabled = false;
+                this.innerHTML = '{% trans "Comprar" %}';
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

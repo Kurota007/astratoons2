@@ -1,0 +1,152 @@
+{% load static wagtailcore_tags wagtailimages_tags i18n %}
+
+<nav class="site-navbar">
+    <div class="navbar-container">
+        <div class="nav-left">
+            <a class="navbar-brand" href="/">
+                {% if settings.core.GlobalSettings.logo %}
+                    {% image settings.core.GlobalSettings.logo width-180 as nav_logo %}
+                    <img src="{{ nav_logo.url }}" alt="{{ settings.core.GlobalSettings.site_name_text|default:'Astraverse' }} Logo" class="navbar-logo" loading="lazy">
+                {% else %}
+                    <span class="site-name">{{ settings.core.GlobalSettings.site_name_text|default:'Astraverse' }}</span>
+                {% endif %}
+            </a>
+
+            <div class="desktop-nav-links">
+                <a href="/" class="nav-item">{% trans "Início" %}</a>
+                <a href="{% url 'manga:manga_list_all' %}" class="nav-item">{% trans "Comics" %}</a>
+                
+                <a href="/subscriptions/plans/" class="nav-item nav-item-premium" aria-label="{% trans 'Vip' %}">
+                    <i class="fas fa-crown"></i> <span class="desktop-only-text">{% trans "Vip" %}</span>
+                </a>
+
+                <a href="{% url 'subscriptions:coin_store' %}" class="nav-item">
+                    <i class="fas fa-coins"></i> <span class="desktop-only-text">{% trans "Loja" %}</span>
+                </a>
+                
+                {% if settings.core.GlobalSettings.discord_link %}
+                    <a href="{{ settings.core.GlobalSettings.discord_link }}" target="_blank" rel="noopener noreferrer" aria-label="{% trans 'Discord' %}" class="nav-item">
+                        <i class="fab fa-discord"></i> <span class="desktop-only-text">{% trans "Discord" %}</span>
+                    </a>
+                {% endif %}
+                {% if settings.core.GlobalSettings.donation_link %}
+                    <a href="{{ settings.core.GlobalSettings.donation_link }}" target="_blank" rel="noopener noreferrer" class="nav-item button-apoiar" aria-label="{% trans 'Apoiar' %}">
+                        <i class="fas fa-heart"></i> <span class="desktop-only-text">{% trans "Apoiar" %}</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="nav-right desktop-nav-right">
+            <div class="search-container">
+                <form method="get" action="{% url 'search:custom_search' %}" class="navbar-search-form" autocomplete="off">
+                    <input id="live-search-input-desktop" type="search" name="query" placeholder="{% trans 'Pesquisar comics...' %}" aria-label="{% trans 'Pesquisar' %}" class="search-input">
+                    <button type="submit" class="search-button" aria-label="{% trans 'Buscar' %}"><i class="fas fa-search"></i></button>
+                </form>
+                <div id="live-search-results-desktop" class="live-search-results"></div>
+            </div>
+
+            {% if user.is_authenticated %}
+                <div class="profile-dropdown-container">
+                    <button type="button" id="profileDropdownTrigger" class="nav-item profile-trigger" aria-haspopup="true" aria-expanded="false">
+                        {% with avatar_url_nav=request.user.profile.get_display_avatar_url %}
+                            {% if avatar_url_nav and "default_avatar.png" not in avatar_url_nav %}
+                                <img src="{{ avatar_url_nav }}" alt="Avatar de {{ request.user.username }}" class="user-avatar-nav">
+                            {% else %}
+                                <i class="fas fa-user-circle user-avatar-nav-icon"></i>
+                            {% endif %}
+                        {% endwith %}
+                        <span class="desktop-only-text">{{ request.user.username|truncatechars:10 }}</span>
+                        <i class="fas fa-caret-down dropdown-caret desktop-only-text"></i>
+                    </button>
+                    <ul id="profileDropdownMenu" class="dropdown-menu" role="menu">
+                        <li><a href="{% url 'accounts:profile' %}" role="menuitem" class="dropdown-item"><i class="fas fa-user-edit"></i> {% trans "Meu Perfil" %}</a></li>
+                        <li><a href="{% url 'accounts:saved_mangas_list' %}" role="menuitem" class="dropdown-item"><i class="fas fa-bookmark"></i> {% trans "Meus Favoritos" %}</a></li>
+                        
+                        <!-- LINK DO HISTÓRICO (DESKTOP) -->
+                        <li><a href="{% url 'manga:reading_history' %}" role="menuitem" class="dropdown-item"><i class="fas fa-history"></i> {% trans "Histórico" %}</a></li>
+                        
+                        {% if user.is_staff or user.is_superuser %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="{% url 'wagtailadmin_home' %}" role="menuitem" class="dropdown-item"><i class="fas fa-tools"></i> {% trans "Admin Wagtail" %}</a></li>
+                            <li><a href="{% url 'admin:index' %}" role="menuitem" class="dropdown-item"><i class="fas fa-shield-alt"></i> {% trans "Admin Django" %}</a></li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="{% url 'account_logout' %}" style="margin:0;">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item dropdown-item-button" role="menuitem">
+                                    <i class="fas fa-sign-out-alt"></i> {% trans "Sair" %}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <a href="{% url 'account_login' %}" aria-label="{% trans 'Login' %}" class="nav-item">
+                    <i class="fas fa-sign-in-alt"></i> <span class="desktop-only-text">{% trans "Login" %}</span>
+                </a>
+                <a href="{% url 'account_signup' %}" aria-label="{% trans 'Registrar' %}" class="nav-item">
+                    <i class="fas fa-user-plus"></i> <span class="desktop-only-text">{% trans "Registrar" %}</span>
+                </a>
+            {% endif %}
+        </div>
+
+        <button class="mobile-menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu-nav">
+            <i class="fas fa-bars icon-open"></i>
+            <i class="fas fa-times icon-close" style="display: none;"></i>
+        </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu-nav">
+        <ul class="mobile-nav-links">
+            <li>
+                <div class="search-container">
+                    <form method="get" action="{% url 'search:custom_search' %}" class="mobile-search-form" autocomplete="off">
+                        <input id="live-search-input-mobile" type="search" name="query" placeholder="{% trans 'Pesquisar comics...' %}" aria-label="{% trans 'Pesquisar' %}" class="search-input">
+                        <button type="submit" class="search-button" aria-label="{% trans 'Buscar' %}"><i class="fas fa-search"></i></button>
+                    </form>
+                    <div id="live-search-results-mobile" class="live-search-results"></div>
+                </div>
+            </li>
+            <li><a href="/">{% trans "Início" %}</a></li>
+            <li><a href="{% url 'manga:manga_list_all' %}">{% trans "Comics" %}</a></li>
+            <li><a href="/subscriptions/plans/"><i class="fas fa-crown"></i> {% trans "Vip" %}</a></li>
+            
+            <li><a href="{% url 'subscriptions:coin_store' %}"><i class="fas fa-coins"></i> {% trans "Loja" %}</a></li>
+    
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'accounts:profile' %}"><i class="fas fa-user-edit"></i> {% trans "Meu Perfil" %}</a></li>
+                <li><a href="{% url 'accounts:saved_mangas_list' %}"><i class="fas fa-bookmark"></i> {% trans "Meus Favoritos" %}</a></li>
+
+                <!-- LINK DO HISTÓRICO (MOBILE) -->
+                <li><a href="{% url 'manga:reading_history' %}"><i class="fas fa-history"></i> {% trans "Histórico" %}</a></li>
+
+                {% if user.is_staff or user.is_superuser %}
+                    <li class="mobile-menu-divider"><hr></li>
+                    <li><a href="{% url 'wagtailadmin_home' %}"><i class="fas fa-tools"></i> {% trans "Admin Wagtail" %}</a></li>
+                    <li><a href="{% url 'admin:index' %}"><i class="fas fa-shield-alt"></i> {% trans "Admin Django" %}</a></li>
+                {% endif %}
+                <li class="mobile-menu-divider"><hr></li>
+                <li>
+                    <form method="post" action="{% url 'account_logout' %}" style="margin:0;">
+                        {% csrf_token %}
+                        <button type="submit" class="mobile-logout-button">
+                            <i class="fas fa-sign-out-alt"></i> {% trans "Sair" %}
+                        </button>
+                    </form>
+                </li>
+            {% else %}
+                <li><a href="{% url 'account_login' %}"><i class="fas fa-sign-in-alt"></i> {% trans "Login" %}</a></li>
+                <li><a href="{% url 'account_signup' %}"><i class="fas fa-user-plus"></i> {% trans "Registrar" %}</a></li>
+            {% endif %}
+            <li class="mobile-menu-divider"><hr></li>
+            {% if settings.core.GlobalSettings.discord_link %}
+                <li><a href="{{ settings.core.GlobalSettings.discord_link }}" target="_blank" rel="noopener noreferrer"><i class="fab fa-discord"></i> {% trans "Discord" %}</a></li>
+            {% endif %}
+            {% if settings.core.GlobalSettings.donation_link %}
+                <li><a href="{{ settings.core.GlobalSettings.donation_link }}" target="_blank" rel="noopener noreferrer"><i class="fas fa-heart"></i> {% trans "Apoiar" %}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

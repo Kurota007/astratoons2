@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Página Não Encontrada" %}{% endblock %}
+
+{% block content %}
+<div class="container text-center my-5 py-5">
+    <div style="font-size: 6rem; font-weight: bold; color: var(--color-accent, #4F46E5);">404</div>
+    <h1 class="mb-3">{% trans "Página Não Encontrada" %}</h1>
+    <p class="lead mb-4" style="max-width: 600px; margin-left: auto; margin-right: auto;">
+        {% trans "Opa! O conteúdo que você está procurando não existe, foi removido ou o link foi digitado incorretamente." %}
+    </p>
+    <a href="/" class="button button-primary">
+        <i class="fas fa-home"></i> {% trans "Voltar para a Página Inicial" %}
+    </a>
+</div>
+
+<style>
+    .main-content-area {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{% endblock content %}

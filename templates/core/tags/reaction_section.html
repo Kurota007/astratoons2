@@ -1,0 +1,39 @@
+{% comment %}
+Arquivo: core/templates/core/tags/reaction_section.html
+Este template renderiza a seção de reações.
+{% endcomment %}
+
+<div class="reactions-container" id="reactions-container-{{ page.id }}">
+    <h3 class="reactions-title">O que você achou?</h3>
+    
+    <div class="reactions-buttons-container">
+        
+        {% for reaction in reaction_types_with_counts %}
+        <button 
+            class="reaction-button {% if not request.user.is_authenticated %}disabled{% endif %} {% if reaction.type_id == user_reaction_type_id %}active{% endif %}" 
+            data-reaction-type="{{ reaction.type_id }}" 
+            data-page-id="{{ page.id }}"
+            aria-label="{{ reaction.name }}" 
+            title="{{ reaction.name }}"
+            {% if not request.user.is_authenticated %}disabled{% endif %}>
+            
+            <span class="reaction-icon-container">
+                {% if reaction.icon %}
+                    <img src="{{ reaction.icon.url }}" alt="" class="reaction-icon-img" loading="lazy">
+                {% else %}
+                    <span>?</span>
+                {% endif %}
+            </span>
+            <span class="reaction-name">{{ reaction.name }}</span>
+            <span class="reaction-count" id="reaction-count-{{ page.id }}-{{ reaction.type_id }}">{{ reaction.count }}</span>
+        </button>
+        {% endfor %}
+        
+    </div>
+    
+    {% if not request.user.is_authenticated %}
+    <p class="text-center text-muted small mt-3">
+        <a href="{% url 'account_login' %}?next={{ request.path }}">Faça login</a> para reagir.
+    </p>
+    {% endif %}
+</div>

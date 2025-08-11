@@ -1,0 +1,91 @@
+<!-- Em templates/comments/form.html -->
+{% load crispy_forms_tags %}
+
+<div>
+    <!-- A classe 'comment-form-instance' é usada pelo CSS para aplicar o estilo correto -->
+    <form class="comment-form-instance" method="post" action="{% url 'comments:post_comment' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="page_id" value="{{ page.id }}">
+        {% if parent %}
+            <input type="hidden" name="parent_id" value="{{ parent.id }}">
+        {% endif %}
+
+        <!-- Renderiza o campo de texto principal com os estilos do Crispy Forms -->
+        {{ form.content|as_crispy_field }}
+
+        <!-- Barra de Ações com layout aprimorado -->
+        <div class="comment-actions-bar">
+            <!-- Lado Esquerdo: Ícone para anexar imagem -->
+            <div>
+                <label for="id_image_{{ parent.id|default:'main' }}" class="image-upload-label" title="Anexar Imagem">
+                    <i class="fas fa-image"></i>
+                </label>
+                <!-- O input de arquivo está oculto, o label acima é o que o aciona -->
+                <!-- O 'onchange' chama nossa função JS de pré-visualização -->
+                <input type="file" name="image" id="id_image_{{ parent.id|default:'main' }}" class="d-none" accept="image/*" onchange="previewImage(event)">
+            </div>
+
+            <!-- Lado Direito: Opção de Spoiler e botão de Enviar -->
+            <div class="actions-right">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="id_is_spoiler_{{ parent.id|default:'main' }}" name="is_spoiler">
+                    <label class="form-check-label" for="id_is_spoiler_{{ parent.id|default:'main' }}">Spoiler</label>
+                </div>
+                <button type="submit" class="btn comment-submit-btn">Comentar</button>
+            </div>
+        </div>
+
+        <!-- O container da pré-visualização da imagem será injetado aqui pelo JavaScript -->
+        <div id="image-preview-container-{{ parent.id|default:'main' }}" class="image-preview-container mt-2"></div>
+    </form>
+</div>
+
+<!-- ============================================= -->
+<!--          SCRIPT DE PRÉ-VISUALIZAÇÃO DE IMAGEM -->
+<!-- ============================================= -->
+<script>
+// Garante que a função seja declarada apenas uma vez, mesmo que o template seja incluído várias vezes.
+if (typeof previewImage !== 'function') {
+    function previewImage(event) {
+        const input = event.target;
+        const file = input.files[0];
+        
+        // Extrai o ID único do formulário (ex: 'main' ou um número) a partir do ID do input
+        const formId = input.id.replace('id_image_', '');
+        const previewContainer = document.getElementById(`image-preview-container-${formId}`);
+
+        // Limpa qualquer pré-visualização anterior
+        previewContainer.innerHTML = '';
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const thumbnailWrapper = document.createElement('div');
+                thumbnailWrapper.classList.add('image-thumbnail-wrapper');
+                
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('image-thumbnail');
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '×';
+                removeBtn.type = 'button'; // Evita que o botão envie o formulário
+                removeBtn.classList.add('remove-image-btn');
+                removeBtn.title = 'Remover imagem';
+                
+                removeBtn.onclick = function() {
+                    input.value = '';
+                    previewContainer.innerHTML = '';
+                };
+
+                thumbnailWrapper.appendChild(img);
+                thumbnailWrapper.appendChild(removeBtn);
+                previewContainer.appendChild(thumbnailWrapper);
+            }
+
+            reader.readAsDataURL(file);
+        }
+    }
+}
+</script>

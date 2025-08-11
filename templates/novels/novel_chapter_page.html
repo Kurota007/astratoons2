@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags i18n %} {# Adicionado i18n se for usar trans #}
+{% get_settings %}
+
+{% block title %}{% if novel %}{{ novel.title }} - {% endif %}{{ page.chapter_display_title|default:page.title }}{% endblock %}
+
+{% block body_class %}template-novelchapterpage theme-dark reading-mode-text{% endblock %}
+
+{% block extra_css %}
+     .series-title-nav {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1rem;
+        margin: 0;
+    }
+    .chapter-title-nav {
+        font-size: 0.8rem;
+        opacity: 0.7;
+        margin: 0;
+    }
+    .chapter-reading-main-content-wrapper {
+        padding-top: 70px;
+    }
+{% endblock %}
+
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="novel-reading-page"> {# Renomeado de chapter- para novel- #}
+
+    <nav class="chapter-navigation top-nav">
+        <div class="container nav-container">
+            <div class="nav-left">
+                {% with prev_chapter=page.get_prev_sibling.specific %}
+                    {% if prev_chapter %}
+                        <a href="{% pageurl prev_chapter %}" class="nav-button prev-button" title="Capítulo Anterior"><i class="fas fa-chevron-left"></i><span class="button-text">{% trans "Anterior" %}</span></a>
+                    {% else %}
+                        <button class="nav-button prev-button disabled" disabled title="Primeiro Capítulo"><i class="fas fa-chevron-left"></i><span class="button-text">{% trans "Anterior" %}</span></button>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="nav-center">
+                {% if novel %}
+                    <a href="{% pageurl novel %}" class="series-link" title="{{ novel.title }}">
+                        {% if novel.cover_image %}
+                            {% image novel.cover_image width-40 as nav_thumb %}
+                            <img src="{{ nav_thumb.url }}" alt="Capa de {{ novel.title }}" class="series-thumb">
+                        {% endif %}
+                        <div class="series-chapter-info">
+                            <h1 class="series-title-nav">{{ novel.title }}</h1>
+                            <h2 class="chapter-title-nav">{{ page.chapter_display_title|default:page.title }}</h2>
+                        </div>
+                    </a>
+                {% else %}
+                    <div class="series-chapter-info">
+                        <h2 class="chapter-title-nav">{{ page.chapter_display_title|default:page.title }}</h2>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="nav-right">
+                {% with next_chapter=page.get_next_sibling.specific %}
+                    {% if next_chapter %}
+                        <a href="{% pageurl next_chapter %}" class="nav-button next-button" title="Próximo Capítulo"><span class="button-text">{% trans "Próximo" %}</span><i class="fas fa-chevron-right"></i></a>
+                    {% else %}
+                        <button class="nav-button next-button disabled" disabled title="Último Capítulo"><span class="button-text">{% trans "Próximo" %}</span><i class="fas fa-chevron-right"></i></button>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container novel-reading-main-content-wrapper">
+        <div class="novel-content-main"> {# Renomeado de chapter-content-main #}
+            <article class="novel-text-container"> {# Substituído chapter-images-container #}
+                {# Aqui o conteúdo RichTextField da NovelChapterPage será renderizado #}
+                {{ page.main_content|richtext }}
+            </article>
+        </div>
+    </div>
+
+    <nav class="chapter-navigation bottom-nav">
+         <div class="container nav-container">
+            <div class="nav-left">
+                {% with prev_chapter=page.get_prev_sibling.specific %}
+                    {% if prev_chapter %}
+                        <a href="{% pageurl prev_chapter %}" class="nav-button prev-button" title="Capítulo Anterior"><i class="fas fa-chevron-left"></i><span class="button-text">{% trans "Anterior" %}</span></a>
+                    {% else %}
+                        <button class="nav-button prev-button disabled" disabled title="Primeiro Capítulo"><i class="fas fa-chevron-left"></i><span class="button-text">{% trans "Anterior" %}</span></button>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="nav-center">
+                {% if novel %}
+                    <a href="{% pageurl novel %}" class="nav-button home-button" title="Voltar para {{ novel.title }}"><i class="fas fa-home"></i><span class="button-text">{% trans "Novel" %}</span></a>
+                {% endif %}
+            </div>
+             <div class="nav-right">
+                {% with next_chapter=page.get_next_sibling.specific %}
+                    {% if next_chapter %}
+                        <a href="{% pageurl next_chapter %}" class="nav-button next-button" title="Próximo Capítulo"><span class="button-text">{% trans "Próximo" %}</span><i class="fas fa-chevron-right"></i></a>
+                    {% else %}
+                        <button class="nav-button next-button disabled" disabled title="Último Capítulo"><span class="button-text">{% trans "Próximo" %}</span><i class="fas fa-chevron-right"></i></button>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </nav>
+
+    {% if settings.core.GlobalSettings.comment_provider == 'disqus' and settings.core.GlobalSettings.disqus_shortname %}
+        <section class="chapter-comments-section">
+            <div class="container">
+                <h2 class="section-title">{% trans "Comentários do Capítulo" %}</h2>
+                <div id="disqus_thread"></div>
+                <script>
+                    var disqus_config = function () {
+                        this.page.url = "{{ request.build_absolute_uri|escapejs }}";
+                        this.page.identifier = "novel-{{ novel.slug|default:novel.id|escapejs }}-chapter-{{ page.slug|default:page.id|escapejs }}";
+                        this.page.title = "{{ novel.title|default:''|escapejs }} - {{ page.chapter_display_title|default:page.title|escapejs }}";
+                    };
+                    (function() {
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://{{ settings.core.GlobalSettings.disqus_shortname|escapejs }}.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Por favor, habilite o JavaScript para ver os <a href="https://disqus.com/?ref_noscript">comentários providos por Disqus.</a></noscript>
+            </div>
+        </section>
+    {% elif settings.core.GlobalSettings.comment_provider == 'custom' %}
+        <section class="chapter-comments-section">
+            <div class="container"><h2 class="section-title">{% trans "Comentários (Sistema Próprio)" %}</h2><div class="comments-placeholder"><p>{% trans "Sistema de comentários próprio será implementado aqui." %}</p></div></div>
+        </section>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isInputFocused = () => {
+                const activeElement = document.activeElement;
+                return activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA' || activeElement.isContentEditable);
+            };
+
+            document.addEventListener('keydown', function(event) {
+                const isSidebarOpen = document.getElementById('itemlistSidebarDrawer')?.classList.contains('active'); // Nome genérico
+                if (!isInputFocused() && !isSidebarOpen) {
+                    const prevButton = document.querySelector('.nav-button.prev-button:not(.disabled)');
+                    const nextButton = document.querySelector('.nav-button.next-button:not(.disabled)');
+
+                    if (event.key === 'ArrowLeft' && prevButton) {
+                        prevButton.click();
+                    } else if (event.key === 'ArrowRight' && nextButton) {
+                        nextButton.click();
+                    }
+                }
+            });
+
+            function scrollSidebarToActive() {
+                const activeItem = document.querySelector('#itemlistSidebarDrawer .sidebar-item.active'); // Nome genérico
+                if (activeItem && drawer) {
+                    drawer.scrollTop = activeItem.offsetTop - (drawer.offsetHeight / 2) + (activeItem.offsetHeight / 2);
+                }
+            }
+
+            const openDrawerButton = document.getElementById('toggleItemListSidebarButton'); // Nome genérico
+            const closeDrawerButton = document.getElementById('closeItemListSidebarButton'); // Nome genérico
+            const drawer = document.getElementById('itemlistSidebarDrawer'); // Nome genérico
+            const overlay = document.getElementById('itemListDrawerOverlay'); // Nome genérico
+
+            function openDrawer() {
+                if (drawer && overlay) {
+                    overlay.classList.add('active');
+                    drawer.classList.add('active');
+                    document.body.classList.add('drawer-open-no-scroll');
+                    setTimeout(scrollSidebarToActive, 50);
+                }
+            }
+
+            function closeDrawer() {
+                if (drawer && overlay) {
+                    overlay.classList.remove('active');
+                    drawer.classList.remove('active');
+                    document.body.classList.remove('drawer-open-no-scroll');
+                }
+            }
+
+            if (openDrawerButton) openDrawerButton.addEventListener('click', openDrawer);
+            if (closeDrawerButton) closeDrawerButton.addEventListener('click', closeDrawer);
+            if (overlay) overlay.addEventListener('click', closeDrawer);
+
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && drawer && drawer.classList.contains('active')) {
+                    closeDrawer();
+                }
+            });
+        });
+    </script>
+{% endblock %}

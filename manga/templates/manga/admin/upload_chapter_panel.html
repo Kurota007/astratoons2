@@ -1,0 +1,7 @@
+{% load i18n %}
+<p>
+    {% trans "Para adicionar novos capítulos ou atualizar existentes usando um arquivo ZIP, utilize a página de upload." %}
+</p>
+<a href="{% url 'manga_upload_admin:combined_upload' %}" class="button button-secondary">
+    <span class="icon icon-doc-full-inverse"></span> {% trans "Ir para Upload de Capítulos (ZIP)" %}
+</a>

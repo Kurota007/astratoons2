@@ -1,0 +1,90 @@
+{% extends "wagtailadmin/base.html" %}
+{% load i18n wagtailadmin_tags %}
+
+{% block titletag %}{{ header_title|default:_("Upload de Capítulos (ZIP)") }}{% endblock %}
+
+{% block content %}
+    {% include "wagtailadmin/shared/header.html" with title=header_title icon=header_icon|default:"zip" %}
+
+    <div class="nice-padding">
+        {% include "wagtailadmin/shared/messages.html" %}
+
+        {% if not selected_manga_from_url %}
+            <p class="help-block help-info">
+                {% blocktrans %}
+                Selecione a obra (mangá) na lista abaixo. Em seguida, escolha o arquivo <code>.zip</code> que contém as pastas dos capítulos.
+                Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será tratada como um capítulo separado. As imagens dentro de cada pasta serão adicionadas ao capítulo correspondente.
+                {% endblocktrans %}
+            </p>
+        {% else %}
+             <p class="help-block help-info">
+                {% blocktrans with manga_title=selected_manga_from_url.title %}
+                Você está upando capítulos para a obra: <strong>{{ manga_title }}</strong>.
+                Escolha o arquivo <code>.zip</code> que contém as pastas dos capítulos.
+                Cada pasta dentro do ZIP (ex: '01', '02', '10.5') será tratada como um capítulo separado. As imagens dentro de cada pasta serão adicionadas ao capítulo correspondente.
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% if selected_manga_from_url %}
+                <input type="hidden" name="manga_page_id" value="{{ selected_manga_from_url.pk }}">
+            {% endif %}
+
+            <ul class="fields">
+
+                {% if not selected_manga_from_url %}
+                    <li class="field char_field {% if form.manga_selection.field.required %}required{% endif %} {% if form.manga_selection.errors %}error{% endif %}">
+                        {{ form.manga_selection.label_tag }}
+                        <div class="field-content">
+                            {{ form.manga_selection }}
+                            {% if form.manga_selection.errors %}
+                                <p class="error-message">
+                                    {% for error in form.manga_selection.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </p>
+                            {% endif %}
+                            {% if form.manga_selection.help_text %}
+                                <p class="help">{{ form.manga_selection.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endif %}
+
+                <li class="field file_field {% if form.zip_file.field.required %}required{% endif %} {% if form.zip_file.errors %}error{% endif %}">
+                    {{ form.zip_file.label_tag }}
+                     <div class="field-content">
+                        {{ form.zip_file }}
+                        {% if form.zip_file.errors %}
+                            <p class="error-message">
+                                {% for error in form.zip_file.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        {% if form.zip_file.help_text %}
+                            <p class="help">{{ form.zip_file.help_text|safe }}</p>
+                        {% endif %}
+                    </div>
+                </li>
+
+                {% if form.non_field_errors %}
+                    <li class="error">
+                         {% for error in form.non_field_errors %}
+                             <p class="error-message"><span>{{ error }}</span></p>
+                         {% endfor %}
+                    </li>
+                {% endif %}
+
+                <li>
+                    <button type="submit" class="button button-longrunning" data-controller="w-progress" data-action="w-progress#activate" data-w-progress-active-value="{% trans 'Processando…' %}">
+                        <span class="icon icon-upload" aria-hidden="true"></span> {% trans 'Enviar e Processar ZIP' %}
+                    </button>
+                </li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}

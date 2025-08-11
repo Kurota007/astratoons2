@@ -1,0 +1,189 @@
+{% load static comment_tags %}
+
+<div class="comments-container">
+    
+    <h2 class="comments-main-title">Comentários</h2>
+
+    <div class="comments-section-header">
+        <h3 class="comments-count-title">{{ comment_count }} {% if comment_count == 1 %}Comentário{% else %}Comentários{% endif %}</h3>
+        
+        {% if user.is_authenticated %}
+        <div class="notifications-bell">
+            <i class="fa-regular fa-bell"></i> 
+            
+            {% if unread_notification_count > 0 %}
+                <span class="notification-count">{{ unread_notification_count }}</span>
+            {% endif %}
+
+            <div class="notifications-dropdown">
+                {% for notification in unread_notifications %}
+                    <a href="{{ notification.comment.page.get_url }}#comment-{{ notification.comment.id }}" class="notification-item">
+                        <strong>{{ notification.comment.user.profile.display_name|default:notification.comment.user.get_full_name|default:notification.comment.user.username|get_username_part }}</strong> respondeu ao seu comentário.
+                        <small>{{ notification.created_at|timesince }} atrás</small>
+                    </a>
+                {% empty %}
+                    <div class="notification-item empty">
+                        Nenhuma notificação nova.
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="new-comment-form mb-4">
+        {% if user.is_authenticated %}
+            {% include "comments/form.html" with page=page %}
+        {% else %}
+            <div class="alert alert-dark" role="alert">
+                Você precisa <a href="{% url 'account_login' %}?next={{ request.path }}#comments" class="alert-link">fazer login</a> para comentar.
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="comments-list">
+        {% for comment in comments %}
+            {% include "comments/comment.html" with comment=comment page=page user=request.user %}
+        {% empty %}
+            <div class="text-center p-4">
+                <p class="text-muted">Ainda não há comentários. Seja o primeiro!</p>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+<!-- =========================================================== -->
+<!--          SCRIPT FINAL E UNIFICADO DE INTERATIVIDADE         -->
+<!-- =========================================================== -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const commentsWrapper = document.querySelector('.comments-container');
+    if (!commentsWrapper) return;
+
+    const csrfTokenInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    const csrfToken = csrfTokenInput ? csrfTokenInput.value : '';
+
+    const bell = document.querySelector('.notifications-bell');
+    if (bell) {
+        bell.addEventListener('click', function(event) {
+            const dropdown = bell.querySelector('.notifications-dropdown');
+            const countBadge = bell.querySelector('.notification-count');
+
+            if (event.target.closest('.notification-item')) {
+                return;
+            }
+            event.preventDefault();
+
+            const isVisible = dropdown.style.display === 'block';
+            dropdown.style.display = isVisible ? 'none' : 'block';
+
+            if (!isVisible && countBadge) {
+                fetch("{% url 'comments:mark_all_as_read' %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'ok') {
+                        countBadge.remove();
+                    }
+                })
+                .catch(error => console.error('Erro ao marcar notificações como lidas:', error));
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!bell.contains(event.target)) {
+                bell.querySelector('.notifications-dropdown').style.display = 'none';
+            }
+        });
+    }
+
+    commentsWrapper.addEventListener('click', function(event) {
+        
+        const spoilerContent = event.target.closest('.spoiler-content');
+        if (spoilerContent) {
+            spoilerContent.classList.toggle('revealed');
+            return;
+        }
+
+        const replyLink = event.target.closest('.comment-reply-link');
+        if (replyLink) {
+            event.preventDefault();
+            const formId = replyLink.getAttribute('data-form-id');
+            const form = document.getElementById(formId);
+            if (form) {
+                const isVisible = form.style.display === 'block';
+                document.querySelectorAll('.comment-reply-form').forEach(f => f.style.display = 'none');
+                if (!isVisible) {
+                    form.style.display = 'block';
+                    form.querySelector('textarea').focus();
+                }
+            }
+            return;
+        }
+
+        const voteButton = event.target.closest('.vote-btn');
+        if (voteButton) {
+            event.preventDefault();
+            const commentId = voteButton.dataset.commentId;
+            const voteType = voteButton.dataset.voteType;
+            
+            {% if not user.is_authenticated %}
+                window.location.href = "{% url 'account_login' %}?next={{ request.path }}#comment-" + commentId;
+                return;
+            {% endif %}
+
+            if (!csrfToken) {
+                alert("Erro de segurança. Por favor, recarregue a página.");
+                return;
+            }
+
+            fetch("{% url 'comments:vote_comment' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `comment_id=${commentId}&vote_type=${voteType}`
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Erro na resposta do servidor.');
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'ok') {
+                    const commentElement = document.getElementById(`comment-${commentId}`);
+                    commentElement.querySelector('.like-count').textContent = data.likes;
+                    commentElement.querySelector('.dislike-count').textContent = data.dislikes;
+
+                    const likeBtn = commentElement.querySelector('.like-btn');
+                    const dislikeBtn = commentElement.querySelector('.dislike-btn');
+                    
+                    likeBtn.classList.remove('active');
+                    dislikeBtn.classList.remove('active');
+
+                    if (data.action === 'vote_created' || data.action === 'vote_changed') {
+                        if (voteType === 'like') {
+                            likeBtn.classList.add('active');
+                        } else {
+                            dislikeBtn.classList.add('active');
+                        }
+                    }
+                } else {
+                    alert(data.message || 'Ocorreu um erro ao processar seu voto.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição de voto:', error);
+                alert('Ocorreu um erro de conexão. Tente novamente.');
+            });
+        }
+    });
+});
+</script>

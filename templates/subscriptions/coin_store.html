@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}Loja de Moedas{% endblock %}
+
+{% block extra_css %}
+<style>
+    .store-header { text-align: center; margin-bottom: 3rem; }
+    .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+    .package-card { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .package-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+    .package-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem; }
+    .package-name { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .package-amount { font-size: 1.1rem; color: var(--light-text-color); margin-bottom: 1.5rem; }
+    .package-price { font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem; }
+    .package-price .currency { font-size: 1.5rem; font-weight: 500; vertical-align: super; }
+    
+    .payment-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: auto; }
+    .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem; color: var(--button-primary-text); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; text-transform: uppercase; cursor: pointer; transition: background-color 0.2s; text-decoration: none; width: 100%; }
+    .buy-button.pix { background-color: #32BCAD; }
+    .buy-button.paypal { background-color: #00457C; }
+    .buy-button:hover { filter: brightness(1.1); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="store-header">
+        <h1>Loja de Moedas</h1>
+        <p class="lead text-muted">Adquira moedas para apoiar suas obras favoritas e comprar itens na loja!</p>
+    </div>
+
+    {% if packages %}
+        <div class="store-grid">
+            {% for package in packages %}
+            <div class="package-card">
+                <div class="package-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <h2 class="package-name">{{ package.name }}</h2>
+                <p class="package-amount">{{ package.amount }} Moedas</p>
+                
+                <!-- === INÍCIO DA LÓGICA DE MOEDA === -->
+
+                {% comment %} Verifica a configuração global de moeda {% endcomment %}
+                {% if settings.core.GlobalSettings.default_currency == 'BRL' %}
+
+                    <!-- MOEDA: REAL (BRL) -->
+                    <div class="package-price">
+                        <span class="currency">R$</span>{{ package.price|floatformat:2 }}
+                    </div>
+                    
+                    <div class="payment-buttons">
+                        <button class="buy-button pix" data-package-id="{{ package.id }}">
+                            <i class="fa-brands fa-pix"></i>
+                            <span>Comprar com PIX</span>
+                        </button>
+                    </div>
+
+                {% elif settings.core.GlobalSettings.default_currency == 'USD' %}
+                    
+                    <!-- MOEDA: DÓLAR (USD) -->
+                    <div class="package-price">
+                        <span class="currency">$</span>{{ package.price|floatformat:2 }}
+                    </div>
+                    
+                    <div class="payment-buttons">
+                        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_xclick">
+                            <input type="hidden" name="business" value="{{ settings.core.GlobalSettings.paypal_receiver_email }}">
+                            <input type="hidden" name="item_name" value="Pacote de Moedas: {{ package.name }}">
+                            <input type="hidden" name="item_number" value="{{ package.id }}">
+                            <input type="hidden" name="amount" value="{{ package.price|stringformat:".2f" }}">
+                            <input type="hidden" name="currency_code" value="USD">
+                            <input type="hidden" name="invoice" value="{{ package.invoice_id }}">
+                            <input type="hidden" name="return" value="{{ request.scheme }}://{{ request.get_host }}{% url 'subscriptions:payment_success' %}">
+                            <input type="hidden" name="cancel_return" value="{{ request.scheme }}://{{ request.get_host }}{% url 'subscriptions:coin_store' %}">
+                            <input type="hidden" name="notify_url" value="{{ request.scheme }}://{{ request.get_host }}{% url 'paypal-ipn' %}">
+
+                            <button type="submit" class="buy-button paypal">
+                                <i class="fa-brands fa-paypal"></i>
+                                <span>Pay with PayPal</span>
+                            </button>
+                        </form>
+                    </div>
+
+                {% endif %}
+                <!-- === FIM DA LÓGICA DE MOEDA === -->
+
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Nenhum pacote de moedas disponível no momento. Volte mais tarde!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Código para o botão de PIX (só funciona se a moeda for BRL)
+    const buyButtons = document.querySelectorAll('.buy-button.pix');
+    if (buyButtons.length > 0) {
+        const knoxToken = "{{ knox_token }}";
+
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const packageId = this.dataset.packageId;
+                const originalHtml = this.innerHTML;
+                
+                this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> {% trans "Redirecionando..." %}';
+                this.disabled = true;
+
+                fetch("{% url 'subscriptions:create_coin_payment' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${knoxToken}`
+                    },
+                    body: JSON.stringify({ 'package_id': packageId })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.error || `{% trans "Erro do Servidor:" %} ${response.status}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success' && data.redirectUrl) {
+                        window.location.href = data.redirectUrl;
+                    } else {
+                        throw new Error(data.error || '{% trans "URL de redirecionamento não recebida." %}');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    alert('{% trans "Erro:" %} ' + error.message);
+                    this.innerHTML = originalHtml;
+                    this.disabled = false;
+                });
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

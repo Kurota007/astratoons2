@@ -1,0 +1,263 @@
+/* ===================================================================== */
+/*          CSS COMPLETO FINAL - TODAS AS FUNCIONALIDADES INCLUÍDAS        */
+/* ===================================================================== */
+
+/* --- CONTAINER GERAL --- */
+.comments-container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* --- TÍTULOS DA SEÇÃO --- */
+.comments-container .comments-main-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.comments-container .comments-main-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #4f46e5;
+    margin-top: 5px;
+}
+.comments-container .comments-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #374151;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+.comments-container .comments-count-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+/* --- FORMULÁRIO DE COMENTÁRIOS --- */
+.comments-container .comment-form-instance textarea {
+    background-color: #212529 !important;
+    border: 1px solid #495057 !important;
+    color: #ced4da !important;
+    border-radius: 8px !important;
+    padding: 12px 15px !important;
+    min-height: 120px !important;
+    width: 100% !important;
+    font-size: 1rem !important;
+    resize: vertical !important;
+}
+.comments-container .comment-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.comments-container .image-upload-label {
+    font-size: 1.6rem;
+    color: #aaa;
+    cursor: pointer;
+}
+.comments-container .actions-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.comments-container .actions-right .form-check-label {
+    color: #aaa;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.comments-container .actions-right .form-check-input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-color: #333;
+    border: 1px solid #555;
+}
+.comments-container .actions-right .form-check-input:checked {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+.comments-container .comment-submit-btn {
+    background-color: #4f46e5 !important;
+    border: none !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+}
+
+/* --- LAYOUT DE CADA COMENTÁRIO --- */
+.comments-container .comment-thread {
+    width: 100%;
+}
+.comments-container .comment-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+.comments-container .comment-wrapper .avatar-column img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.comments-container .comment-bubble {
+    background: none;
+    border: none;
+    padding: 0;
+    flex-grow: 1;
+}
+.comments-container .comment-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+.comments-container .comment-author-info {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
+}
+.comments-container .staff-badge {
+    background-color: #0d6efd;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.comments-container .comment-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+.comments-container .comment-content {
+    margin-bottom: 8px;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #e0e0e0;
+}
+.comments-container .comment-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.comments-container .comment-actions a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #888;
+    text-decoration: none;
+    cursor: pointer;
+}
+.comments-container .comment-actions a:hover {
+    color: #fff;
+}
+.comments-container .replies-container {
+    margin-left: calc(40px + 12px);
+    margin-top: 1rem;
+    border: none;
+    padding: 0;
+}
+
+/* --- FORMULÁRIO DE RESPOSTA --- */
+.comment-reply-form {
+    display: none;
+    margin-top: 1rem;
+    padding-left: calc(40px + 12px); 
+}
+.comment-reply-form .comment-form-instance textarea {
+    min-height: 90px !important;
+    font-size: 0.9rem !important;
+}
+.comment-reply-form .comment-submit-btn {
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+}
+
+/* --- FUNCIONALIDADE DE SPOILER --- */
+.spoiler-content {
+    background-color: #374151;
+    color: #374151;
+    padding: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+}
+.spoiler-content.revealed {
+    background-color: transparent;
+    color: inherit;
+    cursor: default;
+    user-select: auto;
+}
+
+/* --- SINO E DROPDOWN DE NOTIFICAÇÕES --- */
+.notifications-bell {
+    position: relative;
+    font-size: 1.5rem;
+    color: #a0a0a0;
+    cursor: pointer;
+}
+.notifications-bell .notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #e53e3e;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1a1a1a;
+}
+.notifications-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 350px;
+    background-color: #2d3748;
+    border-radius: 8px;
+    border: 1px solid #4a5568;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    margin-top: 10px;
+}
+.notifications-bell:hover .notifications-dropdown {
+    display: block;
+}
+.notification-item {
+    display: block;
+    padding: 12px 15px;
+    border-bottom: 1px solid #4a5568;
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+.notification-item:hover {
+    background-color: #4a5568;
+}
+.notification-item.empty {
+    color: #a0a0a0;
+    text-align: center;
+}
+.notification-item small {
+    display: block;
+    color: #a0a0a0;
+    margin-top: 4px;
+    font-size: 0.75rem;
+}

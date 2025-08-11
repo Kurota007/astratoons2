@@ -1,0 +1,122 @@
+{# templates/includes/comment_list.html #}
+{% load i18n %}
+
+{# === AJUSTE: Container principal com ID que o JS usa === #}
+<div id="comments-container" class="space-y-6">
+
+    {% for comment in comments %}
+        {# === AJUSTE: ID adicionado ao item de comentário === #}
+        <div class="comment-box p-4 rounded-lg" id="comment-{{ comment.id }}">
+            <div class="flex items-start space-x-4">
+                <div class="avatar-placeholder flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-[#00B982] text-white font-bold">
+                     {{ comment.user.username|first|upper|default:"?" }}
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="font-medium text-white">{{ comment.user.username }}</h4>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="text-xs text-gray-400">{{ comment.created_at|timesince }} {% trans "atrás" %}</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-[#00B982]" title="Opções (Não funcional)">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+
+                    <p class="mt-2 text-gray-300">
+                        {% if comment.is_spoiler %}
+                            {# === AJUSTE: Adicionada classe para o botão de spoiler === #}
+                            <span class="spoiler-warning text-yellow-500 font-bold cursor-pointer">{% trans "[SPOILER]" %}</span>
+                            <span class="spoiler-content hidden">{{ comment.text|linebreaksbr }}</span>
+                        {% else %}
+                            {{ comment.text|linebreaksbr }}
+                        {% endif %}
+                    </p>
+
+                    <div class="mt-3 flex items-center space-x-4">
+                        {# === AJUSTES: Adicionadas classes e data attributes para botões de like/dislike === #}
+                        <button class="like-btn flex items-center space-x-1 text-gray-400 hover:text-[#00B982]" data-comment-id="{{ comment.id }}" title="Like">
+                            {# O JS vai trocar entre far/fas e a cor #}
+                            <i class="far fa-thumbs-up"></i>
+                            <span class="like-count text-xs">0</span> {# JS/Backend atualiza #}
+                        </button>
+                        <button class="dislike-btn flex items-center space-x-1 text-gray-400 hover:text-red-500" data-comment-id="{{ comment.id }}" title="Dislike">
+                             {# O JS vai trocar entre far/fas e a cor #}
+                            <i class="far fa-thumbs-down"></i>
+                            <span class="dislike-count text-xs">0</span> {# JS/Backend atualiza #}
+                        </button>
+                        {# === AJUSTE: Chamada JS no onclick do botão Responder === #}
+                        <button class="text-gray-400 hover:text-[#00B982] text-sm" onclick="prepareReply({{ comment.id }})">
+                            <i class="fas fa-reply mr-1"></i> {% trans "Responder" %}
+                        </button>
+                    </div>
+
+                    {# Respostas (estrutura similar, pode aplicar mesmos data-attributes e classes se quiser like/dislike em respostas) #}
+                    {% with replies=comment.replies.all %}
+                        {% if replies %}
+                            <div class="replies-container mt-4 ml-10 space-y-4">
+                                {% for reply in replies %}
+                                    <div class="comment-box p-3 rounded-lg" id="comment-{{ reply.id }}">
+                                        <div class="flex items-start space-x-3">
+                                            <div class="avatar-placeholder flex-shrink-0 h-8 w-8 rounded-full flex items-center justify-center bg-[#00B982] text-white font-bold text-sm">
+                                                {{ reply.user.username|first|upper|default:"?" }}
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="flex justify-between items-center">
+                                                    <div>
+                                                        <h4 class="font-medium text-white text-sm">{{ reply.user.username }}</h4>
+                                                        <div class="flex items-center space-x-2 mt-0.5">
+                                                            <span class="text-xs text-gray-400">{{ reply.created_at|timesince }} {% trans "atrás" %}</span>
+                                                        </div>
+                                                    </div>
+                                                    <button class="text-gray-400 hover:text-[#00B982]" title="Opções (Não funcional)">
+                                                        <i class="fas fa-ellipsis-h fa-xs"></i>
+                                                    </button>
+                                                </div>
+                                                <p class="mt-1 text-gray-300 text-sm">
+                                                     {% if reply.is_spoiler %}
+                                                        <span class="spoiler-warning text-yellow-500 font-bold cursor-pointer">{% trans "[SPOILER]" %}</span>
+                                                        <span class="spoiler-content hidden">{{ reply.text|linebreaksbr }}</span>
+                                                    {% else %}
+                                                        {{ reply.text|linebreaksbr }}
+                                                    {% endif %}
+                                                </p>
+                                                <div class="mt-2 flex items-center space-x-3">
+                                                    <button class="like-btn flex items-center space-x-1 text-gray-400 hover:text-[#00B982]" data-comment-id="{{ reply.id }}" title="Like">
+                                                        <i class="far fa-thumbs-up fa-xs"></i>
+                                                        <span class="like-count text-xs">0</span>
+                                                    </button>
+                                                    {# <button onclick="prepareReply({{ comment.id }}, {{ reply.id }})">Responder</button> #}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="text-center text-gray-500 py-6">
+            <p>{% trans "Nenhum comentário ainda. Seja o primeiro!" %}</p>
+        </div>
+    {% endfor %}
+
+    {# === AJUSTES: Adicionado ID e data attribute ao botão Carregar Mais === #}
+    {# A URL da próxima página precisa ser passada pela view no contexto #}
+    {% if comments.has_next %} {# Exemplo se usar paginação Django padrão #}
+        <div class="mt-8 text-center">
+             <button id="load-more-comments"
+                     data-next-page-url="{% url 'url_para_carregar_mais_comentarios' %}?page={{ comments.next_page_number }}" {# Adapte a URL #}
+                     class="btn-secondary px-6 py-2 rounded-lg">
+                 <i class="fas fa-sync-alt mr-2"></i> {% trans "Carregar mais comentários" %}
+             </button>
+        </div>
+    {% endif %}
+
+</div>
+
+{# O script foi movido para static/js/comments.js e incluído no base.html #}

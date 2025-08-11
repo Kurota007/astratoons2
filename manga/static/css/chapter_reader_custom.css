@@ -1,0 +1,257 @@
+/* static/manga/css/chapter_reader_custom.css */
+
+/* ----- Reset Específico ou Ajustes para Modo Leitor ----- */
+body.reader-active-page {
+    background-color: #000000; /* Fundo preto padrão para o leitor */
+    color: var(--current-text-primary, #e7e5e4); /* Cor de texto padrão do tema */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evitar scroll horizontal */
+}
+
+/* Esconde navbar e footer globais se a classe estiver no body */
+body.reader-active-page .navbar-global-astr, /* Substitua pela classe real da sua navbar global */
+body.reader-active-page .footer-global-astr { /* Substitua pela classe real do seu footer global */
+    display: none !important;
+}
+
+.chapter-reader-container {
+    min-height: 100vh;
+    position: relative; /* Para o posicionamento das barras de navegação */
+}
+
+/* ----- Barras de Navegação do Leitor ----- */
+.reader-navigation {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    background-color: rgba(15, 23, 42, 0.85); /* Ex: bg-slate-900/85 */
+    backdrop-filter: blur(4px);
+    color: var(--current-text-primary);
+    z-index: 50;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.reader-navigation.top-nav {
+    top: 0;
+    border-bottom: 1px solid var(--current-border-medium, #44403c);
+}
+.reader-navigation.bottom-nav {
+    bottom: 0;
+    border-top: 1px solid var(--current-border-medium, #44403c);
+}
+.reader-navigation.nav-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.reader-navigation.top-nav.nav-hidden { transform: translateY(-100%); }
+.reader-navigation.bottom-nav.nav-hidden { transform: translateY(100%); }
+
+/* Transições Alpine.js (definidas no CSS para melhor controle) */
+.transition-transform-opacity-enter { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+.transform-translate-y-full { transform: translateY(-100%); } /* Para top-nav escondida */
+.transform-translate-y-full-bottom { transform: translateY(100%); } /* Para bottom-nav escondida */
+.transform-translate-y-0 { transform: translateY(0); }
+.transform-translate-y-0-bottom { transform: translateY(0); }
+.opacity-0 { opacity: 0; }
+.opacity-100 { opacity: 1; }
+.transition-transform-opacity-leave { transition: transform 0.2s ease-in, opacity 0.2s ease-in; }
+
+.transition-opacity-enter-modal { transition: opacity 0.3s ease-out; }
+.transition-opacity-leave-modal { transition: opacity 0.2s ease-in; }
+
+
+.reader-nav-content {
+    max-width: 1280px; /* Ou a largura do seu container */
+    margin: 0 auto;
+    padding: 0 0.5rem; /* Espaçamento lateral */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.5rem; /* 56px - h-14 */
+}
+
+.nav-back-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* gap-2 */
+    color: var(--current-text-secondary);
+    text-decoration: none;
+}
+.nav-back-link:hover { color: var(--current-text-primary); }
+.nav-series-title {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Ajuste conforme necessário */
+}
+@media (min-width: 640px) { /* sm */
+    .nav-series-title { display: inline; max-width: 250px; }
+}
+
+
+.nav-chapter-selector-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 0.5rem; /* Espaço entre título e ações */
+}
+.reader-select { /* Herda de .form-select-custom do site_base.css se você o definiu */
+    background-color: var(--current-surface, #171717) !important; /* Força a cor de fundo */
+    border: 1px solid var(--current-border-medium, #44403c) !important;
+    color: var(--current-text-primary, #e7e5e4) !important;
+    font-size: 0.875rem; /* text-sm */
+    border-radius: 0.375rem; /* rounded-md */
+    padding: 0.375rem 2rem 0.375rem 0.75rem; /* py-1.5 px-2/3 */
+    width: 100%;
+    max-width: 24rem; /* max-w-xs ou sm */
+    text-align: center;
+    text-overflow: ellipsis;
+    /* A seta do select já deve vir de .form-select-custom */
+}
+
+.nav-actions-group { display: flex; align-items: center; gap: 0.25rem; /* gap-1 */ }
+.nav-action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem; /* p-2 */
+    color: var(--current-text-secondary);
+    background-color: transparent;
+    border: none;
+    border-radius: 0.375rem; /* rounded-md */
+    text-decoration: none;
+    font-size: 0.875rem; /* text-sm para texto em botões como Próximo/Anterior */
+}
+.nav-action-button:hover {
+    color: var(--current-text-primary);
+    background-color: var(--current-surface);
+}
+.nav-action-button.disabled { opacity: 0.5; cursor: not-allowed; }
+.nav-action-button.disabled:hover { background-color: transparent; color: var(--current-text-secondary); }
+.nav-action-button i { font-size: 1.125rem; /* text-lg */ }
+.nav-action-button .fa-chevron-left, .nav-action-button .fa-chevron-right { margin: 0 0.25rem; }
+
+.bottom-actions-group { gap: 0.5rem; } /* Ajusta espaçamento para botões inferiores */
+.prev-next-btn i { margin: 0 0.25rem; }
+
+/* ----- Container das Páginas do Mangá ----- */
+.manga-pages-outer-container {
+    padding-top: calc(var(--navbar-height) + 1rem); /* Espaço da nav superior + margem */
+    padding-bottom: calc(var(--navbar-height) + 1rem); /* Espaço da nav inferior + margem */
+    cursor: pointer; /* Para toggle da UI */
+}
+.manga-pages-inner-container {
+    margin: 0 auto;
+    display: flex; /* Para modo página única */
+    flex-direction: column; /* Para modo tira longa */
+    align-items: center; /* Centraliza imagens mais estreitas */
+}
+
+.manga-pages-inner-container.mode-long-strip .manga-page-item {
+    /* No modo tira longa, cada item toma a largura do ajuste */
+    width: 100%;
+    display: flex; /* Para centralizar a imagem dentro do item se ela for menor */
+    justify-content: center;
+}
+.manga-pages-inner-container.mode-long-strip .manga-page-image {
+    margin-bottom: 2px; /* Pequeno espaço entre as páginas */
+}
+
+/* Ajuste de Imagem */
+.manga-pages-inner-container.fit-width .manga-page-image {
+    max-width: 100%; /* Imagem não ultrapassa a largura do container interno */
+    width: 100%; /* Ocupa a largura disponível */
+    height: auto;
+}
+.manga-pages-inner-container.fit-height .manga-page-image {
+    max-height: calc(100vh - (var(--navbar-height) * 2) - 2rem); /* Altura da tela menos as barras e um pouco de margem */
+    width: auto;
+    max-width: 100%; /* Não deixa a imagem ficar mais larga que seu container */
+}
+.manga-pages-inner-container.fit-original .manga-page-image {
+    max-width: 100%; /* Para não estourar em telas pequenas */
+    width: auto; /* Usa largura original até o max-width */
+    height: auto;
+}
+
+/* Estilo base para as imagens (aplicado a todas) */
+.manga-page-image {
+    display: block; /* Remove espaço extra abaixo da imagem */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Modo Página Única (Placeholder - requer JS para funcionalidade completa) */
+.manga-pages-inner-container.mode-single-page {
+    /* Estilos para quando o modo é página única.
+       A imagem exibida será controlada por JS.
+       Aqui, garantimos que o container possa centralizar a imagem. */
+    justify-content: center;
+    align-items: center;
+    /* min-height: calc(100vh - (var(--navbar-height) * 2) - 2rem); */ /* Para ocupar espaço */
+}
+.manga-pages-inner-container.mode-single-page .manga-page-item {
+    /* No modo página única, apenas o item ativo seria visível (controlado por JS) */
+}
+
+
+.no-pages-message {
+    color: var(--current-text-muted);
+    text-align: center;
+    padding: 4rem 1rem;
+    font-size: 1.125rem;
+}
+
+
+/* ----- Modal de Configurações ----- */
+.reader-settings-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* Mais escuro */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 100;
+}
+.reader-settings-modal-content {
+    background-color: var(--current-surface);
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.5rem; /* rounded-lg */
+    border: 1px solid var(--current-border-medium);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3), 0 4px 6px -2px rgba(0,0,0,0.2); /* shadow-xl */
+    width: 100%;
+    max-width: 28rem; /* max-w-md */
+    position: relative;
+}
+.settings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.settings-title { font-size: 1.125rem; font-weight: 600; color: var(--current-text-primary); }
+.settings-close-btn {
+    color: var(--current-text-secondary); background: none; border: none;
+    font-size: 1.75rem; line-height: 1; cursor: pointer; padding: 0.25rem;
+}
+.settings-close-btn:hover { color: var(--current-text-primary); }
+
+.settings-options-group { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+.settings-label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--current-text-secondary); margin-bottom: 0.25rem; }
+.settings-button-group { display: flex; gap: 0.5rem; }
+.btn-settings {
+    /* Herda de .btn no site_base.css ou define aqui */
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.5rem 0.75rem; font-size: 0.75rem; /* text-xs */
+    border-radius: 0.375rem; border: 1px solid var(--current-border-medium);
+    background-color: var(--current-border-subtle); /* Um pouco diferente da surface */
+    color: var(--current-text-secondary);
+    flex-grow: 1; /* Para os botões ocuparem espaço igual */
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-settings:hover { background-color: var(--current-border-medium); color: var(--current-text-primary); }
+.btn-settings.active {
+    background-color: var(--current-accent);
+    color: white;
+    border-color: var(--current-accent);
+    font-weight: 600;
+}
+.settings-done-btn { width: 100%; margin-top: 1rem; } 

@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags %}
+{% get_settings %}
+
+{# --- Título da Página --- #}
+{% block title %}{{ manga.title }} - Capítulo {{ page.chapter_number }}{% endblock %}
+
+{# --- Classe CSS para o Body --- #}
+{% block body_class %}template-chapterpage theme-dark reading-mode-vertical{% endblock %} {# Adiciona classe para modo leitura #}
+
+{% block extra_css %}
+    <style>
+        /* Esconder a navbar/footer padrão nesta página específica */
+        /* Você pode querer fazer isso de forma mais elegante com lógica no base.html */
+       /* .navbar, .site-footer { display: none !important; } */
+       /* Ou talvez apenas reduzir o padding-top se a navbar do capítulo for fixa */
+       body { padding-top: 0 !important; /* Remove padding do base.html se a navbar aqui não for sticky */ }
+
+       /* Ajuste de Estilo para Navbar de Capítulo Fixa/Sticky */
+       .chapter-navigation.top-nav {
+            position: sticky; /* Faz a barra superior ficar fixa */
+            top: 0;           /* Cola no topo */
+            z-index: 1001;    /* Garante que fique acima do conteúdo */
+            /* background-color: var(--navbar-bg-color); */ /* Reutiliza cor ou define nova */
+            /* Adicione outros estilos como padding, border-bottom, etc. */
+        }
+        /* Se a top-nav for sticky, o body precisa de padding-top novamente */
+        /* .template-chapterpage { padding-top: 3.5rem !important; } */ /* Ajuste a altura (ex: 3.5rem) */
+
+    </style>
+{% endblock %}
+
+
+{# --- REMOVER HEADER E FOOTER PADRÃO (Opcional) --- #}
+{# Se você não quer a navbar e footer principais nesta página #}
+{% block header %}{# Não renderiza o header do base.html #}{% endblock %}
+{% block footer %}{# Não renderiza o footer do base.html #}{% endblock %}
+
+
+{# --- Conteúdo Principal da Página --- #}
+{% block content %}
+<div class="chapter-reading-page">
+
+    {# --- Navegação Superior do Capítulo --- #}
+    <nav class="chapter-navigation top-nav"> {# Adicione classe 'sticky-nav' se for estilizá-la como sticky #}
+        <div class="container nav-container">
+            {# --- Botão Voltar Capítulo --- #}
+            <div class="nav-left">
+                {% if prev_chapter %}
+                    <a href="{% pageurl prev_chapter %}" class="nav-button prev-button" title="Capítulo Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="button-text">Anterior</span>
+                    </a>
+                {% else %}
+                    <button class="nav-button prev-button disabled" disabled title="Primeiro Capítulo">
+                        <i class="fas fa-chevron-left"></i>
+                         <span class="button-text">Anterior</span>
+                    </button>
+                {% endif %}
+            </div>
+
+            {# --- Informações da Obra/Capítulo --- #}
+            <div class="nav-center">
+                <a href="{% pageurl manga %}" class="series-link" title="{{ manga.title }}">
+                    {% if manga.cover %}
+                        {% image manga.cover width-40 as nav_thumb %}
+                        <img src="{{ nav_thumb.url }}" alt="" class="series-thumb">
+                    {% endif %}
+                    <div class="series-chapter-info">
+                        <h1 class="series-title-nav">{{ manga.title }}</h1>
+                        <h2 class="chapter-title-nav">Capítulo {{ page.chapter_number }}</h2>
+                    </div>
+                </a>
+            </div>
+
+             {# --- Botões Centrais/Direita (Lista, Próximo) --- #}
+            <div class="nav-right">
+                 {# Botão para voltar à lista de capítulos (Home da Obra) #}
+                 <a href="{% pageurl manga %}" class="nav-button list-button" title="Lista de Capítulos">
+                      <i class="fas fa-list"></i>
+                      <span class="button-text">Lista</span>
+                 </a>
+                {# Botão Próximo Capítulo --- #}
+                {% if next_chapter %}
+                    <a href="{% pageurl next_chapter %}" class="nav-button next-button" title="Próximo Capítulo">
+                        <span class="button-text">Próximo</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <button class="nav-button next-button disabled" disabled title="Último Capítulo">
+                         <span class="button-text">Próximo</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                {% endif %}
+                 {# TODO: Adicionar botão de Configurações aqui se necessário #}
+                 {# <button class="nav-button settings-button" title="Configurações"><i class="fas fa-cog"></i></button> #}
+            </div>
+        </div>
+    </nav>
+
+    {# --- Container das Imagens do Capítulo --- #}
+    <div class="chapter-images-container">
+        {# Loop através das imagens do capítulo #}
+        {% if pages %}
+            {% for img_obj in pages %}
+                <div class="chapter-image-wrapper"> {# Wrapper opcional para cada imagem #}
+                    <img
+                        src="{{ img_obj.image_url }}"
+                        alt="Página {{ forloop.counter }} - {{ manga.title }} Cap. {{ page.chapter_number }}"
+                        loading="lazy" {# Ativa lazy loading nativo do navegador #}
+                        class="chapter-image"
+                    >
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty-list-message">Nenhuma página encontrada para este capítulo.</p>
+        {% endif %}
+    </div>
+
+    {# --- Navegação Inferior do Capítulo (Repete a superior) --- #}
+    <nav class="chapter-navigation bottom-nav">
+         <div class="container nav-container">
+            <div class="nav-left">
+                {% if prev_chapter %}
+                    <a href="{% pageurl prev_chapter %}" class="nav-button prev-button" title="Capítulo Anterior">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="button-text">Anterior</span>
+                    </a>
+                {% else %}
+                    <button class="nav-button prev-button disabled" disabled title="Primeiro Capítulo">
+                        <i class="fas fa-chevron-left"></i>
+                         <span class="button-text">Anterior</span>
+                    </button>
+                {% endif %}
+            </div>
+            <div class="nav-center">
+                 {# Link para voltar à página da obra #}
+                 <a href="{% pageurl manga %}" class="nav-button home-button" title="Voltar para {{ manga.title }}">
+                    <i class="fas fa-home"></i>
+                     <span class="button-text">Obra</span>
+                 </a>
+            </div>
+             <div class="nav-right">
+                 <a href="{% pageurl manga %}" class="nav-button list-button" title="Lista de Capítulos">
+                      <i class="fas fa-list"></i>
+                      <span class="button-text">Lista</span>
+                 </a>
+                {% if next_chapter %}
+                    <a href="{% pageurl next_chapter %}" class="nav-button next-button" title="Próximo Capítulo">
+                        <span class="button-text">Próximo</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                {% else %}
+                    <button class="nav-button next-button disabled" disabled title="Último Capítulo">
+                         <span class="button-text">Próximo</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {# --- Seção de Comentários (Placeholder) --- #}
+    <section class="chapter-comments-section">
+        <div class="container">
+            <h2 class="section-title">Comentários do Capítulo</h2>
+             {# Incluir Disqus ou seu sistema de comentários aqui #}
+             {# Exemplo Disqus: #}
+             {# <div id="disqus_thread"></div>
+             <script>
+                 var disqus_config = function () {
+                     this.page.url = "{{ request.build_absolute_uri }}"; // URL Canônica
+                     this.page.identifier = "chapter-{{ page.pk }}"; // Identificador único
+                     this.page.title = "{{ manga.title }} - Capítulo {{ page.chapter_number }}"; // Título da página
+                 };
+                 (function() { // DON'T EDIT BELOW THIS LINE
+                     var d = document, s = d.createElement('script');
+                     s.src = 'https://SEU_SHORTNAME_DISQUS.disqus.com/embed.js'; // SUBSTITUA SEU_SHORTNAME_DISQUS
+                     s.setAttribute('data-timestamp', +new Date());
+                     (d.head || d.body).appendChild(s);
+                 })();
+             </script>
+             <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> #}
+             <div class="comments-placeholder">
+                <p>Sistema de comentários será implementado aqui.</p>
+             </div>
+        </div>
+    </section>
+
+</div> {# Fim .chapter-reading-page #}
+{% endblock %}
+
+
+{% block extra_js %}
+    {# Adicione JS aqui se necessário para navegação com teclado, esconder/mostrar nav, etc. #}
+    <script>
+        // Exemplo básico: Navegar com setas do teclado
+        document.addEventListener('keydown', function(event) {
+            const prevButton = document.querySelector('.nav-button.prev-button:not(.disabled)');
+            const nextButton = document.querySelector('.nav-button.next-button:not(.disabled)');
+
+            // Verifica se o foco não está em um input ou textarea para não interferir na digitação
+            const isInputFocused = document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA';
+
+            if (!isInputFocused) {
+                if (event.key === 'ArrowLeft' && prevButton) {
+                    window.location.href = prevButton.href;
+                } else if (event.key === 'ArrowRight' && nextButton) {
+                     window.location.href = nextButton.href;
+                }
+            }
+        });
+
+        // TODO: Adicionar lógica para esconder/mostrar navbars ao rolar, se desejado.
+    </script>
+{% endblock %}

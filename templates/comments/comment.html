@@ -1,0 +1,84 @@
+{% load humanize static %}
+
+{% if comment.id %}
+<div class="comment-thread" id="comment-thread-{{ comment.id }}">
+    <div class="comment-wrapper">
+        <div class="avatar-column">
+            {% if comment.user.profile.get_display_avatar_url %}
+                <img src="{{ comment.user.profile.get_display_avatar_url }}" alt="Avatar">
+            {% else %}
+                <img src="{% static 'images/default-avatar.png' %}" alt="Avatar">
+            {% endif %}
+        </div>
+        
+        <div class="content-column">
+            <div class="comment-bubble">
+                <div class="comment-header">
+                    <span class="comment-author-info">{{ comment.user.profile.display_name|default:comment.user.username }}</span>
+                    
+                    {% for badge in comment.user.profile.get_display_badges %}
+                        <span class="user-badge" style="background-color: {{ badge.color }}; color: {{ badge.text_color }}; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; margin-left: 8px;">
+                            {% if badge.icon_class %}<i class="{{ badge.icon_class }}" style="margin-right: 4px;"></i>{% endif %}
+                            {{ badge.name }}
+                        </span>
+                    {% endfor %}
+
+                    <span class="comment-date">{{ comment.created_at|naturaltime }}</span>
+                </div>
+
+                <div class="comment-content">
+                    {% if comment.is_spoiler %}
+                        <span class="spoiler-content">{{ comment.content|linebreaksbr }}</span>
+                    {% else %}
+                        {{ comment.content|linebreaksbr }}
+                    {% endif %}
+                    
+                    {% if comment.image %}
+                        <div class="comment-image-container">
+                            <img src="{{ comment.image.url }}" class="comment-image" alt="Imagem do comentário">
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="comment-actions">
+                    {% if user.is_authenticated %}
+                        <a class="comment-reply-link" href="#" data-form-id="reply-form-for-comment-{{ comment.id }}">Responder</a>
+                    {% endif %}
+                    
+                    {% if user == comment.user or user.is_staff %}
+                    <div class="dropdown comment-options-dropdown">
+                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-ellipsis-h"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            {% if user == comment.user %}
+                                <li><a class="dropdown-item disabled" href="#">Editar</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li>
+                                <form method="post" action="{% url 'comments:delete_comment' comment.id %}" class="m-0" onsubmit="return confirm('Tem certeza que deseja excluir este comentário?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">Excluir</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-reply-form" id="reply-form-for-comment-{{ comment.id }}">
+        {% include "comments/form.html" with page=page parent=comment %}
+    </div>
+
+    {% if comment.replies.all %}
+    <div class="replies-container">
+        {% for reply in comment.replies.all %}
+            {% if reply.is_approved %}
+                {% include "comments/comment.html" with comment=reply page=page user=user %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endif %}
